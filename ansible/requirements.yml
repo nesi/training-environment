@@ -1,0 +1,4 @@
+---
+roles:
+  - name: osc.open_ondemand
+    version: "v3.0.3"

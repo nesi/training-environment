@@ -1,0 +1,15 @@
+---
+- name: Full system upgrade
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    upgrade: dist
+
+- name: Check if reboot required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: Reboot after upgrade
+  reboot:
+  when: reboot_required_file.stat.exists == true

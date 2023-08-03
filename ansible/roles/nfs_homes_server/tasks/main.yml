@@ -1,0 +1,26 @@
+---
+- name: Install nfs server
+  apt:
+    name:
+      - nfs-kernel-server
+    state: present
+
+- name: Create directory to hold homes
+  file:
+    path: "{{ nfs_remote_homes }}"
+    state: directory
+
+- name: Install exports file
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload nfs
+
+- name: Nfs server running
+  service:
+    name: nfs-kernel-server
+    state: started
+    enabled: true

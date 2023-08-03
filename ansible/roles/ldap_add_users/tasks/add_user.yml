@@ -1,0 +1,91 @@
+---
+# TODO: randomly generate a password and write it back to local
+- name: "Check if password exists for user {{ user_name }}"
+  stat:
+    path: "/etc/ldap/password_{{ user_name }}"
+  register: password_file
+- name: "Create password for user {{ user_name }}"
+  copy:
+    dest: "/etc/ldap/password_{{ user_name }}"
+    owner: root
+    group: root
+    mode: 0600
+    content: "{{ lookup('community.general.random_string', length=16, special=false) }}"
+  when: not password_file.stat.exists
+  register: user_password_file
+- name: "Hash password for user {{ user_name }}"
+  shell: "slappasswd -s $(cat /etc/ldap/password_{{ user_name }})"
+  register: user_pw
+  no_log: true
+  changed_when: user_password_file is changed
+- name: "Retrieve password for user {{ user_name }}"
+  fetch:
+    src: "/etc/ldap/password_{{ user_name }}"
+    dest: "users/password_{{ user_name }}.txt"
+    flat: yes
+# add the user and group
+- name: "Add ldap user {{ user_name }}"
+  community.general.ldap_entry:
+    dn: "uid={{ user_name }},ou=people,{{ ldap_base_dn }}"
+    objectClass:
+      - person
+      - posixAccount
+      - inetOrgPerson
+    attributes:
+      cn: "{{ user_name }}"
+      sn: "{{ user_name }}"
+      uid: "{{ user_name }}"
+      loginShell: /bin/bash
+      uidNumber: "{{ user_number }}"
+      gidNumber: "{{ user_number }}"
+      homeDirectory: "{{ home_local }}"
+      userPassword: "{{ user_pw.stdout }}"
+    server_uri: ldap://services-node.flexi.nesi/
+    bind_dn: "cn=admin,{{ ldap_base_dn }}"
+    bind_pw: "{{ ldap_admin_password }}"
+- name: "Add group for user {{ user_name }}"
+  community.general.ldap_entry:
+    dn: "cn={{ user_name }},ou=groups,{{ ldap_base_dn }}"
+    objectClass:
+      - posixGroup
+    attributes:
+      gidNumber: "{{ user_number }}"
+      memberUid: "{{ user_name }}"
+    server_uri: ldap://services-node.flexi.nesi/
+    bind_dn: "cn=admin,{{ ldap_base_dn }}"
+    bind_pw: "{{ ldap_admin_password }}"
+# create home and add ssh keys
+- name: "Create home for user {{ user_name }}"
+  copy:
+    remote_src: true
+    src: /etc/skel/
+    dest: "{{ home_remote }}"
+    owner: "{{ user_number }}"
+    group: "{{ user_number }}"
+    mode: 0750
+- name: "Fix permissions on home dir for user {{ user_name }}"
+  file:
+    path: "{{ home_remote }}"
+    owner: "{{ user_number }}"
+    group: "{{ user_number }}"
+    recurse: true
+- name: "Create .ssh dir for user {{ user_name }}"
+  file:
+    path: "{{ home_remote }}/.ssh"
+    state: directory
+    owner: "{{ user_number }}"
+    group: "{{ user_number }}"
+    mode: 0700
+- name: "Generate SSH keypair for user {{ user_name }}"
+  community.crypto.openssh_keypair:
+    path: "{{ home_remote }}/.ssh/id_rsa"
+    owner: "{{ user_number }}"
+    group: "{{ user_number }}"
+- name: "Add key to authorized_keys for user {{ user_name }}"
+  copy:
+    remote_src: true
+    src: "{{ home_remote }}/.ssh/id_rsa.pub"
+    dest: "{{ home_remote }}/.ssh/authorized_keys"
+    owner: "{{ user_number }}"
+    group: "{{ user_number }}"
+    mode: 0600

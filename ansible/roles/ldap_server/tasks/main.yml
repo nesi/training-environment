@@ -1,0 +1,88 @@
+---
+- name: Check mandatory variables are defined
+  assert:
+    that:
+      - ldap_admin_password is defined
+
+- name: Install LDAP server packages
+  apt:
+    name:
+      - slapd
+      - ldap-utils
+      - python3-ldap
+    state: present
+
+# debconf always shows passwords as having changes so do our own check
+- name: Check for ldap admin password change
+  copy:
+    dest: /etc/ldap/rootpw_configured
+    content: "{{ ldap_admin_password | checksum }}"
+    mode: 0600
+  notify: reconfigure slapd
+
+- name: Configure ldap-auth-config/rootbindpw
+  debconf:
+    name: ldap-auth-config
+    question: ldap-auth-config/rootbindpw
+    value: "{{ ldap_admin_password }}"
+    vtype: password
+  no_log: true
+  changed_when: false
+
+- name: Configure ldap-auth-config/ldapns/base-dn
+  debconf:
+    name: ldap-auth-config
+    question: ldap-auth-config/ldapns/base-dn
+    value: "{{ ldap_base_dn }}"
+    vtype: string
+  notify: reconfigure slapd
+
+- name: Configure ldap-auth-config/rootbinddn
+  debconf:
+    name: ldap-auth-config
+    question: ldap-auth-config/rootbinddn
+    value: "cn=admin,{{ ldap_base_dn }}"
+    vtype: string
+  notify: reconfigure slapd
+
+- name: Configure ldap-auth-config/ldapns/ldap-server
+  debconf:
+    name: ldap-auth-config
+    question: ldap-auth-config/ldapns/ldap-server
+    value: ldap://services-node.flexi.nesi
+    vtype: string
+  notify: reconfigure slapd
+
+- name: Configure slapd/password1
+  debconf:
+    name: slapd
+    question: slapd/password1
+    value: "{{ ldap_admin_password }}"
+    vtype: password
+  no_log: true
+  changed_when: false
+
+- name: Configure slapd/password2
+  debconf:
+    name: slapd
+    question: slapd/password2
+    value: "{{ ldap_admin_password }}"
+    vtype: password
+  no_log: true
+  changed_when: false
+
+- name: Configure flexi.nesi
+  debconf:
+    name: slapd
+    question: slapd/domain
+    value: "{{ ldap_domain }}"
+    vtype: string
+  notify: reconfigure slapd
+
+- name: Configure shared/organization
+  debconf:
+    name: slapd
+    question: shared/organization
+    value: "{{ ldap_domain }}"
+    vtype: string
+  notify: reconfigure slapd

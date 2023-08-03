@@ -1,0 +1,42 @@
+---
+- name: Install LDAP client packages
+  apt:
+    name:
+      - libpam-ldap
+      - ldap-utils
+      - nscd
+      - nslcd
+      - libnss-ldapd
+    state: present
+
+- name: Configure nslcd uri
+  lineinfile:
+    path: /etc/nslcd.conf
+    regexp: '^uri'
+    line: 'uri ldap://services-node.flexi.nesi/'
+  notify: restart nslcd
+
+- name: Configure basedn
+  lineinfile:
+    path: /etc/nslcd.conf
+    regexp: '^base'
+    line: 'base {{ ldap_base_dn }}'
+  notify: restart nslcd
+
+- name: Configure passwd in nsswitch.conf
+  lineinfile:
+    path: /etc/nsswitch.conf
+    regexp: '^passwd:'
+    line: 'passwd: files systemd ldap'
+
+- name: Configure group in nsswitch.conf
+  lineinfile:
+    path: /etc/nsswitch.conf
+    regexp: '^group:'
+    line: 'group: files systemd ldap'
+
+- name: Configure common-password
+  replace:
+    path: /etc/pam.d/common-password
+    regexp: '(use_authtok\s*)'
+    replace: ''

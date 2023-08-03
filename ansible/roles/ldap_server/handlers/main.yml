@@ -1,0 +1,3 @@
+---
+- name: reconfigure slapd
+  command: "sudo dpkg-reconfigure -f noninteractive slapd"

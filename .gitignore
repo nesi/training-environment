@@ -1,0 +1,6 @@
+.terraform.lock.hcl
+.terraform/*
+ansible/host.ini
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars

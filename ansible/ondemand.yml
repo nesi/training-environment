@@ -1,0 +1,74 @@
+---
+# create ssl cert
+- name: Create SSL certificate for ondemand
+  become: yes
+  hosts: web-node
+  tasks:
+    - name: Create directories for OpenSSL certificate
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+      loop:
+        - /etc/ssl/private
+        - /etc/ssl/crt
+        - /etc/ssl/csr
+    - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+      community.crypto.openssl_privatekey:
+        path: /etc/ssl/private/apache-ood.key
+    - name: Generate an OpenSSL Certificate Signing Request
+      community.crypto.openssl_csr:
+        path: /etc/ssl/csr/apache-ood.csr
+        privatekey_path: /etc/ssl/private/apache-ood.key
+        common_name: flexi.nesi
+    - name: Generate a Self Signed OpenSSL certificate
+      community.crypto.x509_certificate:
+        path: /etc/ssl/crt/apache-ood.crt
+        privatekey_path: /etc/ssl/private/apache-ood.key
+        csr_path: /etc/ssl/csr/apache-ood.csr
+        provider: selfsigned
+
+- name: Install Apptainer
+  become: yes
+  hosts: web-node
+  roles:
+    - apptainer
+
+# run ondemand role
+- name: Install ondemand
+  become: yes
+  hosts: web-node
+  vars_files:
+    - secrets.yml
+    - ondemand-config.yml
+  pre_tasks:
+    - name: Get keycloak client secret
+      community.general.keycloak_clientsecret_info:
+        client_id: ondemand.flexi
+        realm: ondemand
+        auth_client_id: admin-cli
+        auth_keycloak_url: https://ood-idp.flexi.nesi/auth
+        auth_realm: master
+        auth_username: admin
+        auth_password: "{{ keycloak_admin_password }}"
+        validate_certs: false
+      register: keycloak_secret
+      no_log: true
+    - name: Set keycloak client secret fact for ondemand
+      set_fact:
+        oidc_client_secret: "{{ keycloak_secret.clientsecret_info.value }}"
+      no_log: true
+  roles:
+    - osc.open_ondemand
+
+- name: Post ondemand setup
+  hosts: web-node
+  become: yes
+  tasks:
+    - name: Install dependencies for interactive apps
+      apt:
+        name:
+          - ncat
+          - websockify
+        state: present

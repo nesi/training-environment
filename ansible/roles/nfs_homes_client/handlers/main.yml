@@ -1,0 +1,3 @@
+---
+- name: fstab updated
+  command: mount -a

@@ -1,0 +1,28 @@
+---
+# add parent entries
+- name: Make sure we have a parent entry for users
+  community.general.ldap_entry:
+    dn: ou=people,dc=flexi,dc=nesi
+    objectClass: organizationalUnit
+    server_uri: ldap://services-node.flexi.nesi/
+    bind_dn: cn=admin,dc=flexi,dc=nesi
+    bind_pw: "{{ ldap_admin_password }}"
+
+- name: Make sure we have a parent entry for groups
+  community.general.ldap_entry:
+    dn: ou=groups,dc=flexi,dc=nesi
+    objectClass: organizationalUnit
+    server_uri: ldap://services-node.flexi.nesi/
+    bind_dn: cn=admin,dc=flexi,dc=nesi
+    bind_pw: "{{ ldap_admin_password }}"
+      
+# iterate here, creating users
+- name: Add users
+  include_tasks: add_user.yml
+  vars:
+    user_number: "{{ 2000 + item|int }}"
+    user_name: "training{{ item }}"
+    home_local: "{{ nfs_local_homes }}/training{{ item }}"
+    home_remote: "{{ nfs_remote_homes }}/training{{ item }}"
+    user_password: "{{ test_user_password }}"
+  with_sequence: start=1 end={{ num_users_create }}

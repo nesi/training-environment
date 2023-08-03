@@ -1,0 +1,22 @@
+<VirtualHost *:443>
+  ServerName {{ apache_keycloak_servername }}
+
+  ErrorLog  "/var/log/apache2/keycloak_error_ssl.log"
+  CustomLog "/var/log/apache2/keycloak_access_ssl.log" combined
+
+  ## SSL directives
+  SSLEngine on
+  SSLCertificateFile      "{{ apache_keycloak_certificate_path }}"
+  SSLCertificateKeyFile   "{{ apache_keycloak_private_key_path }}"
+
+  # Proxy rules
+  ProxyRequests Off
+  ProxyPreserveHost On
+  ProxyPass / http://localhost:8080/
+  ProxyPassReverse / http://localhost:8080/
+
+  ## Request header rules
+  ## as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+  RequestHeader set X-Forwarded-Proto "https"
+  RequestHeader set X-Forwarded-Port "443"
+</VirtualHost>

@@ -1,0 +1,81 @@
+---
+# authentication settings
+oidc_uri: "/oidc"
+oidc_settings_samefile: true
+oidc_provider_metadata_url: https://ood-idp.flexi.nesi/auth/realms/ondemand/.well-known/openid-configuration
+oidc_client_id: ondemand.flexi
+oidc_remote_user_claim: preferred_username
+oidc_scope: "openid profile email"
+oidc_session_inactivity_timeout: 28800
+oidc_session_max_duration: 28800
+oidc_cookie_same_site: "On"
+oidc_settings:
+  OIDCCryptoPassphrase: "CHANGEME"
+  OIDCSSLValidateServer: 'Off'
+  OIDCOAuthSSLValidateServer: 'Off'
+  OIDCPassClaimsAs: environment
+  OIDCStripCookies: mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1
+
+# ood portal config
+servername: ood.flexi.nesi
+ssl_cert: /etc/ssl/crt/apache-ood.crt
+ssl_cert_key: /etc/ssl/private/apache-ood.key
+ssl:
+- "SSLCertificateFile {{ ssl_cert }}"
+- "SSLCertificateKeyFile {{ ssl_cert_key }}"
+httpd_auth:
+  - 'AuthType openid-connect'
+  - 'Require valid-user'
+node_uri: '/node'
+rnode_uri: '/rnode'
+logout_redirect: '/oidc?logout=https%3A%2F%2Food.flexi.nesi'
+
+httpd_port: 443
+server_aliases:
+  - web-node.flexi.nesi
+
+# clusters config
+clusters:
+  local_linux_cluster: |
+    ---
+    v2:
+      metadata:
+        title: "Localhost Linux Cluster"
+      job:
+        adapter: "linux_host"
+        submit_host: "web-node.flexi.nesi"
+        ssh_hosts:
+          - web-node.flexi.nesi
+          - ood.flexi.nesi
+          - web-node
+          - localhost
+        site_timeout: 7200
+        debug: true
+        singularity_bin: /usr/bin/singularity
+        singularity_bindpath: /etc,/media,/mnt,/opt,/run,/srv,/usr,/var
+        singularity_image: /opt/ood/linuxhost_adapter/ubuntu_22.04.sif
+        strict_host_checking: false
+        tmux_bin: /usr/bin/tmux
+      batch_connect:
+        basic:
+          script_wrapper: |
+            %s
+        vnc:
+          script_wrapper: |
+            export PATH="/opt/TurboVNC/bin/:$PATH"
+            export WEBSOCKIFY_CMD="/usr/bin/websockify"
+            %s
+
+  test_local: |
+    ---
+    v2:
+      metadata:
+        title: "Test Localhost Cluster"
+      login:
+        host: "localhost"
+
+# apps config
+ood_install_apps:
+  jupyter_ml101:
+    repo: https://github.com/chrisdjscott/ood_ml101_test.git
+    version: main

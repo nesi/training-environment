@@ -1,0 +1,5 @@
+---
+nfs_remote_homes: /srv/homes
+nfs_local_homes: /home/shared
+ldap_base_dn: "dc=flexi,dc=nesi"
+num_users_create: 2

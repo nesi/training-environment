@@ -1,0 +1,9 @@
+user_name   = "FLEXIHPC_USER"
+tenant_name = "FLEXIHPC_PROJECT_NAME"
+auth_url    = "https://keystone.akl-1.cloud.nesi.org.nz/v3"
+region      = "akl-1"
+
+key_pair    = "FLEXIHPC_KEYPAIR_NAME"
+key_file    = "FLEXIHPC_KEYFILE"
+
+vm_user     = "ubuntu"

@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: python:3.10-bookworm
+
+%files
+    notebooks /opt/ML101/
+    requirements.txt /opt/ML101
+
+%post
+    which pip
+    pip install -r /opt/ML101/requirements.txt

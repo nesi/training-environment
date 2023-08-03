@@ -1,0 +1,184 @@
+---
+- name: Install dependencies for keycloak
+  apt:
+    name:
+      - openjdk-8-jdk
+    state: present
+- name: Download keycloak archive
+  ansible.builtin.get_url:
+    url: https://downloads.jboss.org/keycloak/9.0.0/keycloak-9.0.0.tar.gz
+    dest: /opt/keycloak-9.0.0.tar.gz
+    checksum: "sha256:3b2f050b166b07dfe54aff94b99649f290bd2ad834d844a71e0c1b1ea9add98c"
+- name: Extract keycloak archive
+  ansible.builtin.unarchive:
+    src: /opt/keycloak-9.0.0.tar.gz
+    dest: /opt
+    creates: /opt/keycloak-9.0.0
+    remote_src: yes
+- name: Create keycloak group
+  ansible.builtin.group:
+    name: keycloak
+    state: present
+    system: true
+- name: Create keycloak user
+  ansible.builtin.user:
+    name: keycloak
+    group: keycloak
+    create_home: true
+    home: /var/lib/keycloak
+    system: true
+    shell: /sbin/nologin
+    state: present
+- name: Set ownership of keycloak dir
+  file:
+    path: /opt/keycloak-9.0.0
+    owner: keycloak
+    group: keycloak
+    recurse: true
+- name: Restrict access to standalone
+  file:
+    path: /opt/keycloak-9.0.0/standalone
+    mode: 0700
+- name: Add keycloak admin user
+  command: "sudo -u keycloak /opt/keycloak-9.0.0/bin/add-user-keycloak.sh --user admin --password {{ keycloak_admin_password }} --realm master"
+  args:
+    creates: /opt/keycloak-9.0.0/.admin_user_added
+  register: create_keycloak_admin
+- file:
+    path: /opt/keycloak-9.0.0/.admin_user_added
+    state: touch
+  when: create_keycloak_admin is changed
+- name: Copy proxy config file
+  copy:
+    src: keycloak-proxy-config.cli
+    dest: /opt/keycloak-9.0.0/.keycloak-proxy-config.cli
+  register: keycloak_proxy_config
+- name: Allow proxying in keycloak
+  shell: "sudo -u keycloak /opt/keycloak-9.0.0/bin/jboss-cli.sh --file=/opt/keycloak-9.0.0/.keycloak-proxy-config.cli"
+  when: keycloak_proxy_config.changed
+- name: Copy keycloak system service file
+  copy:
+    src: keycloak.service
+    dest: /etc/systemd/system/keycloak.service
+    owner: root
+    group: root
+  register: keycloak_service_file
+- name: Restart keycloak service
+  systemd:
+    name: keycloak
+    daemon_reload: true
+    state: restarted
+    enabled: true
+  when: keycloak_service_file is changed
+- name: Keycloak service is running
+  systemd:
+    name: keycloak
+    enabled: true
+    state: started
+
+# setting up apache in front of keycloak
+- name: Install apache2
+  apt:
+    name:
+      - apache2
+    state: present
+- name: Create directories for OpenSSL certificate
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+  loop:
+    - "{{ apache_keycloak_certificate_path | dirname }}"
+    - "{{ apache_keycloak_private_key_path | dirname }}"
+    - "{{ apache_keycload_csr_path | dirname }}"
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  community.crypto.openssl_privatekey:
+    path: "{{ apache_keycloak_private_key_path }}"
+- name: Generate an OpenSSL Certificate Signing Request
+  community.crypto.openssl_csr:
+    path: "{{ apache_keycload_csr_path }}"
+    privatekey_path: "{{ apache_keycloak_private_key_path }}"
+    common_name: flexi.nesi
+- name: Generate a Self Signed OpenSSL certificate
+  community.crypto.x509_certificate:
+    path: "{{ apache_keycloak_certificate_path }}"
+    privatekey_path: "{{ apache_keycloak_private_key_path }}"
+    csr_path: "{{ apache_keycload_csr_path }}"
+    provider: selfsigned
+- name: Enable the Apache2 modules
+  community.general.apache2_module:
+    state: present
+    name: "{{ item }}"
+  notify: restart apache
+  loop:
+    - proxy_http
+    - ssl
+    - headers
+    - rewrite
+- name: Install apache keycloak config
+  template:
+    src: keycloak.conf.j2
+    dest: /etc/apache2/sites-available/keycloak.conf
+    owner: root
+    group: root
+  notify: restart apache
+- name: Enable apache keycloak site
+  command: a2ensite keycloak.conf
+  args:
+    creates: /etc/apache2/sites-enabled/keycloak.conf
+  notify: restart apache
+
+# configuring keycloak
+- name: Create ondemand Keycloak realm
+  community.general.keycloak_realm:
+    auth_client_id: admin-cli
+    auth_keycloak_url: http://127.0.0.1:8080/auth
+    auth_realm: master
+    auth_username: admin
+    auth_password: "{{ keycloak_admin_password }}"
+    id: ondemand
+    realm: ondemand
+    login_with_email_allowed: false
+    remember_me: true
+    enabled: true
+    state: present
+- name: Create LDAP user federation
+  community.general.keycloak_user_federation:
+    auth_client_id: admin-cli
+    auth_keycloak_url: http://127.0.0.1:8080/auth
+    auth_realm: master
+    auth_username: admin
+    auth_password: "{{ keycloak_admin_password }}"
+    realm: ondemand
+    name: my-ldap
+    state: present
+    provider_id: ldap
+    provider_type: org.keycloak.storage.UserStorageProvider
+    config:
+      importEnabled: false
+      editMode: READ_ONLY
+      vendor: other
+      userObjectClasses: posixAccount
+      connectionUrl: ldap://services-node.flexi.nesi
+      usersDn: ou=people,dc=flexi,dc=nesi
+      authType: none
+      useTruststoreSpi: never
+      usernameLDAPAttribute: uid
+      rdnLDAPAttribute: uid
+      uuidLDAPAttribute: entryUUID
+- name: Add ondemand as a client
+  community.general.keycloak_client:
+    auth_client_id: admin-cli
+    auth_keycloak_url: http://127.0.0.1:8080/auth
+    auth_realm: master
+    auth_username: admin
+    auth_password: "{{ keycloak_admin_password }}"
+    state: present
+    realm: ondemand
+    client_id: ondemand.flexi
+    protocol: openid-connect
+    public_client: false
+    redirect_uris:
+      - https://ood.flexi.nesi/oidc
+      - https://ood.flexi.nesi

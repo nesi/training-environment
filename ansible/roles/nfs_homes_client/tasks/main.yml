@@ -1,0 +1,16 @@
+---
+- name: Install nfs-common
+  apt:
+    name: nfs-common
+    state: present
+
+- name: Create nfs mount root
+  file:
+    path: "{{ nfs_local_homes }}"
+    state: directory
+
+- name: Add nfs fstab entry
+  lineinfile:
+    path: /etc/fstab
+    line: "services-node.flexi.nesi:{{ nfs_remote_homes }}        {{ nfs_local_homes }}    nfs4    bg      0       0"
+  notify: fstab updated

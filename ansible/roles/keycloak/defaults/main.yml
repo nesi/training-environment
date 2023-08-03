@@ -1,0 +1,5 @@
+---
+apache_keycloak_servername: ood-idp.flexi.nesi
+apache_keycloak_private_key_path: /etc/ssl/private/apache-keycloak.key
+apache_keycloak_certificate_path: /etc/ssl/crt/apache-keycloak.crt
+apache_keycload_csr_path: /etc/ssl/csr/apache-keycloak.csr
