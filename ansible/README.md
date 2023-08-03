@@ -58,6 +58,15 @@ You will need to modify your hosts file with the IP addresses from *host.ini*, o
 
 Connect via [https://ood.flexi.nesi](https://ood.flexi.nesi).
 
+## Apps
+
+There is currently one app installed, it should show up under "Interactive Apps" on the
+top bar as "ML101 JupyterLab".
+
+Note: it is not working correctly at this time. JupyterLab starts but the dashboard marks 
+the job as completed straight away, it isn't detecting that jupyterlab is running, although
+I can manually proxy to the lab app using the connection.yml settings.
+
 ## TODO
 
 - starting jupyter app doesn't work
