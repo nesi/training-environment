@@ -27,6 +27,7 @@ jobs:
         env:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
       - run: ls -l ~/.ssh
+      - run: whoami
       - run: chmod 400 $TF_VAR_key_file
       - name: Initialise terraform
         run: terraform init -input=false
