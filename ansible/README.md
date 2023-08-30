@@ -24,8 +24,7 @@ generated password, e.g. the output of `openssl rand -hex 40`.
 Run:
 
 ```
-ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key everything-except-ondemand.yml
-ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key ondemand.yml
+ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key setup-training-environment.yml
 ```
 
 By default 2 users will be created, `training1` and `training2`. Passwords for these users will be

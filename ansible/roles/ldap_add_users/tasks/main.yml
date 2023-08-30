@@ -24,5 +24,4 @@
     user_name: "training{{ item }}"
     home_local: "{{ nfs_local_homes }}/training{{ item }}"
     home_remote: "{{ nfs_remote_homes }}/training{{ item }}"
-    user_password: "{{ test_user_password }}"
   with_sequence: start=1 end={{ num_users_create }}

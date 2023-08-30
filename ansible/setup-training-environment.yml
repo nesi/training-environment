@@ -1,4 +1,95 @@
 ---
+- name: Set timezone
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Set timezone
+      community.general.timezone:
+        name: Pacific/Auckland
+
+- name: Upgrade systems
+  become: yes
+  hosts: servers
+  roles:
+    - upgrade_system
+
+- name: Set hostnames
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}.flexi.nesi"
+- name: Setup /etc/hosts
+  hosts: servers
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Add IP address of all hosts to all hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: '{{ hostvars[item]["ansible_default_ipv4"]["address"] }} {{ hostvars[item]["ansible_hostname"] }} {{ hostvars[item]["ansible_nodename"] }}'
+        state: present
+      with_items: "{{ groups['servers'] }}"
+    - name: setup hosts ood-idp
+      lineinfile:
+        dest: /etc/hosts
+        line: '{{ hostvars["services-node"]["ansible_default_ipv4"]["address"] }} ood-idp.flexi.nesi'
+        state: present
+    - name: setup hosts ood
+      lineinfile:
+        dest: /etc/hosts
+        line: '{{ hostvars["web-node"]["ansible_default_ipv4"]["address"] }} ood.flexi.nesi'
+        state: present
+
+- name: Setup LDAP server
+  become: yes
+  hosts: services-node
+  vars_files:
+    - secrets.yml
+  roles:
+    - ldap_server
+
+- name: Setup LDAP clients
+  become: yes
+  hosts: servers
+  vars_files:
+    - secrets.yml
+  roles:
+    - ldap_client
+
+- name: Setup NFS server
+  become: yes
+  hosts: services-node
+  vars_files:
+    - secrets.yml
+  roles:
+    - nfs_homes_server
+
+- name: Setup NFS clients
+  become: yes
+  hosts: servers
+  vars_files:
+    - secrets.yml
+  roles:
+    - nfs_homes_client
+
+- name: Add users
+  become: yes
+  hosts: services-node
+  vars_files:
+    - secrets.yml
+  roles:
+    - ldap_add_users
+
+- name: Setup keycloak
+  become: yes
+  hosts: services-node
+  vars_files:
+    - secrets.yml
+  roles:
+    - keycloak
+
 # create ssl cert
 - name: Create SSL certificate for ondemand
   become: yes

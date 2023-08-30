@@ -10,7 +10,7 @@ oidc_session_inactivity_timeout: 28800
 oidc_session_max_duration: 28800
 oidc_cookie_same_site: "On"
 oidc_settings:
-  OIDCCryptoPassphrase: "CHANGEME"
+  OIDCCryptoPassphrase: "CHANGEME_OIDC_CRYPTO_PASSPHRASE"
   OIDCSSLValidateServer: 'Off'
   OIDCOAuthSSLValidateServer: 'Off'
   OIDCPassClaimsAs: environment

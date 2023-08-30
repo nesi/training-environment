@@ -91,6 +91,7 @@ locals {
 resource "local_file" "host_ini" {
   filename = "ansible/host.ini"
   content  = local.host_ini_content
+  file_permission = "0644"
 }
 
 resource "null_resource" "wait_for_nodes" {
@@ -103,11 +104,21 @@ resource "null_resource" "wait_for_nodes" {
 }
 
 # Run ansible playbook
+#resource "null_resource" "run_ansible_playbook" {
+#  depends_on = [local_file.host_ini, null_resource.wait_for_nodes]
+#
+#  provisioner "local-exec" {
+#    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ansible/host.ini ansible/ping_test.yml -u ${var.vm_user} --key-file '${var.key_file}'"
+#    working_dir = path.module
+#  }
+#}
+
+# Run ansible playbook
 resource "null_resource" "run_ansible_playbook" {
   depends_on = [local_file.host_ini, null_resource.wait_for_nodes]
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ansible/host.ini ansible/ping_test.yml -u ${var.vm_user} --key-file '${var.key_file}'"
-    working_dir = path.module
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i host.ini setup-training-environment.yml -u ${var.vm_user} --key-file '${var.key_file}'"
+    working_dir = "ansible"
   }
 }

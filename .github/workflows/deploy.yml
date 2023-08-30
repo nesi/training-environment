@@ -33,6 +33,25 @@ jobs:
       - run: echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
       - run: echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
       - run: echo "GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME"
+      - name: Write ansible secrets file
+        run: |
+          cp secrets.yml.example secrets.yml
+          sed -i'' "s/CHANGEME_KEYCLOAK_ADMIN_PASSWORD/$KEYCLOAK_ADMIN_PASSWORD/" secrets.yml
+          sed -i'' "s/CHANGEME_LDAP_ADMIN_PASSWORD/$LDAP_ADMIN_PASSWORD/" secrets.yml
+        working-directory: ansible/vars
+        env:
+          KEYCLOAK_ADMIN_PASSWORD: '${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}'
+          LDAP_ADMIN_PASSWORD: '${{ secrets.LDAP_ADMIN_PASSWORD }}'
+      - name: Write ansible ondemand config file
+        run: |
+          cp ondemand-config.yml.example ondemand-config.yml
+          sed -i'' "s/CHANGEME_OIDC_CRYPTO_PASSPHRASE/$OIDC_CRYPTO_PASSPHRASE/" ondemand-config.yml
+        working-directory: ansible/vars
+        env:
+          OIDC_CRYPTO_PASSPHRASE: '${{ secrets.OIDC_CRYPTO_PASSPHRASE }}'
+      - name: Install ansible dependencies
+        run: ansible-galaxy install -r requirements.yml
+        working-directory: ansible
       - name: Switch terraform workspace
         run: terraform workspace select -or-create=true ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
       - name: Terraform plan
@@ -43,5 +62,3 @@ jobs:
         run: terraform plan -input=false
       - name: Terraform apply
         run: terraform apply -input=false -auto-approve
-#      - name: Write ansible secrets file
-
