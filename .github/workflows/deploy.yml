@@ -34,6 +34,12 @@ jobs:
       - run: echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
       - run: echo "GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME"
       - name: Switch workspace
-        run: terraform workspace select -or-create=true $GITHUB_REF_NAME
+        run: terraform workspace select -or-create=true ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
       - name: Plan
         run: terraform plan -input=false
+      - name: Destroy first (?)
+        run: terraform apply -destroy -input=false -auto-approve
+      - name: Plan
+        run: terraform plan -input=false
+      - name: Apply
+        run: terraform apply -input=false -auto-approve
