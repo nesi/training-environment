@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
       - run: mkdir -p ~/.ssh
-      - run: printf "${PRIVATE_KEY_CONTENT}" > ~/.ssh/my_ci_private_key
+      - run: printf -- "${PRIVATE_KEY_CONTENT}" > $TF_VAR_key_file
         shell: bash
         env:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
