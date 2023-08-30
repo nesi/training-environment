@@ -18,7 +18,7 @@ Copy ondemand config:
 cp vars/ondemand-config.yml.example vars/ondemand-config.yml
 ```
 
-and edit, in particular set `odic_settings.OIDCCryptoPassphrase` with a randomly
+and edit, in particular set `oidc_settings.OIDCCryptoPassphrase` with a randomly
 generated password, e.g. the output of `openssl rand -hex 40`.
 
 Run:

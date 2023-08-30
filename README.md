@@ -1,5 +1,7 @@
 # flexi training environment
 
+**Work in progress**
+
 This repo sets up a training environment using Open OnDemand within the FlexiHPC platform using Terraform and Ansible.
 
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and
