@@ -17,12 +17,12 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       TF_VAR_key_pair: ${{ secrets.KEY_PAIR_NAME }}
-      TF_VAR_key_file: ~/.my_ci_private_key
+      TF_VAR_key_file: ~/.ssh/my_ci_private_key
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
-      - name: Setup key file
-        run: printf "${PRIVATE_KEY_CONTENT}" > $TF_VAR_key_file
+      - run: mkdir -p ~/.ssh
+      - run: printf "${PRIVATE_KEY_CONTENT}" > $TF_VAR_key_file
         shell: bash
         env:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
