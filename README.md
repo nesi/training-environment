@@ -2,7 +2,8 @@
 
 This repo sets up a training environment using Open OnDemand within the FlexiHPC platform using Terraform and Ansible.
 
-[Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html) and [Ansible](https://www.ansible.com/) need to be installed on your system to run this.
+[Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and
+[Ansible](https://www.ansible.com/) need to be installed on your system to run this.
 
 First copy the config file:
 
@@ -13,24 +14,29 @@ cp terraform.tfvars.example terraform.tfvars
 Inside the `terraform.tfvars` file is some user configuration required.
 
 ```
-user_name   = "FLEXIHPC_USER"
-tenant_name = "FLEXIHPC_PROJECT_NAME"
-auth_url    = "https://keystone.akl-1.cloud.nesi.org.nz/v3"
-region      = "akl-1"
-
 key_pair    = "FLEXIHPC_KEYPAIR_NAME"
 key_file    = "FLEXIHPC_KEYFILE"
 
 vm_user     = "ubuntu"
 ```
 
-`FLEXIHPC_USER` is set to your username for the FlexiHPC Platform
+where
 
-`FLEXIHPC_PROJECT_NAME` is the project name
+- `FLEXIHPC_KEYPAIR_NAME` is your `Key Pair` name that is setup in FlexiHPC
+- `FLEXIHPC_KEYFILE` is the local location for your ssh key
+- *vm_user* can usually be left the same unless you change to a different image
 
-`FLEXIHPC_KEYPAIR_NAME` is your `Key Pair` name that is setup in FlexiHPC
+Set environment variables for authenticating with OpenStack using environment variables, e.g.
 
-`FLEXIHPC_KEYFILE` is the local location for your ssh key
+```
+export OS_USERNAME="FLEXIHPC_USER"
+export OS_PASSWORD="FLEXIHPC_PASSWORD"
+```
+
+where
+
+- `FLEXIHPC_USER` is set to your username for the FlexiHPC Platform
+- `FLEXIHPC_PASSWORD` is set to your password for the FlexiHPC Platform
 
 ## Create the environment
 
