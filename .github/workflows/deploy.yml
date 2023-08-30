@@ -43,5 +43,5 @@ jobs:
         run: terraform plan -input=false
       - name: Terraform apply
         run: terraform apply -input=false -auto-approve
-      - name: Write ansible secrets file
+#      - name: Write ansible secrets file
 
