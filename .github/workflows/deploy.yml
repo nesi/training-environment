@@ -28,11 +28,11 @@ jobs:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
       - name: Initialise terraform
         run: terraform init -input=false
-      - run: echo "GITHUB_REF: $GITHUB_REF"
-      - run: echo "GITHUB_REF_NAME: $GITHUB_REF_NAME"
-      - run: echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
-      - run: echo "GITHUB_BASE_REF: $GITHUB_BASE_REF"
-      - run: echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+      - run: echo "GITHUB_REF = $GITHUB_REF"
+      - run: echo "GITHUB_REF_NAME = $GITHUB_REF_NAME"
+      - run: echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
+      - run: echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
+      - run: echo "GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME"
       - name: Switch workspace
         run: terraform workspace select -or-create=true $GITHUB_REF_NAME
       - name: Plan
