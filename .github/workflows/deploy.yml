@@ -23,7 +23,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
       - run: mkdir -p ~/.ssh
       - run: python --version
-      - run: python -c "import os; open(os.path.expanduser(os.environ['TV_VAR_key_file']), 'w').write(os.environ['PRIVATE_KEY_CONTENT'])"
+      - run: python -c "import os; open(os.path.expanduser(os.environ['TF_VAR_key_file']), 'w').write(os.environ['PRIVATE_KEY_CONTENT'])"
         env:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
       - name: Initialise terraform
