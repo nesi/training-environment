@@ -1,22 +1,16 @@
-variable "user_name" {
-  description = "FlexiHPC username"
-}
-
 variable "tenant_name" {
   description = "FlexiHPC project Name"
+  default = "NeSI-Training-Test"
 }
 
-variable "password" {
-  description = "FlexiHPC password"
-  type        = string
-  sensitive   = true
-}
 variable "auth_url" {
   description = "FlexiHPC authentication URL"
+  default = "https://keystone.akl-1.cloud.nesi.org.nz/v3"
 }
 
 variable "region" {
   description = "FlexiHPC region"
+  default = "akl-1"
 }
 
 variable "instance_count" {
@@ -64,4 +58,5 @@ variable "webnode_image_id" {
 
 variable "vm_user" {
   description = "FlexiHPC VM user"
+  default = "ubuntu"
 }

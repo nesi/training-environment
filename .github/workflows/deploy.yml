@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+# TODO: also for pull requests into main
+# TODO: add dev branch too?
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      OS_APPLICATION_CREDENTIAL_ID: ${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}
+      OS_APPLICATION_CREDENTIAL_NAME: ${{ secrets.OS_APPLICATION_CREDENTIAL_NAME }}
+      OS_APPLICATION_CREDENTIAL_SECRET: ${{ secrets.OS_APPLICATION_CREDENTIAL_SECRET }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      TF_VAR_key_pair: ${{ secrets.KEY_PAIR_NAME }}
+      TF_VAR_key_file: ~/.my_ci_private_key
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - name: Setup key file
+        run: printf "${PRIVATE_KEY_CONTENT}" > $TF_VAR_key_file
+        shell: bash
+        env:
+          PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
+      - name: Initialise terraform
+        run: terraform init -input=false
+      - name: Switch workspace
+        run: terraform workspace select -or-create=true $GITHUB_REF
+      - name: Plan
+        run: terraform plan -input=false
