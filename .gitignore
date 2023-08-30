@@ -4,3 +4,4 @@ ansible/host.ini
 terraform.tfstate
 terraform.tfstate.backup
 terraform.tfvars
+env.sh

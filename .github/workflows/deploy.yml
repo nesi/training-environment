@@ -18,28 +18,30 @@ jobs:
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       TF_VAR_key_pair: ${{ secrets.KEY_PAIR_NAME }}
       TF_VAR_key_file: my_ci_private_key
+      TF_VAR_extra_public_keys: '${{ vars.EXTRA_PUBLIC_KEYS }}'
     steps:
       - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
       - run: python --version
       - run: python -c "import os; open(os.environ['TF_VAR_key_file'], 'w').write(os.environ['PRIVATE_KEY_CONTENT'])"
         env:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
       - run: chmod 400 ${TF_VAR_key_file}
-      - name: Initialise terraform
+      - name: Terraform initialise
         run: terraform init -input=false
       - run: echo "GITHUB_REF = $GITHUB_REF"
       - run: echo "GITHUB_REF_NAME = $GITHUB_REF_NAME"
       - run: echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
       - run: echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
       - run: echo "GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME"
-      - name: Switch workspace
+      - name: Switch terraform workspace
         run: terraform workspace select -or-create=true ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
-      - name: Plan
+      - name: Terraform plan
         run: terraform plan -input=false
-      - name: Destroy first (?)
+      - name: Terraform destroy first (?)
         run: terraform apply -destroy -input=false -auto-approve
-      - name: Plan
+      - name: Terraform plan
         run: terraform plan -input=false
-      - name: Apply
+      - name: Terraform apply
         run: terraform apply -input=false -auto-approve
+      - name: Write ansible secrets file
+
