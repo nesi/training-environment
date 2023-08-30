@@ -17,19 +17,19 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       TF_VAR_key_pair: ${{ secrets.KEY_PAIR_NAME }}
-      TF_VAR_key_file: ~/.ssh/my_ci_private_key
+      TF_VAR_key_file: my_ci_private_key
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
-      - run: mkdir -p ~/.ssh
       - run: python --version
-      - run: python -c "import os; open(os.path.expanduser(os.environ['TF_VAR_key_file']), 'w').write(os.environ['PRIVATE_KEY_CONTENT'])"
+      - run: python -c "import os; open(os.environ['TF_VAR_key_file'], 'w').write(os.environ['PRIVATE_KEY_CONTENT']).flush()"
         env:
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
-      - run: ls -l ~/.ssh
+      - run: ls -l
       - run: ls -l $TF_VAR_key_file
       - run: whoami
       - run: python -c "from pathlib import Path; import os; Path(os.environ['TF_VAR_key_file']).expanduser().chmod(0o400)"
+      - run: chmod 400 ${TF_VAR_key_file}
       - run: ls -l $TF_VAR_key_file
       - name: Initialise terraform
         run: terraform init -input=false
