@@ -2,3 +2,4 @@
 vars/secrets.yml
 users/password*
 vars/ondemand-config.yml
+pubkeys/*.pub
