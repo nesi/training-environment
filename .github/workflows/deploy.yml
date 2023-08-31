@@ -26,6 +26,8 @@ jobs:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
       - run: chmod 400 ${TF_VAR_key_file}
+        env:
+          TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
       - name: Terraform initialise
         run: terraform init -input=false
         env:
