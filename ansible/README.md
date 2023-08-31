@@ -39,7 +39,7 @@ More users can be added by overriding the `num_users_create` variable, e.g.
 
 ```
 ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key \
-    --extra-vars "num_users_create=5" everything-except-ondemand.yml
+    --extra-vars "num_users_create=5" setup-training-environment.yml
 ```
 
 You will need to modify your hosts file with the IP addresses from *host.ini*, on Linux this file is
