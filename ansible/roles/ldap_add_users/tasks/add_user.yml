@@ -40,7 +40,7 @@
       gidNumber: "{{ user_number }}"
       homeDirectory: "{{ home_local }}"
       userPassword: "{{ user_pw.stdout }}"
-    server_uri: ldap://services-node.flexi.nesi/
+    server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
 - name: "Add group for user {{ user_name }}"
@@ -51,7 +51,7 @@
     attributes:
       gidNumber: "{{ user_number }}"
       memberUid: "{{ user_name }}"
-    server_uri: ldap://services-node.flexi.nesi/
+    server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
 # create home and add ssh keys

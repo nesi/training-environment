@@ -32,7 +32,7 @@ logout_redirect: '/oidc?logout=https%3A%2F%2Food.flexi.nesi'
 
 httpd_port: 443
 server_aliases:
-  - web-node.flexi.nesi
+  - webnode.flexi.nesi
 
 # clusters config
 clusters:
@@ -43,12 +43,10 @@ clusters:
         title: "Localhost Linux Cluster"
       job:
         adapter: "linux_host"
-        submit_host: "web-node.flexi.nesi"
+        submit_host: "webnode.flexi.nesi"
         ssh_hosts:
-          - web-node.flexi.nesi
-          - ood.flexi.nesi
-          - web-node
-          - localhost
+          - webnode.flexi.nesi
+          - webnode
         site_timeout: 7200
         debug: true
         singularity_bin: /usr/bin/singularity
@@ -56,15 +54,6 @@ clusters:
         singularity_image: /opt/ood/linuxhost_adapter/ubuntu_22.04.sif
         strict_host_checking: false
         tmux_bin: /usr/bin/tmux
-      batch_connect:
-        basic:
-          script_wrapper: |
-            %s
-        vnc:
-          script_wrapper: |
-            export PATH="/opt/TurboVNC/bin/:$PATH"
-            export WEBSOCKIFY_CMD="/usr/bin/websockify"
-            %s
 
   test_local: |
     ---

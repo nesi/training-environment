@@ -4,7 +4,7 @@
   community.general.ldap_entry:
     dn: ou=people,dc=flexi,dc=nesi
     objectClass: organizationalUnit
-    server_uri: ldap://services-node.flexi.nesi/
+    server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: cn=admin,dc=flexi,dc=nesi
     bind_pw: "{{ ldap_admin_password }}"
 
@@ -12,7 +12,7 @@
   community.general.ldap_entry:
     dn: ou=groups,dc=flexi,dc=nesi
     objectClass: organizationalUnit
-    server_uri: ldap://services-node.flexi.nesi/
+    server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: cn=admin,dc=flexi,dc=nesi
     bind_pw: "{{ ldap_admin_password }}"
       

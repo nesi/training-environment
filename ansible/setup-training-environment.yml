@@ -34,12 +34,12 @@
     - name: setup hosts ood-idp
       lineinfile:
         dest: /etc/hosts
-        line: '{{ hostvars["services-node"]["ansible_default_ipv4"]["address"] }} ood-idp.flexi.nesi'
+        line: '{{ hostvars["servicesnode"]["ansible_default_ipv4"]["address"] }} ood-idp.flexi.nesi'
         state: present
     - name: setup hosts ood
       lineinfile:
         dest: /etc/hosts
-        line: '{{ hostvars["web-node"]["ansible_default_ipv4"]["address"] }} ood.flexi.nesi'
+        line: '{{ hostvars["webnode"]["ansible_default_ipv4"]["address"] }} ood.flexi.nesi'
         state: present
 
 - name: Exchange SSH keys between servers
@@ -67,7 +67,7 @@
 
 - name: Setup LDAP server
   become: yes
-  hosts: services-node
+  hosts: servicesnode
   vars_files:
     - secrets.yml
   roles:
@@ -83,7 +83,7 @@
 
 - name: Setup NFS server
   become: yes
-  hosts: services-node
+  hosts: servicesnode
   vars_files:
     - secrets.yml
   roles:
@@ -99,7 +99,7 @@
 
 - name: Add users
   become: yes
-  hosts: services-node
+  hosts: servicesnode
   vars_files:
     - secrets.yml
   roles:
@@ -107,7 +107,7 @@
 
 - name: Setup keycloak
   become: yes
-  hosts: services-node
+  hosts: servicesnode
   vars_files:
     - secrets.yml
   roles:
@@ -116,7 +116,7 @@
 # create ssl cert
 - name: Create SSL certificate for ondemand
   become: yes
-  hosts: web-node
+  hosts: webnode
   tasks:
     - name: Create directories for OpenSSL certificate
       file:
@@ -145,14 +145,14 @@
 
 - name: Install Apptainer
   become: yes
-  hosts: web-node
+  hosts: webnode
   roles:
     - apptainer
 
 # run ondemand role
 - name: Install ondemand
   become: yes
-  hosts: web-node
+  hosts: webnode
   vars_files:
     - secrets.yml
     - ondemand-config.yml
@@ -177,7 +177,7 @@
     - osc.open_ondemand
 
 - name: Post ondemand setup
-  hosts: web-node
+  hosts: webnode
   become: yes
   tasks:
     - name: Install dependencies for interactive apps

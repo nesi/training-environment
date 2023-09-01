@@ -49,7 +49,7 @@
   debconf:
     name: ldap-auth-config
     question: ldap-auth-config/ldapns/ldap-server
-    value: ldap://services-node.flexi.nesi
+    value: ldap://servicesnode.flexi.nesi
     vtype: string
   notify: reconfigure slapd
 

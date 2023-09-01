@@ -48,10 +48,10 @@ You will need to modify your hosts file with the IP addresses from *host.ini*, o
 ```
 # /etc/hosts snippet
 
-# this one should be the IP for web-node from host.ini
+# this one should be the IP for webnode from host.ini
 1.2.3.4 ood.flexi.nesi
 
-# this one should be the IP for services-node from host.ini
+# this one should be the IP for servicesnode from host.ini
 5.6.7.8 ood-idp.flexi.nesi
 ```
 

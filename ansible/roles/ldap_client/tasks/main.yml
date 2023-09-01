@@ -13,7 +13,7 @@
   lineinfile:
     path: /etc/nslcd.conf
     regexp: '^uri'
-    line: 'uri ldap://services-node.flexi.nesi/'
+    line: 'uri ldap://servicesnode.flexi.nesi/'
   notify: restart nslcd
 
 - name: Configure basedn

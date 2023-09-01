@@ -160,7 +160,7 @@
       editMode: READ_ONLY
       vendor: other
       userObjectClasses: posixAccount
-      connectionUrl: ldap://services-node.flexi.nesi
+      connectionUrl: ldap://servicesnode.flexi.nesi
       usersDn: ou=people,dc=flexi,dc=nesi
       authType: none
       useTruststoreSpi: never
