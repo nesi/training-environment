@@ -79,3 +79,4 @@ jobs:
         run: ansible-playbook -i host.ini -u $TF_VAR_vm_user --key-file $TF_VAR_key_file setup-training-environment.yml
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+          ANSIBLE_HOST_KEY_CHECKING: "False"
