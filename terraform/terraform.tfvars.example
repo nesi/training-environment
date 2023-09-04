@@ -1,5 +1,4 @@
 key_pair    = "FLEXIHPC_KEYPAIR_NAME"
 key_file    = "/path/to/flexi/private_key"
 
-k8s_vm_prefix       = "k8s"
 k8s_security_groups = ["Kahus-IP-Allow", "SSH Allow All", "default"] 
