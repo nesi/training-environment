@@ -1,0 +1,19 @@
+- hosts: localhost
+  tasks:
+  - name: Provision infrastructure using Terraform
+    terraform:
+      project_path: "../terraform"
+      state: present
+      force_init: yes
+      init_reconfigure: yes
+    register: terraform_provision
+    when: (operation == "create")
+
+  - name: Destroy resources
+    terraform:
+      project_path: "../terraform"
+      state: absent
+      force_init: yes
+      init_reconfigure: yes
+    when: (operation == "destroy")
+    register: destroy

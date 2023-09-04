@@ -1,7 +1,7 @@
-.terraform.lock.hcl
-.terraform/*
+terraform/.terraform.lock.hcl
+terraform/.terraform/*
 ansible/host.ini
-terraform.tfstate
-terraform.tfstate.backup
-terraform.tfvars
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/terraform.tfvars
 env.sh

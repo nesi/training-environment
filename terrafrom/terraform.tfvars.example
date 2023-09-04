@@ -1,0 +1,2 @@
+key_pair    = "FLEXIHPC_KEYPAIR_NAME"
+key_file    = "/path/to/flexi/private_key"
