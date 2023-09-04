@@ -7,23 +7,18 @@ This repo sets up a training environment using Open OnDemand within the FlexiHPC
 
 ## Configure terraform
 
-First copy the config file:
+Set some variables via environment variables:
 
 ```
-cp terraform/terraform.tfvars.example terraform/terraform.tfvars
-```
-
-Inside the `terraform/terraform.tfvars` file is some user configuration required.
-
-```
-key_pair    = "FLEXIHPC_KEYPAIR_NAME"
-key_file    = "/path/to/flexi/private_key"
+export TF_VAR_key_pair="FLEXIHPC_KEYPAIR_NAME"
+export TF_VAR_key_file="/path/to/flexi/private_key"
+export TF_VAR_vm_user="ubuntu"
 ```
 
 where
 
 - `FLEXIHPC_KEYPAIR_NAME` is your `Key Pair` name that is setup in FlexiHPC
-- `FLEXIHPC_KEYFILE` is the local location for your ssh key
+- `/path/to/flexi/private_key` is the local path to the private key
 
 Set environment variables for authenticating with OpenStack and object store (for the state file), e.g.
 
