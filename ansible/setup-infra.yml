@@ -1,4 +1,6 @@
 - hosts: localhost
+  vars:
+    terraform_workspace: default
   tasks:
   - name: Provision infrastructure using Terraform
     terraform:
@@ -6,6 +8,7 @@
       state: present
       force_init: yes
       init_reconfigure: yes
+      workspace: "{{ terraform_workspace }}"
     register: terraform_provision
     when: (operation == "create")
 
@@ -15,5 +18,6 @@
       state: absent
       force_init: yes
       init_reconfigure: yes
+      workspace: "{{ terraform_workspace }}"
     when: (operation == "destroy")
     register: destroy
