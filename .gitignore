@@ -1,7 +1,14 @@
 terraform/.terraform.lock.hcl
 terraform/.terraform/*
-ansible/host.ini
+host.ini
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/terraform.tfvars
 env.sh
+.terraform
+.terraform.lock.hcl
+*.zip
+vars/secrets.yml
+users/password*
+vars/ondemand-config.yml
+pubkeys/*.pub

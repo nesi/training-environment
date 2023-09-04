@@ -1,9 +1,11 @@
+#!/bin/bash -e
+
 case $1 in
 "destroy")
-    ansible-playbook setup-infra.yml -e operation=destroy
+    ansible-playbook setup-infra.yml -e operation=destroy -e terraform_workspace=${2:-default}
     ;;
 "create")
-    ansible-playbook ./ansible/setup-infra.yml -e operation=create
-    ansible-playbook -i ./ansible/host.ini ./ansible/setup-training-environment.yml -u ${var.vm_user} --key-file '${var.key_file}'
+    ansible-playbook setup-infra.yml -e operation=create -e terraform_workspace=${2:-default}
+    ansible-playbook -i host.ini setup-training-environment.yml -u ${var.vm_user} --key-file '${var.key_file}'
     ;;
 esac

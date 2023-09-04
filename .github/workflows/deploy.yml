@@ -18,10 +18,12 @@ jobs:
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       TF_VAR_key_pair: ${{ secrets.KEY_PAIR_NAME }}
       TF_VAR_extra_public_keys: '${{ vars.EXTRA_PUBLIC_KEYS }}'
+      TF_VAR_vm_user: ubuntu
     steps:
       - uses: actions/checkout@v3
       - run: python --version
-      - run: |
+      - name: Write private key file
+        run: |
           import os
           with open(os.environ['TF_VAR_key_file'], 'w') as fh:
             fh.write(os.environ['PRIVATE_KEY_CONTENT'])
@@ -30,10 +32,6 @@ jobs:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
           PRIVATE_KEY_CONTENT: ${{ secrets.PRIVATE_KEY_CONTENT }}
       - run: chmod 400 ${TF_VAR_key_file}
-        env:
-          TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      - name: Terraform initialise
-        run: terraform init -input=false
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
       - run: echo "GITHUB_REF = $GITHUB_REF"
@@ -46,7 +44,7 @@ jobs:
           cp secrets.yml.example secrets.yml
           sed -i'' "s/CHANGEME_KEYCLOAK_ADMIN_PASSWORD/$KEYCLOAK_ADMIN_PASSWORD/" secrets.yml
           sed -i'' "s/CHANGEME_LDAP_ADMIN_PASSWORD/$LDAP_ADMIN_PASSWORD/" secrets.yml
-        working-directory: ansible/vars
+        working-directory: vars
         env:
           KEYCLOAK_ADMIN_PASSWORD: '${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}'
           LDAP_ADMIN_PASSWORD: '${{ secrets.LDAP_ADMIN_PASSWORD }}'
@@ -54,29 +52,30 @@ jobs:
         run: |
           cp ondemand-config.yml.example ondemand-config.yml
           sed -i'' "s/CHANGEME_OIDC_CRYPTO_PASSPHRASE/$OIDC_CRYPTO_PASSPHRASE/" ondemand-config.yml
-        working-directory: ansible/vars
+        working-directory: vars
         env:
           OIDC_CRYPTO_PASSPHRASE: '${{ secrets.OIDC_CRYPTO_PASSPHRASE }}'
       - name: Install ansible dependencies
         run: ansible-galaxy install -r requirements.yml
-        working-directory: ansible
-      - name: Switch terraform workspace
+      - name: Terraform initialise
+        run: terraform init -input=false
+        env:
+          TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+        working-directory: terraform
+      - name: Switch terraform workspace (making sure it exists)
         run: terraform workspace select -or-create=true ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      - name: Terraform plan
-        run: terraform plan -input=false
+        working-directory: terraform
+      - name: Destroy the environment first
+        run: ansible-playbook setup-infra.yml -e operation=destroy -e terraform_workspace=${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      - name: Terraform destroy first (?)
-        run: terraform apply -destroy -input=false -auto-approve
+      - name: Create the environment
+        run: ansible-playbook setup-infra.yml -e operation=create -e terraform_workspace=${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      - name: Terraform plan
-        run: terraform plan -input=false
-        env:
-          TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      - name: Terraform apply
-        run: terraform apply -input=false -auto-approve
+      - name: Configure the environment
+        run: ansible-playbook -i host.ini -u $TF_VAR_vm_user --key-file $TF_VAR_key_file setup-training-environment.yml
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"

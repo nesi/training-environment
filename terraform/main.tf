@@ -89,7 +89,7 @@ locals {
 }
 
 resource "local_file" "host_ini" {
-  filename = "../ansible/host.ini"
+  filename = "../host.ini"
   content  = local.host_ini_content
   file_permission = "0644"
 }
