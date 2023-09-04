@@ -15,12 +15,10 @@ variable "region" {
 
 variable "key_pair" {
   description = "FlexiHPC SSH Key Pair name"
-  default = "kahus-key"
 }
 
 variable "key_file" {
   description = "Path to local SSH private key associated with Flexi key_pair, used for provisioning"
-  default = "~/.ssh/id_flexi"
 }
 
 variable "services_flavor_id" {
@@ -70,7 +68,7 @@ variable "k8s_image_id" {
 
 variable "k8s_security_groups" {
   description = "A list of security groups to add to the K8 VM's"
-  default     = ["Kahus-IP-Allow", "SSH Allow All", "default"] 
+  default     = ["6443_Allow_ALL", "SSH Allow All", "default"] 
 }
 
 variable "vm_user" {
