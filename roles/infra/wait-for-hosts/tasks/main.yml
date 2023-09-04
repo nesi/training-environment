@@ -1,0 +1,14 @@
+---
+- name: Wait for nodes to become accessible
+  wait_for_connection:
+    # Wait for 10 mins for host to become available
+    timeout: 30
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ hostvars[item]['ansible_host'] }}"
+    ansible_user: "ubuntu"
+    ansible_ssh_private_key_file: "~/.ssh/id_flexi"
+    ansible_python_interpreter: auto_legacy
+    ansible_ssh_common_args: "{{ hostvars[item]['ansible_ssh_common_args'] }}"
+  with_items:
+    - "{{ groups['all'] }}"

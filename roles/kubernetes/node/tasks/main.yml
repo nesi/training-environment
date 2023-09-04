@@ -1,0 +1,50 @@
+---
+- name: Install nfs-common
+  apt:
+    name: nfs-common
+    state: present
+    force: yes
+
+- name: Check if kubeadm has already run
+  stat:
+    path: "/var/lib/kubelet/config.yaml"
+    get_attributes: no
+    get_checksum: no
+    get_mime: no
+  register: kubeadm_already_run
+
+- name: Create kubeadm token for joining nodes with 24h expiration (default)
+  command: >-
+    kubeadm token create
+  register: temp_token
+  delegate_to: "{{ groups['kube_control_plane'][0] }}"
+  when:
+    - kubeadm_token is not defined
+    - not kubeadm_already_run.stat.exists
+  changed_when: false
+
+- name: Set kubeadm_token to generated token
+  set_fact:
+    kubeadm_token: "{{ temp_token.stdout }}"
+  when:
+    - kubeadm_token is not defined
+    - not kubeadm_already_run.stat.exists
+
+- name: Create kubeadm client config
+  template:
+    src: "kubeadm-client.conf.j2"
+    dest: "{{ kube_config_dir }}/kubeadm-client.conf"
+    backup: yes
+    mode: 0640
+  when:
+    - not is_kube_master
+    - not kubeadm_already_run.stat.exists
+
+- name: Join to cluster with ignores
+  command: >-
+    kubeadm join
+    --config {{ kube_config_dir }}/kubeadm-client.conf
+    --ignore-preflight-errors=all
+  when:
+    - not is_kube_master
+    - not kubeadm_already_run.stat.exists
