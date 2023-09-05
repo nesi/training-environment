@@ -42,12 +42,6 @@
     owner: root
     group: root
     mode: '600'
-- name: Keycloak proxy configuration
-  lineinfile:
-    path: /opt/keycloak-22.0.1/conf/keycloak.conf
-    line: proxy=edge
-    owner: keycloak
-    group: keycloak
 - name: Copy keycloak system service file
   copy:
     src: keycloak.service
@@ -55,6 +49,7 @@
     owner: root
     group: root
   register: keycloak_service_file
+  notify: restart apache
 - name: Restart keycloak service
   systemd:
     name: keycloak
