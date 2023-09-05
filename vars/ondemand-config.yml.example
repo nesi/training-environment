@@ -2,7 +2,7 @@
 # authentication settings
 oidc_uri: "/oidc"
 oidc_settings_samefile: true
-oidc_provider_metadata_url: https://ood-idp.flexi.nesi/auth/realms/ondemand/.well-known/openid-configuration
+oidc_provider_metadata_url: https://ood-idp.flexi.nesi/realms/ondemand/.well-known/openid-configuration
 oidc_client_id: ondemand.flexi
 oidc_remote_user_claim: preferred_username
 oidc_scope: "openid profile email"
