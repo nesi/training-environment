@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - main
-# TODO: also for pull requests into main
-# TODO: add dev branch too?
 
 jobs:
   deploy:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     runs-on: ubuntu-22.04
     env:
       OS_APPLICATION_CREDENTIAL_ID: ${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}
