@@ -1,0 +1,32 @@
+---
+- name: Web Node | Setting OOD enabled boolean to {{ ood_enabled }}
+  set_fact:
+    enable_openondemand: "{{ ood_enabled }}"
+
+- name: Web Node | Bootstrapping OnDemand Web node
+  block:
+    - name: Web Node | Get ondemand serviceaccount token
+      shell: >-
+        kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
+      become: true
+      register: ondemand_token
+
+    - name: Web Node | Get {{ cluster_name }} kube-root-ca.crt data
+      shell: >-
+        kubectl --kubeconfig ~/{{ cluster_name }}.kubeconfig get cm kube-root-ca.crt \
+        -n kube-system -o jsonpath="{['data']['ca\.crt']}"
+      become: true
+      register: kube_root_ca
+  when:
+    - "enable_openondemand|default(false)|bool == true"
+  become: true
+
+# kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
+
+# kubectl --kubeconfig ~/training-ml101.kubeconfig get cm kube-root-ca.crt -n kube-system -o jsonpath="{['data']['ca\.crt']}"
+# /etc/pki/tls/certs/k8s-cluster.crt
+
+# kubectl config set-cluster kubernetes --server=https://$CONTROLLER:6443 --certificate-authority=$CACERT
+# kubectl config set-credentials ondemand@kubernetes --token=$TOKEN
+# kubectl config set-context ondemand@kubernetes --cluster=kubernetes --user=ondemand@kubernetes
+# kubectl config use-context ondemand@kubernetes

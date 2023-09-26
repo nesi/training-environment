@@ -1,4 +1,9 @@
 ---
+- name: CLI Install | Ensure clusterctl is installed
+  stat:
+    path: "{{ bin_dir }}/clusterctl"
+  register: clusterctl_binary
+
 - name: CLI Install | Download clusterctl to specified location {{ bin_dir }}
   get_url:
     url: "{{ clusterctl_repo }}"
@@ -6,6 +11,8 @@
     mode: 0755
     force: true
   become: true
+  when:
+    - not clusterctl_binary.stat.exists
 
 - name: CLI Install | Installation has been finished
   debug:

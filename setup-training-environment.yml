@@ -32,9 +32,10 @@
   become_user: root
   any_errors_fatal: "true"
   roles:
+    - { role: kubectl }
     - { role: cluster-ctl/cli-install }
     - { role: capi-cluster/workload }
-    - { role: openondemand-k8s }
+    - { role: openondemand-k8s/kuberenetes }
 
 - name: Setup /etc/hosts
   hosts: servers
@@ -195,10 +196,13 @@
 - name: Post ondemand setup
   hosts: webnode
   become: yes
-  tasks:
+  pre_tasks:
     - name: Install dependencies for interactive apps
       apt:
         name:
           - ncat
           - websockify
         state: present
+  roles:
+    - { role: kubectl }
+    - { role: openondemand-k8s/web-node }

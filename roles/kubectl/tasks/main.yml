@@ -1,0 +1,15 @@
+---
+- name: Kubectl | Ensure Kubectl is installed
+  stat:
+    path: "{{ bin_dir }}/kubectl"
+  register: kubectl_binary
+
+- name: Kubectl | Download kubectl to specified location {{ bin_dir }}
+  get_url:
+    url: "{{ kubectl_url }}"
+    dest: "{{ bin_dir }}/kubectl"
+    mode: 0755
+    force: true
+  become: true
+  when:
+    - not kubectl_binary.stat.exists

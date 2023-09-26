@@ -1,0 +1,5 @@
+---
+bin_dir: /usr/local/bin
+
+kubectl_version: v1.28.2
+kubectl_url: https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
