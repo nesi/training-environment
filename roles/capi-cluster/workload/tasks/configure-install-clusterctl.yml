@@ -1,0 +1,93 @@
+---
+- name: Workload | Setting OIDC auth boolean to {{ kube_oidc_auth }}
+  set_fact:
+    enable_oidc_auth: "{{ kube_oidc_auth }}"
+
+- name: Workload | Create OIDC clusterctl template
+  template:
+    src: "cluster-template-oidc.yml.j2"
+    dest: "/tmp/cluster-template.yml"
+    mode: 0640
+  when:
+    - "enable_oidc_auth|default(false)|bool == true"
+
+- name: Workload | Create clusterctl template
+  template:
+    src: "cluster-template.yml.j2"
+    dest: "/tmp/cluster-template.yml"
+    mode: 0640
+  when:
+    - "enable_oidc_auth|default(false)|bool == false"
+
+- name: Workload | Copy create_base64_ca_cert.sh
+  copy:
+    src: "files/create_base64_ca_cert.sh"
+    dest: "/tmp/create_base64_ca_cert.sh"
+    mode: 0770
+
+- name: Workload | Run create_base64_ca_cert for {{ cluster_name }}
+  shell: >-
+    /tmp/create_base64_ca_cert.sh \
+    {{ clouds_yaml_location }} openstack
+  become: true
+  register: base64_ca_cert
+
+- name: Workload | Copy create_base64_yaml.sh
+  copy:
+    src: "files/create_base64_yaml.sh"
+    dest: "/tmp/create_base64_yaml.sh"
+    mode: 0770
+
+- name: Workload | Run create_base64_yaml for {{ cluster_name }}
+  shell: >-
+    /tmp/create_base64_yaml.sh \
+    {{ clouds_yaml_location }} openstack
+  become: true
+  register: base64_cloud_yaml
+
+- name: Workload | Create clusterctl config
+  template:
+    src: "openstack-cluster-config.yml.j2"
+    dest: "/tmp/{{ cluster_name }}-openstack-cluster-config.yml"
+    mode: 0640
+
+- name: Workload | Generate clusterctl yaml for {{ cluster_name }}
+  shell: >-
+    clusterctl generate cluster {{ cluster_name }} \
+    --config /tmp/{{ cluster_name }}-openstack-cluster-config.yml \
+    --from /tmp/cluster-template.yml > /tmp/{{ cluster_name }}.yml
+  become: true
+
+- name: Workload | Init {{ cluster_name }} clusterctl yaml 
+  shell: >-
+    kubectl apply -f /tmp/{{ cluster_name }}.yml
+  become: true
+
+- name: Workload | Wait for {{ cluster_name }} control plane to return true
+  shell: >-
+    kubectl get kubeadmcontrolplane | grep {{ cluster_name }} | grep -c true
+  register: result
+  until: result.stdout == "1"
+  retries: 10
+  delay: 30
+  become: true
+
+- name: Workload | Get {{ cluster_name }} cluster kubeconfig yaml 
+  shell: >-
+    kubectl get secret -n {{ cluster_namespace }} {{ cluster_name }}-kubeconfig 
+    -o jsonpath='{.data.value}'|base64 -d > /tmp/{{ cluster_name }}.kubeconfig
+  become: true
+
+- name: Workload | Check for {{ cluster_name }} calico-kube nodes
+  shell: >-
+    kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig get pods -A | grep -c calico-kube
+  register: calico_kube_pods
+  become: true
+  ignore_errors: true
+
+- name: Workload | Install CNI for {{ cluster_name }}
+  shell: >-
+    kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+  become: true
+  when:
+    - calico_kube_pods.stdout != "1"

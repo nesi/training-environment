@@ -1,0 +1,21 @@
+---
+- name: OpenOnDemand K8s | Setting OOD enabled boolean to {{ ood_enabled }}
+  set_fact:
+    enable_openondemand: "{{ ood_enabled }}"
+
+- name: OpenOnDemand K8s | Bootstrapping kubernetes cluster for OOD
+  block:
+    - name: OpenOnDemand K8s | Create ondemand-bootstrap.yml
+      copy:
+        src: "files/ondemand-bootstrap.yml"
+        dest: "/tmp/ondemand-bootstrap.yml"
+        mode: 0644
+
+    - name: OpenOnDemand K8s | Generate clouds.yaml secret
+      shell: >-
+        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
+        -f /tmp/ondemand-bootstrap.yml
+      become: true
+  when:
+    - "enable_openondemand|default(false)|bool == true"
+  become: true

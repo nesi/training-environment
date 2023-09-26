@@ -1,0 +1,12 @@
+---
+- name: CLI Install | Download clusterctl to specified location {{ bin_dir }}
+  get_url:
+    url: "{{ clusterctl_repo }}"
+    dest: "{{ bin_dir }}/clusterctl"
+    mode: 0755
+    force: true
+  become: true
+
+- name: CLI Install | Installation has been finished
+  debug:
+    msg: "Installation of clusterctl version {{ clusterctl_version }} has been finished!"

@@ -1,0 +1,6 @@
+---
+bin_dir: /usr/local/bin
+
+ood_enabled: true
+
+cluster_name: capi-cluster

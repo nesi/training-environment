@@ -1,4 +1,2 @@
-key_pair    = "FLEXIHPC_KEYPAIR_NAME"
-key_file    = "/path/to/flexi/private_key"
-
-k8s_security_groups = ["6443_Allow_ALL", "SSH Allow All", "default"] 
+key_pair    = "NeSI_RDC_KEYPAIR_NAME"
+key_file    = "/path/to/nesi-rdc/private_key"

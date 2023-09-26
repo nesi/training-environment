@@ -41,36 +41,6 @@ variable "webnode_image_id" {
   default     = "a5c9b7b2-e77b-4094-99ac-db0cf5181da5" 
 }
 
-variable "control_plane_instance_count" {
-  description = "Number of compute instances to create as control planes"
-  default     = 1
-}
-
-variable "control_plane_flavor_id" {
-  description = "FlexiHPC Flavor ID, Defaults to devtest1.1cpu1ram"
-  default     = "ee55c523-9803-4296-91be-1c34e986baaa" 
-}
-
-variable "worker_instance_count" {
-  description = "Number of compute instances to create as workers"
-  default     = 1
-}
-
-variable "worker_flavor_id" {
-  description = "FlexiHPC Flavor ID for workers, Defaults to devtest1.1cpu1ram"
-  default     = "ee55c523-9803-4296-91be-1c34e986baaa" 
-}
-
-variable "k8s_image_id" {
-  description = "FlexiHPC Image ID, Defaults to Ubuntu-Jammy-22.04"
-  default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd" 
-}
-
-variable "k8s_security_groups" {
-  description = "A list of security groups to add to the K8 VM's"
-  default     = ["6443_Allow_ALL", "SSH Allow All", "default"] 
-}
-
 variable "vm_user" {
   description = "FlexiHPC VM user"
   default = "ubuntu"

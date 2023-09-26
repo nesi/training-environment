@@ -2,7 +2,7 @@
 - name: Wait for Kubernetes Nodes
   hosts: localhost
   gather_facts: False
-  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  any_errors_fatal: "true"
   roles:
     - { role: infra/wait-for-hosts }
 
@@ -28,30 +28,13 @@
       ansible.builtin.hostname:
         name: "{{ inventory_hostname }}.flexi.nesi"
 
-- name: Install Kubernetes nodes
-  hosts: k8s_cluster
-  gather_facts: False
-  become: true
-  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+- hosts: localhost
+  become_user: root
+  any_errors_fatal: "true"
   roles:
-    - { role: container-engine/docker }
-    - { role: kubernetes/kubernetes-defaults }
-
-- name: Install the control plane
-  hosts: kube_control_plane
-  gather_facts: False
-  become: true
-  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
-  roles:
-    - { role: kubernetes/control-plane }
-
-- name: Configure and join the workers
-  hosts: kube_node
-  gather_facts: False
-  become: true
-  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
-  roles:
-    - { role: kubernetes/node }
+    - { role: cluster-ctl/cli-install }
+    - { role: capi-cluster/workload }
+    - { role: openondemand-k8s }
 
 - name: Setup /etc/hosts
   hosts: servers

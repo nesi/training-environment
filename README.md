@@ -1,6 +1,6 @@
 # flexi training environment
 
-This repo sets up a training environment using Open OnDemand within the FlexiHPC platform using Terraform and Ansible.
+This repo sets up a training environment using Open OnDemand within the NeSI RDC platform using Terraform and Ansible.
 
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and
 [Ansible](https://www.ansible.com/) need to be installed on your system to run this.
@@ -16,28 +16,28 @@ cp terraform/terraform.tfvars.example terraform/terraform.tfvars
 Inside the `terraform/terraform.tfvars` file is some user configuration required.
 
 ```
-key_pair    = "FLEXIHPC_KEYPAIR_NAME"
-key_file    = "/path/to/flexi/private_key"
+key_pair    = "NeSI_RDC_KEYPAIR_NAME"
+key_file    = "/path/to/nesi-rdc/private_key"
 ```
 
 where
 
-- `FLEXIHPC_KEYPAIR_NAME` is your `Key Pair` name that is setup in FlexiHPC
-- `FLEXIHPC_KEYFILE` is the local location for your ssh key
+- `NeSI_RDC_KEYPAIR_NAME` is your `Key Pair` name that is setup in NeSI RDC
+- `NeSI_RDC_KEYFILE` is the local location for your ssh key
 
 Set environment variables for authenticating with OpenStack and object store (for the state file), e.g.
 
 ```
-export OS_USERNAME="FLEXIHPC_USER"
-export OS_PASSWORD="FLEXIHPC_PASSWORD"
+export OS_USERNAME="NeSI_RDC_USER"
+export OS_PASSWORD="NeSI_RDC_PASSWORD"
 export AWS_ACCESS_KEY_ID="EC2_User_Access_Token"
 export AWS_SECRET_KEY="EC2_User_Secret_Token"
 ```
 
 where
 
-- `FLEXIHPC_USER` is set to your username for the FlexiHPC Platform
-- `FLEXIHPC_PASSWORD` is set to your password for the FlexiHPC Platform
+- `NeSI_RDC_USER` is set to your username for the NeSI RDC Platform
+- `NeSI_RDC_PASSWORD` is set to your password for the NeSI RDC Platform
 - `EC2_User_Access_Token` is set to your EC2 access token
 - `EC2_User_Secret_Token` is set to your EC2 secret token
 
@@ -69,6 +69,12 @@ cp vars/ondemand-config.yml.example vars/ondemand-config.yml
 
 and edit, in particular set `oidc_settings.OIDCCryptoPassphrase` with a randomly
 generated password, e.g. the output of `openssl rand -hex 40`.
+
+`clouds.yaml`
+
+You will need to ensure you have downloaded the `clouds.yaml` from the NeSI RDC dashboard and placed it in `~/.config/openstack/clouds.yaml`
+
+It is recommended that you use `Application Credentials` rather then your own credentials.
 
 ## Note about terraform workspaces
 

@@ -1,0 +1,56 @@
+---
+- name: Workload | Ensure clouds.yaml file exists locally
+  delegate_to: localhost
+  stat:
+    path: "{{ clouds_yaml_local_location }}"
+  register: clouds_yaml_local_file
+
+- name: Workload | Copy local clouds.yaml to remote
+  copy:
+    src: "{{ clouds_yaml_local_location }}"
+    dest: "{{ clouds_yaml_location }}"
+    mode: 0640  
+
+- name: Workload | Ensure clouds.yaml file exists remotely
+  stat:
+    path: "{{ clouds_yaml_location }}"
+  register: clouds_yaml_file
+  when: clouds_yaml_local_file.stat.exists
+
+- name: Workload | Ensure yq is installed in {{ bin_dir }}
+  stat:
+    path: "{{ bin_dir }}/yq"
+  register: yq_binary
+
+- name: Workload | Download yq to specified location {{ bin_dir }}
+  get_url:
+    url: "{{ yq_repo }}"
+    dest: "{{ bin_dir }}/yq"
+    mode: 0755
+    force: true
+  become: true
+  when:
+    - not yq_binary.stat.exists
+
+- name: Workload | Create and initialize clusterctl and cloud manager
+  block:
+    - name: Workload | Read clouds.yaml
+      slurp:
+        src: "{{ clouds_yaml_location }}"
+      register: file_content
+
+    - name: Workload | Decode the base64 encoded version of the YAML file and assign it to a variable
+      set_fact:
+        file_contents: "{{ file_content['content'] | b64decode | from_yaml }}"
+
+    - name: Workload | Create and initialize clusterctl
+      include_tasks: configure-install-clusterctl.yml
+
+    - name: Workload | Create and initialize cloud manager
+      include_tasks: install-cloud-manager.yml
+  when:
+    - clouds_yaml_file.stat.exists
+    - clouds_yaml_local_file.stat.exists
+  become: true
+
+

@@ -1,0 +1,47 @@
+---
+- name: Workload | Check for cloud-config secret in {{ cluster_name }}
+  shell: >-
+    kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig get secrets -A | grep -c cloud-config
+  register: cloud_config_secret
+  become: true
+  ignore_errors: true
+
+- name: Workload | Install and configure Openstack cloud controller
+  block:
+    - name: Workload | Create create_cloud_conf.sh
+      copy:
+        src: "files/create_cloud_conf.sh"
+        dest: "/tmp/create_cloud_conf.sh"
+        mode: 0770
+
+    - name: Workload | Prep clouds.yaml for kube secret
+      shell: >-
+        /tmp/create_cloud_conf.sh {{ clouds_yaml_location }} openstack > /tmp/cloud.conf
+      become: true
+
+    - name: Workload | Generate clouds.yaml secret
+      shell: >-
+        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig create secret \
+        -n kube-system generic cloud-config --from-file /tmp/cloud.conf
+      become: true
+
+    - name: Workload | Install cloud-controller-manager-roles.yaml
+      shell: >-
+        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
+        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/master/manifests/controller-manager/cloud-controller-manager-roles.yaml
+      become: true
+
+    - name: Workload | Install cloud-controller-manager-role-bindings.yaml
+      shell: >-
+        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
+        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/master/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
+      become: true
+
+    - name: Workload | Install openstack-cloud-controller-manager-ds.yaml
+      shell: >-
+        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
+        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/master/manifests/controller-manager/openstack-cloud-controller-manager-ds.yaml
+      become: true
+  when:
+    - cloud_config_secret.stdout != "1"
+  become: true

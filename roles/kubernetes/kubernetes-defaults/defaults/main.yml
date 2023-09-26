@@ -1,3 +1,0 @@
-## Change this to use another Kubernetes version, e.g. a current beta release
-apt_kube_version: 1.23.0-00
-kube_version: v1.23.4
