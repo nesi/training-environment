@@ -5,28 +5,17 @@
 
 - name: Web Node | Bootstrapping OnDemand Web node
   block:
-    - name: Web Node | Get ondemand serviceaccount token
-      shell: >-
-        kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
-      become: true
-      register: ondemand_token
+    - name: Web Node | Bootstrapping ondemand k8s
+      include_tasks: bootstrap-ondemand-k8s.yml
 
-    - name: Web Node | Get {{ cluster_name }} kube-root-ca.crt data
-      shell: >-
-        kubectl --kubeconfig ~/{{ cluster_name }}.kubeconfig get cm kube-root-ca.crt \
-        -n kube-system -o jsonpath="{['data']['ca\.crt']}"
-      become: true
-      register: kube_root_ca
+    - name: Web Node | Setting pod reaper enabled boolean to {{ use_job_pod_reaper }}
+      set_fact:
+        enable_pod_reaper: "{{ use_job_pod_reaper }}"
+
+    - name: Web Node | Install pod reaper
+      include_tasks: job-pod-reaper.yml
+      when:
+        - "enable_pod_reaper|default(false)|bool == true"
   when:
     - "enable_openondemand|default(false)|bool == true"
   become: true
-
-# kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
-
-# kubectl --kubeconfig ~/training-ml101.kubeconfig get cm kube-root-ca.crt -n kube-system -o jsonpath="{['data']['ca\.crt']}"
-# /etc/pki/tls/certs/k8s-cluster.crt
-
-# kubectl config set-cluster kubernetes --server=https://$CONTROLLER:6443 --certificate-authority=$CACERT
-# kubectl config set-credentials ondemand@kubernetes --token=$TOKEN
-# kubectl config set-context ondemand@kubernetes --cluster=kubernetes --user=ondemand@kubernetes
-# kubectl config use-context ondemand@kubernetes

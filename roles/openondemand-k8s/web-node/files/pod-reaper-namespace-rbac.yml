@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: job-pod-reaper
+  labels:
+    app.kubernetes.io/name: job-pod-reaper
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-pod-reaper
+  namespace: job-pod-reaper
+  labels:
+    app.kubernetes.io/name: job-pod-reaper
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: job-pod-reaper
+  namespace: job-pod-reaper
+  labels:
+    app.kubernetes.io/name: job-pod-reaper
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - configmaps
+  - secrets
+  verbs:
+  - list
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: job-pod-reaper-list-namespaces
+  namespace: job-pod-reaper
+  labels:
+    app.kubernetes.io/name: job-pod-reaper
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: job-pod-reaper-list-namespaces
+  namespace: job-pod-reaper
+  labels:
+    app.kubernetes.io/name: job-pod-reaper
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: job-pod-reaper-list-namespaces
+subjects:
+- kind: ServiceAccount
+  name: job-pod-reaper
+  namespace: job-pod-reaper

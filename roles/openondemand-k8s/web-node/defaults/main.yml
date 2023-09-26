@@ -5,5 +5,20 @@ ood_enabled: true
 
 cluster_name: capi-cluster
 
+kube_root_ca_location: /etc/pki/tls/certs/k8s-cluster.crt
+
 kubectl_version: v1.28.2
 kubectl_url: https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
+
+ood_config_dir: /etc/ood/config
+ood_hooks_dir: /opt/nesi/hooks
+ood_cluster_config_dir: "{{ ood_config_dir }}/clusters.d"
+
+use_job_pod_reaper: false
+network_policy_allow_cidr: 0.0.0.0/0
+k8s_namespace_prefix: "user-"
+
+kube_oidc_url: https://ood-idp.training.data.nesi.org.nz/realms/ondemand
+kube_oidc_client_id: kubernetes
+kube_oidc_client_secret_id: secret
+kube_oidc_username_prefix: "-"

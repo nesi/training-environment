@@ -1,0 +1,26 @@
+# /etc/ood/config/clusters.d/my_k8s_cluster.yml
+---
+v2:
+  metadata:
+    title: "Kubernetes"
+  job:
+    adapter: "kubernetes"
+    bin: "{{ bin_dir }}kubectl"
+    all_namespaces: false
+    cluster: "kubernetes"
+    context: "kubernetes"
+    namespace_prefix: "{{ k8s_namespace_prefix }}"
+    auto_supplemental_groups: false
+    server:
+      endpoint: "https://{{ kube_controller_url }}"
+      cert_authority_file: "{{ kube_root_ca_location }}"
+    mounts: []
+    auth:
+      type: "oidc"
+  batch_connect:
+    ssh_allow: false
+    basic:
+      script_wrapper: |
+        module purge
+        %s
+      set_host: "host=$(hostname -A | awk '{print $1}')"

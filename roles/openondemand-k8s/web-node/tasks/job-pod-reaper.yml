@@ -1,0 +1,27 @@
+---
+- name: Web Node | Copy pod-reaper-namespace-rbac.yml
+  copy:
+    src: "files/pod-reaper-namespace-rbac.yml"
+    dest: "/tmp/pod-reaper-namespace-rbac.yml"
+    mode: 0644
+
+- name: Web Node | Copy pod-reaper-deployment.yml
+  copy:
+    src: "files/pod-reaper-deployment.yml"
+    dest: "/tmp/pod-reaper-deployment.yml"
+    mode: 0644
+
+- name: Web Node | kubectl apply pod-reaper-namespace-rbac.yml
+  shell: >-
+    kubectl apply -f /tmp/pod-reaper-namespace-rbac.yml
+  become: true
+
+- name: Web Node | kubectl apply pod-reaper-deployment.yml
+  shell: >-
+    kubectl apply -f /tmp/pod-reaper-deployment.yml
+  become: true
+
+
+# kubectl apply -f https://github.com/OSC/job-pod-reaper/releases/latest/download/namespace-rbac.yaml
+
+# kubectl apply -f https://github.com/OSC/job-pod-reaper/releases/latest/download/ondemand-deployment.yaml

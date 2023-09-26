@@ -1,0 +1,97 @@
+---
+- name: Web Node | Get ondemand serviceaccount token
+  shell: >-
+    kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
+  become: true
+  register: ondemand_token
+
+- name: Web Node | Get {{ cluster_name }} kube-root-ca.crt data
+  shell: >-
+    kubectl --kubeconfig ~/{{ cluster_name }}.kubeconfig get cm kube-root-ca.crt \
+    -n kube-system -o jsonpath="{['data']['ca\.crt']}"
+  become: true
+  register: kube_root_ca
+
+- name: Web Node | Get {{ cluster_name }} endpoint URL
+  shell: >-
+    kubectl --kubeconfig ~/training-ml101.kubeconfig cluster-info \
+    | grep 'control plane' | awk -F 'https://' '{print $2}'
+  become: true
+  register: kube_controller_url
+
+- name: Web Node | Install kubernetes ca cert
+  copy:
+    content: "{{ kube_root_ca.stdout }}"
+    dest: "{{ kube_root_ca_location }}"
+
+- name: Web Node | kubectl config set-cluster kubernetes
+  shell: >-
+    kubectl config set-cluster kubernetes --server=https://{{ kube_controller_url.stdout }} \
+    --certificate-authority={{ kube_root_ca_location }}
+  become: true
+
+- name: Web Node | kubectl config set-credentials
+  shell: >-
+    kubectl config set-credentials ondemand@kubernetes \
+    --token={{ ondemand_token }}
+  become: true
+
+- name: Web Node | kubectl config set-context
+  shell: >-
+    kubectl config set-context ondemand@kubernetes --cluster=kubernetes \
+    --user=ondemand@kubernetes
+  become: true
+
+- name: Web Node | kubectl config use-context
+  shell: >-
+    kubectl config use-context ondemand@kubernetes
+  become: true
+
+- name: Web Node | Create cluster config
+  template:
+    src: "cluster-config.yml.j2"
+    dest: "{{ ood_cluster_config_dir }}/{{ cluster_name }}-cluster.yml"
+    mode: 0640
+
+- name: Web Node | Creating folder {{ ood_hooks_dir }}/k8s-bootstrap if it does not exist
+  file:
+    path: "{{ ood_hooks_dir }}/k8s-bootstrap"
+    state: directory
+    mode: 0755
+
+- name: Web Node | Create hook.env
+  template:
+    src: "hook.env.j2"
+    dest: "{{ ood_config_dir }}/hook.env"
+    mode: 0644
+
+- name: Web Node | Create ood_pun_prehook.sh
+  template:
+    src: "ood_pun_prehook.sh.j2"
+    dest: "{{ ood_cluster_config_dir }}/ood_pun_prehook.sh"
+    mode: 0755
+
+- name: Web Node | Create k8s-bootstrap-ondemand.sh
+  copy:
+    src: "files/k8s-bootstrap-ondemand.sh"
+    dest: "{{ ood_hooks_dir }}/k8s-bootstrap/k8s-bootstrap-ondemand.sh"
+    mode: 0770
+
+- name: Web Node | Create set-k8s-creds.sh
+  copy:
+    src: "files/set-k8s-creds.sh"
+    dest: "{{ ood_hooks_dir }}/k8s-bootstrap/set-k8s-creds.sh"
+    mode: 0770
+
+
+# kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
+
+# kubectl --kubeconfig ~/training-ml101.kubeconfig get cm kube-root-ca.crt -n kube-system -o jsonpath="{['data']['ca\.crt']}"
+# /etc/pki/tls/certs/k8s-cluster.crt
+
+# kubectl --kubeconfig ~/training-ml101.kubeconfig cluster-info | grep 'control plane' | awk -F 'https://' '{print $2}'
+
+# kubectl config set-cluster kubernetes --server=https://$CONTROLLER:6443 --certificate-authority=$CACERT
+# kubectl config set-credentials ondemand@kubernetes --token=$TOKEN
+# kubectl config set-context ondemand@kubernetes --cluster=kubernetes --user=ondemand@kubernetes
+# kubectl config use-context ondemand@kubernetes
