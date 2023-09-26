@@ -5,6 +5,8 @@ This repo sets up a training environment using Open OnDemand within the NeSI RDC
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and
 [Ansible](https://www.ansible.com/) need to be installed on your system to run this.
 
+This setup also requires [Kubernetes Cluster API](https://cluster-api.sigs.k8s.io/) to be running within your NeSI RDC project. To bootstrap one we have the following repo to get you started [NeSI RDC CAPI Bootstrap](https://github.com/nesi/nesi.rdc.kind-bootstrap-capi)
+
 ## Configure terraform
 
 First copy the config file:
@@ -75,6 +77,8 @@ generated password, e.g. the output of `openssl rand -hex 40`.
 You will need to ensure you have downloaded the `clouds.yaml` from the NeSI RDC dashboard and placed it in `~/.config/openstack/clouds.yaml`
 
 It is recommended that you use `Application Credentials` rather then your own credentials.
+
+You will also need the kube config from the CAPI cluster to so you can create k8s clusters, this should reside within `~/.kube/config`, if running as root then under `/root/.kube/config`
 
 ## Note about terraform workspaces
 
