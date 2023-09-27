@@ -14,7 +14,7 @@
 
 - name: Web Node | Get {{ cluster_name }} endpoint URL
   shell: >-
-    kubectl --kubeconfig ~/training-ml101.kubeconfig cluster-info \
+    kubectl --kubeconfig ~/{{ cluster_name }}.kubeconfig cluster-info \
     | grep 'control plane' | awk -F 'https://' '{print $2}'
   become: true
   register: kube_controller_url
