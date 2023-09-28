@@ -134,7 +134,7 @@ ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key \
 ```
 
 You will need to modify your hosts file with the IP addresses from *host.ini*, on Linux this file is
-*/etc/hosts*, on Windows it is XXXX.
+*/etc/hosts*, on Windows it is *C:\Windows\System32\drivers\etc\hosts*.
 
 ```
 # /etc/hosts snippet

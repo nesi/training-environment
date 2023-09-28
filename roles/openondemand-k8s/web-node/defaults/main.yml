@@ -11,8 +11,11 @@ kubectl_version: v1.28.2
 kubectl_url: https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
 
 ood_config_dir: /etc/ood/config
-ood_hooks_dir: "{{ ood_config_dir }}/hooks"
 ood_cluster_config_dir: "{{ ood_config_dir }}/clusters.d"
+
+ood_hooks_dir: "/opt/ood-hooks"
+ood_k8s_hooks_dir: "{{ ood_hooks_dir }}/k8s-bootstrap"
+ood_k8s_yaml_dir: "{{ ood_k8s_hooks_dir }}/yaml"
 
 use_job_pod_reaper: false
 network_policy_allow_cidr: 0.0.0.0/0

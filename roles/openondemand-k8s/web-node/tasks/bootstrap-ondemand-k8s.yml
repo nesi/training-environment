@@ -32,6 +32,10 @@
   become: true
   register: kube_controller_url
 
+- name: Web Node | Strip color from controller URL
+  set_fact:
+    kube_controller_url_stripped: "{{ kube_controller_url.stdout | replace('\u001b[0m','') }}"
+
 - name: Web Node | Creating {{ kube_root_ca_location }} if it does not exist
   file:
     path: "{{ kube_root_ca_location }}"
@@ -45,7 +49,7 @@
 
 - name: Web Node | kubectl config set-cluster kubernetes
   shell: >-
-    kubectl config set-cluster kubernetes --server=https://{{ kube_controller_url.stdout }} \
+    kubectl config set-cluster kubernetes --server=https://{{ kube_controller_url_stripped }} \
     --certificate-authority={{ kube_root_ca_location }}/k8s-cluster.crt
   become: true
 
@@ -72,36 +76,61 @@
     dest: "{{ ood_cluster_config_dir }}/{{ cluster_name }}-cluster.yml"
     mode: 0640
 
-- name: Web Node | Creating folder {{ ood_hooks_dir }}/k8s-bootstrap if it does not exist
-  file:
-    path: "{{ ood_hooks_dir }}/k8s-bootstrap"
-    state: directory
-    mode: 0755
-
 - name: Web Node | Create hook.env
   template:
     src: "hook.env.j2"
     dest: "{{ ood_config_dir }}/hook.env"
     mode: 0644
 
-- name: Web Node | Create ood_pun_prehook.sh
+- name: Web Node | Creating folder {{ ood_hooks_dir }}/k8s-bootstrap if it does not exist
+  file:
+    path: "{{ ood_hooks_dir }}/k8s-bootstrap"
+    state: directory
+    mode: 0770
+
+- name: Web Node | Create ood_pun_prehook
   template:
-    src: "ood_pun_prehook.sh.j2"
-    dest: "{{ ood_cluster_config_dir }}/ood_pun_prehook.sh"
-    mode: 0755
+    src: "ood_pun_prehook.j2"
+    dest: "{{ ood_hooks_dir }}/ood_pun_prehook"
+    mode: 0770
 
 - name: Web Node | Create k8s-bootstrap-ondemand.sh
   copy:
     src: "files/k8s-bootstrap-ondemand.sh"
-    dest: "{{ ood_hooks_dir }}/k8s-bootstrap/k8s-bootstrap-ondemand.sh"
+    dest: "{{ ood_k8s_hooks_dir }}/k8s-bootstrap-ondemand.sh"
     mode: 0770
 
 - name: Web Node | Create set-k8s-creds.sh
   copy:
     src: "files/set-k8s-creds.sh"
-    dest: "{{ ood_hooks_dir }}/k8s-bootstrap/set-k8s-creds.sh"
+    dest: "{{ ood_k8s_hooks_dir }}/set-k8s-creds.sh"
     mode: 0770
 
+- name: Replace pun_pre_hook_root_cmd entry in ood_portal.yml
+  lineinfile:
+    path: "{{ ood_config_dir }}/ood_portal.yml"
+    search_string: '# pun_pre_hook_root_cmd: null'
+    line: "pun_pre_hook_root_cmd: {{ ood_hooks_dir }}/ood_pun_prehook"
+
+- name: Replace pun_pre_hook_exports entry in ood_portal.yml
+  lineinfile:
+    path: "{{ ood_config_dir }}/ood_portal.yml"
+    search_string: '# pun_pre_hook_exports: null'
+    line: "pun_pre_hook_exports: 'OIDC_ACCESS_TOKEN,OIDC_CLAIM_EMAIL,OIDC_REFRESH_TOKEN'"
+
+# - name: Web Node | Creating folder {{ ood_k8s_yaml_dir }} if it does not exist
+#   file:
+#     path: "{{ ood_k8s_yaml_dir }}"
+#     state: directory
+#     mode: 0755
+
+- name: Web Node | Copy k8s bootstrap yaml files
+  copy: 
+    src: "{{ item.src }}" 
+    dest: "{{ item.dest }}"
+  loop:
+    - src: files/yaml
+      dest: "{{ ood_k8s_hooks_dir }}"
 
 # kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
 
