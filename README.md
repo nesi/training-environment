@@ -9,17 +9,12 @@ This setup also requires [Kubernetes Cluster API](https://cluster-api.sigs.k8s.i
 
 ## Configure terraform
 
-First copy the config file:
+Set some variables via environment variables:
 
 ```
-cp terraform/terraform.tfvars.example terraform/terraform.tfvars
-```
-
-Inside the `terraform/terraform.tfvars` file is some user configuration required.
-
-```
-key_pair    = "NeSI_RDC_KEYPAIR_NAME"
-key_file    = "/path/to/nesi-rdc/private_key"
+export TF_VAR_key_pair="NeSI_RDC_KEYPAIR_NAME"
+export TF_VAR_key_file="/path/to/nesi-rdc/private_key"
+export TF_VAR_vm_user="ubuntu"
 ```
 
 where

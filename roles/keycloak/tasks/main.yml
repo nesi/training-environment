@@ -2,18 +2,18 @@
 - name: Install dependencies for keycloak
   apt:
     name:
-      - openjdk-8-jdk
+      - openjdk-17-jdk
     state: present
 - name: Download keycloak archive
   ansible.builtin.get_url:
-    url: https://downloads.jboss.org/keycloak/9.0.0/keycloak-9.0.0.tar.gz
-    dest: /opt/keycloak-9.0.0.tar.gz
-    checksum: "sha256:3b2f050b166b07dfe54aff94b99649f290bd2ad834d844a71e0c1b1ea9add98c"
+    url: https://github.com/keycloak/keycloak/releases/download/22.0.1/keycloak-22.0.1.tar.gz
+    dest: /opt/keycloak-22.0.1.tar.gz
+    checksum: "sha1:eea6076b99a78f88104e3a08618f4422d0ff16e2"
 - name: Extract keycloak archive
   ansible.builtin.unarchive:
-    src: /opt/keycloak-9.0.0.tar.gz
+    src: /opt/keycloak-22.0.1.tar.gz
     dest: /opt
-    creates: /opt/keycloak-9.0.0
+    creates: /opt/keycloak-22.0.1
     remote_src: yes
 - name: Create keycloak group
   ansible.builtin.group:
@@ -31,31 +31,17 @@
     state: present
 - name: Set ownership of keycloak dir
   file:
-    path: /opt/keycloak-9.0.0
+    path: /opt/keycloak-22.0.1
     owner: keycloak
     group: keycloak
     recurse: true
-- name: Restrict access to standalone
-  file:
-    path: /opt/keycloak-9.0.0/standalone
-    mode: 0700
-- name: Add keycloak admin user
-  command: "sudo -u keycloak /opt/keycloak-9.0.0/bin/add-user-keycloak.sh --user admin --password {{ keycloak_admin_password }} --realm master"
-  args:
-    creates: /opt/keycloak-9.0.0/.admin_user_added
-  register: create_keycloak_admin
-- file:
-    path: /opt/keycloak-9.0.0/.admin_user_added
-    state: touch
-  when: create_keycloak_admin is changed
-- name: Copy proxy config file
-  copy:
-    src: keycloak-proxy-config.cli
-    dest: /opt/keycloak-9.0.0/.keycloak-proxy-config.cli
-  register: keycloak_proxy_config
-- name: Allow proxying in keycloak
-  shell: "sudo -u keycloak /opt/keycloak-9.0.0/bin/jboss-cli.sh --file=/opt/keycloak-9.0.0/.keycloak-proxy-config.cli"
-  when: keycloak_proxy_config.changed
+- name: Install keycloak defaults file
+  template:
+    src: keycloak_defaults.j2
+    dest: /etc/default/keycloak
+    owner: root
+    group: root
+    mode: '600'
 - name: Copy keycloak system service file
   copy:
     src: keycloak.service
@@ -63,6 +49,7 @@
     owner: root
     group: root
   register: keycloak_service_file
+  notify: restart apache
 - name: Restart keycloak service
   systemd:
     name: keycloak
@@ -133,7 +120,7 @@
 - name: Create ondemand Keycloak realm
   community.general.keycloak_realm:
     auth_client_id: admin-cli
-    auth_keycloak_url: http://127.0.0.1:8080/auth
+    auth_keycloak_url: http://127.0.0.1:8080
     auth_realm: master
     auth_username: admin
     auth_password: "{{ keycloak_admin_password }}"
@@ -146,7 +133,7 @@
 - name: Create LDAP user federation
   community.general.keycloak_user_federation:
     auth_client_id: admin-cli
-    auth_keycloak_url: http://127.0.0.1:8080/auth
+    auth_keycloak_url: http://127.0.0.1:8080
     auth_realm: master
     auth_username: admin
     auth_password: "{{ keycloak_admin_password }}"
@@ -170,7 +157,7 @@
 - name: Add ondemand as a client
   community.general.keycloak_client:
     auth_client_id: admin-cli
-    auth_keycloak_url: http://127.0.0.1:8080/auth
+    auth_keycloak_url: http://127.0.0.1:8080
     auth_realm: master
     auth_username: admin
     auth_password: "{{ keycloak_admin_password }}"

@@ -2,7 +2,7 @@
 # authentication settings
 oidc_uri: "/oidc"
 oidc_settings_samefile: true
-oidc_provider_metadata_url: https://ood-idp.flexi.nesi/auth/realms/ondemand/.well-known/openid-configuration
+oidc_provider_metadata_url: https://ood-idp.flexi.nesi/realms/ondemand/.well-known/openid-configuration
 oidc_client_id: ondemand.flexi
 oidc_remote_user_claim: preferred_username
 oidc_scope: "openid profile email"
@@ -15,6 +15,7 @@ oidc_settings:
   OIDCOAuthSSLValidateServer: 'Off'
   OIDCPassClaimsAs: environment
   OIDCStripCookies: mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1
+  OIDCPassRefreshToken: 'On'
 
 # ood portal config
 servername: ood.flexi.nesi
@@ -29,6 +30,7 @@ httpd_auth:
 node_uri: '/node'
 rnode_uri: '/rnode'
 logout_redirect: '/oidc?logout=https%3A%2F%2Food.flexi.nesi'
+pun_pre_hook_exports: 'OIDC_ACCESS_TOKEN,OIDC_CLAIM_EMAIL,OIDC_REFRESH_TOKEN'
 
 httpd_port: 443
 server_aliases:

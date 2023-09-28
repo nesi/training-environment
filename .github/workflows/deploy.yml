@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - main
-# TODO: also for pull requests into main
-# TODO: add dev branch too?
 
 jobs:
   deploy:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     runs-on: ubuntu-22.04
     env:
       OS_APPLICATION_CREDENTIAL_ID: ${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}
@@ -79,3 +80,4 @@ jobs:
         run: ansible-playbook -i host.ini -u $TF_VAR_vm_user --key-file $TF_VAR_key_file setup-training-environment.yml
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+          ANSIBLE_HOST_KEY_CHECKING: "False"

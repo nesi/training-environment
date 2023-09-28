@@ -179,13 +179,13 @@
         client_id: ondemand.flexi
         realm: ondemand
         auth_client_id: admin-cli
-        auth_keycloak_url: https://ood-idp.flexi.nesi/auth
+        auth_keycloak_url: https://ood-idp.flexi.nesi
         auth_realm: master
         auth_username: admin
         auth_password: "{{ keycloak_admin_password }}"
         validate_certs: false
       register: keycloak_secret
-      no_log: true
+#      no_log: true
     - name: Set keycloak client secret fact for ondemand
       set_fact:
         oidc_client_secret: "{{ keycloak_secret.clientsecret_info.value }}"
