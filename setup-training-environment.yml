@@ -31,6 +31,8 @@
 - hosts: localhost
   become_user: root
   any_errors_fatal: "true"
+  vars_files:
+    - ondemand-config.yml
   roles:
     - { role: kubectl }
     - { role: cluster-ctl/cli-install }
@@ -196,6 +198,8 @@
 - name: Post ondemand setup
   hosts: webnode
   become: yes
+  vars_files:
+    - ondemand-config.yml
   pre_tasks:
     - name: Install dependencies for interactive apps
       apt:
