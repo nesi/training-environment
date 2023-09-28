@@ -3,6 +3,8 @@
 case $1 in
 "destroy")
     ansible-playbook setup-infra.yml -e operation=destroy -e terraform_workspace=${2:-default}
+    # Need to also run this command 'kubectl delete cluster CLUSTER_NAME'
+    # which ill probs base of the terraform workspace
     ;;
 "create")
     ansible-playbook setup-infra.yml -e operation=create -e terraform_workspace=${2:-default}
