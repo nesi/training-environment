@@ -6,7 +6,7 @@ After=network.target
 Type=idle
 User=keycloak
 Group=keycloak
-ExecStart=/opt/keycloak-22.0.1/bin/kc.sh start --hostname-strict=false --http-enabled=true --proxy=edge --hostname=ood-idp.flexi.nesi
+ExecStart=/opt/keycloak-22.0.1/bin/kc.sh start --hostname-strict=false --http-enabled=true --proxy=edge --hostname={{ oidc_hostname }}
 EnvironmentFile=/etc/default/keycloak
 TimeoutStartSec=600
 TimeoutStopSec=600

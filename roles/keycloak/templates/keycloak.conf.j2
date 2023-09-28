@@ -1,5 +1,5 @@
 <VirtualHost *:443>
-  ServerName {{ apache_keycloak_servername }}
+  ServerName {{ oidc_hostname }}
 
   ErrorLog  "/var/log/apache2/keycloak_error_ssl.log"
   CustomLog "/var/log/apache2/keycloak_access_ssl.log" combined

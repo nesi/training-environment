@@ -52,13 +52,7 @@ Install dependencies:
 ansible-galaxy install -r requirements.yml
 ```
 
-Copy example secrets file and edit:
-
-```
-cp vars/secrets.yml.example vars/secrets.yml
-```
-
-Copy ondemand config:
+Copy template ondemand config and edit:
 
 ```
 cp vars/ondemand-config.yml.example vars/ondemand-config.yml

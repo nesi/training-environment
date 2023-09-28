@@ -42,9 +42,9 @@
     owner: root
     group: root
     mode: '600'
-- name: Copy keycloak system service file
-  copy:
-    src: keycloak.service
+- name: Install keycloak system service file
+  template:
+    src: keycloak.service.j2
     dest: /etc/systemd/system/keycloak.service
     owner: root
     group: root
