@@ -30,14 +30,11 @@ clusterctl_repo: 'https://github.com/kubernetes-sigs/cluster-api/releases/downlo
 ## To use OpenID you have to deploy additional an OpenID Provider (e.g Dex, Keycloak, ...)
 
 kube_oidc_auth: true
-kube_oidc_url: https://ood-idp.training.data.nesi.org.nz/realms/ondemand
+kube_oidc_hostname: ood-idp.training.data.nesi.org.nz
+kube_oidc_url: https://{{ kube_oidc_hostname }}/realms/ondemand
 kube_oidc_client_id: kubernetes
 ## Optional settings for OIDC
 kube_oidc_username_claim: preferred_username
 kube_oidc_username_prefix: "-"
 kube_oidc_groups_claim: groups
 kube_oidc_groups_prefix: 'oidc:'
-# Copy oidc CA file to the following path if needed
-kube_oidc_ca_file: "{{ kube_cert_dir }}/zero_ca.crt"
-# Optionally include a base64-encoded oidc CA cert
-kube_oidc_ca_cert: <I_WILL_PASS_YOU_THIS-MAYBE_SET_AS_AN_ENV>

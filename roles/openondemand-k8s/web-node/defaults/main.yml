@@ -5,13 +5,13 @@ ood_enabled: true
 
 cluster_name: capi-cluster
 
-kube_root_ca_location: /etc/pki/tls/certs/k8s-cluster.crt
+kube_root_ca_location: /etc/pki/ood-certs
 
 kubectl_version: v1.28.2
 kubectl_url: https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
 
 ood_config_dir: /etc/ood/config
-ood_hooks_dir: /opt/nesi/hooks
+ood_hooks_dir: "{{ ood_config_dir }}/hooks"
 ood_cluster_config_dir: "{{ ood_config_dir }}/clusters.d"
 
 use_job_pod_reaper: false

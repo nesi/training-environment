@@ -21,7 +21,5 @@ required_version = ">= 0.14.0"
 
 # Configure the OpenStack Provider
 provider "openstack" {
-  tenant_name = var.tenant_name
-  auth_url    = var.auth_url
-  region      = var.region
+  cloud = "openstack"
 }

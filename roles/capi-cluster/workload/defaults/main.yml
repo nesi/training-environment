@@ -1,6 +1,6 @@
 ---
 kubernetes_version: v1.26.7
-capi_image_name: ubuntu-2204-kube-v1.26.7
+capi_image_name: ubuntu-2204-kube-v1.26.7-ca
 
 capi_provider_version: v0.8.0
 
@@ -27,15 +27,15 @@ clouds_yaml_location: /tmp/clouds.yaml
 yq_version: v4.2.0 
 yq_repo: "https://github.com/mikefarah/yq/releases/download/{{ yq_version }}/yq_linux_amd64"
 
-# Editing those values will almost surely break something.
-kube_config_dir: /etc/kubernetes
-kube_cert_dir: "{{ kube_config_dir }}/ssl"
+ca_cert_dir: /usr/local/share/ca-certificates
+ca_cert_file: "{{ ca_cert_dir }}/zero_ca.crt"
 
 ## Variables for OpenID Connect Configuration https://kubernetes.io/docs/admin/authentication/
 ## To use OpenID you have to deploy additional an OpenID Provider (e.g Dex, Keycloak, ...)
 
 kube_oidc_auth: true
-kube_oidc_url: https://ood-idp.training.data.nesi.org.nz/realms/ondemand
+kube_oidc_hostname: ood-idp.training.data.nesi.org.nz
+kube_oidc_url: https://{{ kube_oidc_hostname }}/realms/ondemand
 kube_oidc_client_id: kubernetes
 ## Optional settings for OIDC
 kube_oidc_username_claim: preferred_username
@@ -43,6 +43,4 @@ kube_oidc_username_prefix: "-"
 kube_oidc_groups_claim: groups
 kube_oidc_groups_prefix: 'oidc:'
 # Copy oidc CA file to the following path if needed
-kube_oidc_ca_file: "{{ kube_cert_dir }}/zero_ca.crt"
-# Optionally include a base64-encoded oidc CA cert
-kube_oidc_ca_cert: LS0tLS1CRU.....
+kube_oidc_ca_file: "{{ ca_cert_file }}"

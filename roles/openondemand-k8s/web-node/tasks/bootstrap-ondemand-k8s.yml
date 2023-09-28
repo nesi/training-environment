@@ -1,39 +1,58 @@
 ---
+- name: Web Node | Check local for {{ cluster_name }}.kubeconfig
+  delegate_to: localhost
+  stat:
+    path: "/tmp/{{ cluster_name }}.kubeconfig"
+  register: kubeconfig_file
+  failed_when: not kubeconfig_file.stat.exists
+  
+- name: Web Node | Copy {{ cluster_name }}.kubeconfig to web node
+  copy:
+    src: "/tmp/{{ cluster_name }}.kubeconfig"
+    dest: "/tmp/{{ cluster_name }}.kubeconfig"
+    mode: 0644
+
 - name: Web Node | Get ondemand serviceaccount token
   shell: >-
-    kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
+    kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig describe secret ondemand-sa -n ondemand | grep token: | awk '{ print $2 }'
   become: true
   register: ondemand_token
 
 - name: Web Node | Get {{ cluster_name }} kube-root-ca.crt data
   shell: >-
-    kubectl --kubeconfig ~/{{ cluster_name }}.kubeconfig get cm kube-root-ca.crt \
+    kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig get cm kube-root-ca.crt \
     -n kube-system -o jsonpath="{['data']['ca\.crt']}"
   become: true
   register: kube_root_ca
 
 - name: Web Node | Get {{ cluster_name }} endpoint URL
   shell: >-
-    kubectl --kubeconfig ~/{{ cluster_name }}.kubeconfig cluster-info \
+    kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig cluster-info \
     | grep 'control plane' | awk -F 'https://' '{print $2}'
   become: true
   register: kube_controller_url
 
+- name: Web Node | Creating {{ kube_root_ca_location }} if it does not exist
+  file:
+    path: "{{ kube_root_ca_location }}"
+    state: directory
+    mode: 0755
+
 - name: Web Node | Install kubernetes ca cert
   copy:
     content: "{{ kube_root_ca.stdout }}"
-    dest: "{{ kube_root_ca_location }}"
+    dest: "{{ kube_root_ca_location }}/k8s-cluster.crt"
 
 - name: Web Node | kubectl config set-cluster kubernetes
   shell: >-
     kubectl config set-cluster kubernetes --server=https://{{ kube_controller_url.stdout }} \
-    --certificate-authority={{ kube_root_ca_location }}
+    --certificate-authority={{ kube_root_ca_location }}/k8s-cluster.crt
   become: true
 
 - name: Web Node | kubectl config set-credentials
   shell: >-
     kubectl config set-credentials ondemand@kubernetes \
-    --token={{ ondemand_token }}
+    --token={{ ondemand_token.stdout }}
   become: true
 
 - name: Web Node | kubectl config set-context

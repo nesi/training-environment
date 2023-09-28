@@ -19,14 +19,14 @@
 
     - name: Kubernetes | Create ondemand-secrets.yml
       copy:
-        src: "files/ondemand-secrets.yml"
-        dest: "/tmp/ondemand-secrets.yml"
+        src: "files/ondemand-secret.yml"
+        dest: "/tmp/ondemand-secret.yml"
         mode: 0644
 
     - name: Kubernetes | Generate ondemand serviceaccount secret
       shell: >-
         kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
-        -f /tmp/ondemand-secrets.yml
+        -f /tmp/ondemand-secret.yml
       become: true
   when:
     - "enable_openondemand|default(false)|bool == true"

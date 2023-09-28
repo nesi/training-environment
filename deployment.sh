@@ -6,6 +6,6 @@ case $1 in
     ;;
 "create")
     ansible-playbook setup-infra.yml -e operation=create -e terraform_workspace=${2:-default}
-    ansible-playbook -i host.ini setup-training-environment.yml -u ${var.vm_user} --key-file '${var.key_file}'
+    ansible-playbook -i host.ini setup-training-environment.yml -u ubuntu --key-file ~/.ssh/id_flexi
     ;;
 esac
