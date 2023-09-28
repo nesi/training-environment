@@ -82,7 +82,7 @@ capi_provider_version: v0.8.0
 cluster_name: "{{ terraform_workspace }}"
 cluster_namespace: default
 
-openstack_ssh_key: kahus-key
+openstack_ssh_key: CHANGEME_OPENSTACK_SSH_KEY_NAME
 
 cluster_control_plane_count: 1
 control_plane_flavor: balanced1.2cpu4ram
