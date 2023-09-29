@@ -28,6 +28,22 @@ You will need to download the `clouds.yaml` file from the NeSI RDC dashboard and
 `~/.config/openstack/clouds.yaml` so that Terraform can authenticate with NeSI RDC. It is recommended
 that you use `Application Credentials` rather then your own credentials.
 
+At the end of your `clouds.yaml` file ensure you ahve the line `verify: false` example below
+
+```
+clouds:
+  openstack:
+    auth:
+      auth_url: https://keystone.akl-1.cloud.nesi.org.nz
+      application_credential_id: "SECRET"
+      application_credential_secret: "SUPER_SECRET"
+    region_name: "akl-1"
+    interface: "public"
+    identity_api_version: 3
+    auth_type: "v3applicationcredential"
+    verify: false
+```
+
 Set environment variables for authenticating with the object store (for the state file), e.g.
 
 ```
