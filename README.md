@@ -5,11 +5,13 @@ This repo sets up a training environment using Open OnDemand within the NeSI RDC
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and
 [Ansible](https://www.ansible.com/) need to be installed on your system to run this.
 
-This setup also requires [Kubernetes Cluster API](https://cluster-api.sigs.k8s.io/) to be running within your NeSI RDC project. To bootstrap one we have the following repo to get you started [NeSI RDC CAPI Bootstrap](https://github.com/nesi/nesi.rdc.kind-bootstrap-capi)
+This setup also requires [Kubernetes Cluster API](https://cluster-api.sigs.k8s.io/) to be running within your NeSI RDC project. To bootstrap one we have the following repo to get you started [NeSI RDC CAPI Bootstrap](https://github.com/nesi/nesi.rdc.kind-bootstrap-capi).
 
-## Configure terraform
+You also need to install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) on your system.
 
-Set some variables via environment variables:
+## Configuration
+
+Configure Terraform using environment variables:
 
 ```
 export TF_VAR_key_pair="NeSI_RDC_KEYPAIR_NAME"
@@ -22,19 +24,19 @@ where
 - `NeSI_RDC_KEYPAIR_NAME` is your `Key Pair` name that is setup in NeSI RDC
 - `NeSI_RDC_KEYFILE` is the local location for your ssh key
 
-Set environment variables for authenticating with OpenStack and object store (for the state file), e.g.
+You will need to download the `clouds.yaml` file from the NeSI RDC dashboard and place it in
+`~/.config/openstack/clouds.yaml` so that Terraform can authenticate with NeSI RDC. It is recommended
+that you use `Application Credentials` rather then your own credentials.
+
+Set environment variables for authenticating with the object store (for the state file), e.g.
 
 ```
-export OS_USERNAME="NeSI_RDC_USER"
-export OS_PASSWORD="NeSI_RDC_PASSWORD"
 export AWS_ACCESS_KEY_ID="EC2_User_Access_Token"
 export AWS_SECRET_KEY="EC2_User_Secret_Token"
 ```
 
 where
 
-- `NeSI_RDC_USER` is set to your username for the NeSI RDC Platform
-- `NeSI_RDC_PASSWORD` is set to your password for the NeSI RDC Platform
 - `EC2_User_Access_Token` is set to your EC2 access token
 - `EC2_User_Secret_Token` is set to your EC2 secret token
 
@@ -44,9 +46,7 @@ If you don't have any EC2 credentials then use the following CLI command to gene
 openstack ec2 credentials create
 ```
 
-## Configure ansible
-
-Install dependencies:
+Install Ansible dependencies:
 
 ```
 ansible-galaxy install -r requirements.yml
@@ -59,13 +59,8 @@ cp vars/ondemand-config.yml.example vars/ondemand-config.yml
 ```
 
 and edit, in particular set `oidc_settings.OIDCCryptoPassphrase` with a randomly
-generated password, e.g. the output of `openssl rand -hex 40`.
-
-`clouds.yaml`
-
-You will need to ensure you have downloaded the `clouds.yaml` from the NeSI RDC dashboard and placed it in `~/.config/openstack/clouds.yaml`
-
-It is recommended that you use `Application Credentials` rather then your own credentials.
+generated password, e.g. the output of `openssl rand -hex 40`. Also change `keycloak_admin_password`
+and `ldap_admin_password`.
 
 You will also need the kube config from the CAPI cluster to so you can create k8s clusters, this should reside within `~/.kube/config`, if running as root then under `/root/.kube/config`
 
@@ -89,7 +84,7 @@ of your workspace instead of "default".
 To destroy a previously created environment run:
 
 ```
-ansible-playbook setup-infra.yml -e operation=destroy -e terraform_workspace=default
+./deployment.sh destroy [workspace_name]
 ```
 
 ## Create the environment
@@ -97,14 +92,7 @@ ansible-playbook setup-infra.yml -e operation=destroy -e terraform_workspace=def
 First, create the terraform resources:
 
 ```
-ansible-playbook setup-infra.yml -e operation=create -e terraform_workspace=default
-```
-
-Then configure the environment:
-
-```
-export ANSIBLE_HOST_KEY_CHECKING=False
-ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key setup-training-environment.yml
+./deployment.sh create [workspace_name]
 ```
 
 By default 2 users will be created, `training1` and `training2`. Passwords for these users will be
@@ -118,8 +106,7 @@ password_training1.txt  password_training2.txt
 More users can be added by overriding the `num_users_create` variable, e.g.
 
 ```
-ansible-playbook -i host.ini -u ubuntu --key-file ~/.ssh/flexi-private-key \
-    --extra-vars "num_users_create=5" setup-training-environment.yml
+NUM_USERS=5 ./deployment.sh create [workspace_name]
 ```
 
 You will need to modify your hosts file with the IP addresses from *host.ini*, on Linux this file is
