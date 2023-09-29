@@ -8,26 +8,23 @@
     - name: Kubernetes | Create ondemand-bootstrap.yml
       copy:
         src: "files/ondemand-bootstrap.yml"
-        dest: "/tmp/ondemand-bootstrap.yml"
+        dest: "{{ tmp_dir }}/ondemand-bootstrap.yml"
         mode: 0644
 
     - name: Kubernetes | Generate clouds.yaml secret
       shell: >-
-        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
-        -f /tmp/ondemand-bootstrap.yml
-      become: true
+        kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
+        -f {{ tmp_dir }}/ondemand-bootstrap.yml
 
     - name: Kubernetes | Create ondemand-secrets.yml
       copy:
         src: "files/ondemand-secret.yml"
-        dest: "/tmp/ondemand-secret.yml"
+        dest: "{{ tmp_dir }}/ondemand-secret.yml"
         mode: 0644
 
     - name: Kubernetes | Generate ondemand serviceaccount secret
       shell: >-
-        kubectl --kubeconfig /tmp/{{ cluster_name }}.kubeconfig apply \
-        -f /tmp/ondemand-secret.yml
-      become: true
+        kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
+        -f {{ tmp_dir }}/ondemand-secret.yml
   when:
     - "enable_openondemand|default(false)|bool == true"
-  become: true

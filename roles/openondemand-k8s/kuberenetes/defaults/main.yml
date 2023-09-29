@@ -1,5 +1,6 @@
 ---
 bin_dir: /usr/local/bin
+tmp_dir: "/tmp/{{ cluster_name }}"
 
 ood_enabled: true
 

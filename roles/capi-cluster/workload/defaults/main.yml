@@ -21,8 +21,10 @@ cluster_pod_cidr: 192.168.0.0/16
 
 bin_dir: /usr/local/bin
 
+tmp_dir: "/tmp/{{ cluster_name }}"
+
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
-clouds_yaml_location: /tmp/clouds.yaml
+clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"
 
 yq_version: v4.2.0 
 yq_repo: "https://github.com/mikefarah/yq/releases/download/{{ yq_version }}/yq_linux_amd64"

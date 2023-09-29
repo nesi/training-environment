@@ -1,4 +1,10 @@
 ---
+- name: Workload | Creating {{ tmp_dir }} if it does not exist
+  file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: 0755
+
 - name: Workload | Ensure clouds.yaml file exists locally
   delegate_to: localhost
   stat:
@@ -28,7 +34,6 @@
     dest: "{{ bin_dir }}/yq"
     mode: 0755
     force: true
-  become: true
   when:
     - not yq_binary.stat.exists
 
@@ -51,6 +56,5 @@
   when:
     - clouds_yaml_file.stat.exists
     - clouds_yaml_local_file.stat.exists
-  become: true
 
 
