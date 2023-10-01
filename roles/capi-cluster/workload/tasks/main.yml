@@ -6,7 +6,7 @@
     mode: 0755
 
 - name: Workload | Ensure clouds.yaml file exists locally
-  delegate_to: localhost
+  delegate_to: servicesnode
   stat:
     path: "{{ clouds_yaml_local_location }}"
   register: clouds_yaml_local_file

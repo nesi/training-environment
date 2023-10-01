@@ -28,7 +28,7 @@
       ansible.builtin.hostname:
         name: "{{ inventory_hostname }}.flexi.nesi"
 
-- hosts: localhost
+- hosts: servicesnode
   become_user: root
   any_errors_fatal: "true"
   vars_files:

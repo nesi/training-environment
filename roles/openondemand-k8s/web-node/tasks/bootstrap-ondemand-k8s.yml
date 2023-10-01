@@ -1,12 +1,13 @@
 ---
-- name: Web Node | Check local for {{ cluster_name }}.kubeconfig
-  delegate_to: localhost
+- name: Web Node | Check servicesnode for {{ cluster_name }}.kubeconfig
+  delegate_to: servicesnode
   stat:
     path: "/tmp/{{ cluster_name }}.kubeconfig"
   register: kubeconfig_file
   failed_when: not kubeconfig_file.stat.exists
   
 - name: Web Node | Copy {{ cluster_name }}.kubeconfig to web node
+  delegate_to: servicesnode
   copy:
     src: "/tmp/{{ cluster_name }}.kubeconfig"
     dest: "/tmp/{{ cluster_name }}.kubeconfig"
