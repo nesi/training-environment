@@ -51,3 +51,11 @@ variable "extra_public_keys" {
   type = list(string)
   default = []
 }
+
+variable "kube_config" {
+  description = "kube config file"
+}
+
+variable "clouds_yaml" {
+  description = "clouds.yaml file for connecting to NeSI RDC"
+}

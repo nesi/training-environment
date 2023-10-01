@@ -28,7 +28,7 @@ You will need to download the `clouds.yaml` file from the NeSI RDC dashboard and
 `~/.config/openstack/clouds.yaml` so that Terraform can authenticate with NeSI RDC. It is recommended
 that you use `Application Credentials` rather then your own credentials.
 
-At the end of your `clouds.yaml` file ensure you ahve the line `verify: false` example below
+At the end of your `clouds.yaml` file ensure you have the line `verify: false` example below
 
 ```
 clouds:
@@ -43,6 +43,8 @@ clouds:
     auth_type: "v3applicationcredential"
     verify: false
 ```
+
+Set the `TF_VAR_clouds_yaml` environment variable to point to the location of your *clouds.yaml* file.
 
 Set environment variables for authenticating with the object store (for the state file), e.g.
 
@@ -78,7 +80,7 @@ and edit, in particular set `oidc_settings.OIDCCryptoPassphrase` with a randomly
 generated password, e.g. the output of `openssl rand -hex 40`. Also change `keycloak_admin_password`
 and `ldap_admin_password`.
 
-You will also need the kube config from the CAPI cluster to so you can create k8s clusters, this should reside within `~/.kube/config`, if running as root then under `/root/.kube/config`
+You will also need the kube config from the CAPI cluster to so you can create k8s clusters, this should reside within `~/.kube/config`. Set the `TF_VAR_kube_config` environment variable to point to the location of your kube *config* file.
 
 ## Note about terraform workspaces
 
