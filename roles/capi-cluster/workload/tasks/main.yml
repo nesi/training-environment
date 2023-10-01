@@ -6,7 +6,7 @@
     mode: 0755
 
 - name: Workload | Ensure clouds.yaml file exists locally
-  delegate_to: servicesnode
+  delegate_to: localhost
   stat:
     path: "{{ clouds_yaml_local_location }}"
   register: clouds_yaml_local_file
@@ -15,13 +15,36 @@
   copy:
     src: "{{ clouds_yaml_local_location }}"
     dest: "{{ clouds_yaml_location }}"
-    mode: 0640  
+    mode: 0640
 
 - name: Workload | Ensure clouds.yaml file exists remotely
   stat:
     path: "{{ clouds_yaml_location }}"
   register: clouds_yaml_file
   when: clouds_yaml_local_file.stat.exists
+  
+- name: Workload | Creating {{ kube_config_location }} if it does not exist
+  file:
+    path: "{{ kube_config_location }}"
+    state: directory
+    mode: 0755
+
+- name: Workload | Copy local kubectl config to remote
+  copy:
+    src: "{{ kube_config_local_location }}"
+    dest: "{{ kube_config_location }}/config"
+    mode: 0640
+
+- name: Workload | Ensure kubectl config file exists remotely
+  stat:
+    path: "{{ kube_config_location }}/config"
+  register: kube_config_file
+
+- name: Workload | Check kubectl config and clouds.yaml exists
+  assert:
+    that:
+      - clouds_yaml_local_file.stat.exists
+      - kube_config_file.stat.exists
 
 - name: Workload | Ensure yq is installed in {{ bin_dir }}
   stat:
@@ -34,6 +57,7 @@
     dest: "{{ bin_dir }}/yq"
     mode: 0755
     force: true
+  become: true
   when:
     - not yq_binary.stat.exists
 

@@ -10,5 +10,6 @@
     dest: "{{ bin_dir }}/kubectl"
     mode: 0755
     force: true
+  become: true    
   when:
     - not kubectl_binary.stat.exists

@@ -1,0 +1,15 @@
+---
+- name: Kubernetes | Get kube-api machine name
+  shell: >-
+    kubectl get machine | grep {{ cluster_name }}-control-plane | awk '{ print $1 }'
+  register: kube_api_machine
+
+- name: Kubernetes | Get kube-api ip
+  shell: >-
+    kubectl describe machine {{ kube_api_machine.stdout }} | grep Address: | awk '{ print $2 }'
+  register: kube_api_ip
+
+- name: Kubernetes | Add kube-api host to "temp_control_plane" group
+  add_host:
+    groups: temp_control_plane
+    name: "{{ kube_api_ip }}"

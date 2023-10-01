@@ -38,6 +38,13 @@
     - { role: cluster-ctl/cli-install }
     - { role: capi-cluster/workload }
     - { role: openondemand-k8s/kuberenetes }
+      
+# - hosts: temp_control_plane
+#   any_errors_fatal: "true"
+#   vars_files:
+#     - ondemand-config.yml
+#   roles:
+#     - { role: openondemand-k8s/kuberenetes-oidc }
 
 - name: Setup /etc/hosts
   hosts: servers

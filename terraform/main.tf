@@ -39,32 +39,32 @@ resource "null_resource" "services_extra_keys" {
 }
 
 # copy kube config and cloud.yaml
-resource "null_resource" "services_kube_cloud" {
-  depends_on = [openstack_compute_floatingip_associate_v2.services_floating_ip_association]
+# resource "null_resource" "services_kube_cloud" {
+#   depends_on = [openstack_compute_floatingip_associate_v2.services_floating_ip_association]
 
-  connection {
-    user = var.vm_user
-    private_key = file(var.key_file)
-    host = "${openstack_networking_floatingip_v2.services_floating_ip.address}"
-  }
+#   connection {
+#     user = var.vm_user
+#     private_key = file(var.key_file)
+#     host = "${openstack_networking_floatingip_v2.services_floating_ip.address}"
+#   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "mkdir -p ~/.kube",
-      "mkdir -p ~/.config/openstack",
-    ]
-  }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "mkdir -p ~/.kube",
+#       "mkdir -p ~/.config/openstack",
+#     ]
+#   }
 
-  provisioner "file" {
-    source = var.clouds_yaml
-    destination = "/home/${var.vm_user}/.config/openstack/clouds.yaml"
-  }
+#   provisioner "file" {
+#     source = var.clouds_yaml
+#     destination = "/home/${var.vm_user}/.config/openstack/clouds.yaml"
+#   }
 
-  provisioner "file" {
-    source = var.kube_config
-    destination = "/home/${var.vm_user}/.kube/config"
-  }
-}
+#   provisioner "file" {
+#     source = var.kube_config
+#     destination = "/home/${var.vm_user}/.kube/config"
+#   }
+# }
 
 # Create webnode instance
 resource "openstack_compute_instance_v2" "webnode_instance" {

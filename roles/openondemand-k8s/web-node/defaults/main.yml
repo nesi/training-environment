@@ -1,9 +1,10 @@
 ---
-bin_dir: /usr/local/bin
-
 ood_enabled: true
 
 cluster_name: capi-cluster
+
+bin_dir: /usr/local/bin
+tmp_dir: "/tmp/{{ cluster_name }}"
 
 kube_root_ca_location: /etc/pki/ood-certs
 

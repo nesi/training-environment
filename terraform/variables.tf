@@ -52,10 +52,10 @@ variable "extra_public_keys" {
   default = []
 }
 
-variable "kube_config" {
-  description = "kube config file"
-}
+# variable "kube_config" {
+#   description = "kube config file"
+# }
 
-variable "clouds_yaml" {
-  description = "clouds.yaml file for connecting to NeSI RDC"
-}
+# variable "clouds_yaml" {
+#   description = "clouds.yaml file for connecting to NeSI RDC"
+# }

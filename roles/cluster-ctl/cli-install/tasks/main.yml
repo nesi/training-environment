@@ -10,6 +10,7 @@
     dest: "{{ bin_dir }}/clusterctl"
     mode: 0755
     force: true
+  become: true
   when:
     - not clusterctl_binary.stat.exists
 

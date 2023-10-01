@@ -2,16 +2,21 @@
 - name: Web Node | Check servicesnode for {{ cluster_name }}.kubeconfig
   delegate_to: servicesnode
   stat:
-    path: "/tmp/{{ cluster_name }}.kubeconfig"
+    path: "{{ tmp_dir }}/{{ cluster_name }}.kubeconfig"
   register: kubeconfig_file
   failed_when: not kubeconfig_file.stat.exists
   
-- name: Web Node | Copy {{ cluster_name }}.kubeconfig to web node
+- name: Web Node | Copy {{ cluster_name }}.kubeconfig to local
   delegate_to: servicesnode
+  fetch:
+    src: "{{ tmp_dir }}/{{ cluster_name }}.kubeconfig"
+    dest: /tmp/
+    flat: yes
+
+- name: Web Node | Copy the {{ cluster_name }}.kubeconfig to webnode
   copy:
-    src: "/tmp/{{ cluster_name }}.kubeconfig"
-    dest: "/tmp/{{ cluster_name }}.kubeconfig"
-    mode: 0644
+    src: /tmp/{{ cluster_name }}.kubeconfig
+    dest: /tmp/{{ cluster_name }}.kubeconfig
 
 - name: Web Node | Get ondemand serviceaccount token
   shell: >-
