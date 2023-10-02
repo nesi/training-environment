@@ -4,15 +4,10 @@
     kube_config_bas64: "{{ lookup('ansible.builtin.env', 'KUBE_CONFIG_BASE64') | default('') }}"
 
 - name: Pre-Checks | Ensure clouds.yaml file exists
+  delegate_to: localhost
   stat:
     path: "{{ clouds_yaml_local_location }}"
   register: clouds_yaml_local_file
-
-- debug:
-    var: "{{ clouds_yaml_local_location }}"
-
-- debug:
-    var: clouds_yaml_local_file
 
 - name: Pre-Checks | Check KUBE_CONFIG_BASE64 variables are defined
   assert:
