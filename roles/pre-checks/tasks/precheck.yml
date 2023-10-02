@@ -8,6 +8,9 @@
     path: "{{ clouds_yaml_local_location }}"
   register: clouds_yaml_local_file
 
+- debug:
+    var: clouds_yaml_local_file
+
 - name: Pre-Checks | Check KUBE_CONFIG_BASE64 variables are defined
   assert:
     that:
