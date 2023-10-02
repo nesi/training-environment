@@ -24,6 +24,6 @@
     content: '{{ kube_api_pod_yaml_data_updated | to_nice_yaml }}'
     dest: "{{ tmp_dir }}/{{ cluster_name }}-kube-api.yml"
 
-- name: Kubernetes OIDC | Update kube-api yaml
-  shell: >-
-    kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply -f {{ tmp_dir }}/{{ cluster_name }}-kube-api.yml
+# - name: Kubernetes OIDC | Update kube-api yaml
+#   shell: >-
+#     kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply -f {{ tmp_dir }}/{{ cluster_name }}-kube-api.yml

@@ -27,14 +27,14 @@
         kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
         -f {{ tmp_dir }}/ondemand-secret.yml
     
-    # - name: Kubernetes | Setting OIDC auth boolean to {{ kube_oidc_auth }}
-    #   set_fact:
-    #     enable_oidc_auth: "{{ kube_oidc_auth }}"
+    - name: Kubernetes | Setting OIDC auth boolean to {{ kube_oidc_auth }}
+      set_fact:
+        enable_oidc_auth: "{{ kube_oidc_auth }}"
 
-    # - name: Kubernetes | Update kube-api hosts temp var
-    #   include_tasks: add-kube-api-hosts-temp.yml
-    #   when:
-    #     - "enable_oidc_auth|default(false)|bool == true"
+    - name: Kubernetes | Update kube-api hosts temp var
+      include_tasks: add-kube-api-hosts-temp.yml
+      when:
+        - "enable_oidc_auth|default(false)|bool == true"
 
   when:
     - "enable_openondemand|default(false)|bool == true"
