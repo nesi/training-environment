@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 20230929-merge
 
 jobs:
   deploy:
@@ -23,6 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: python --version
+
       - name: Write private key file
         run: |
           import os
@@ -35,27 +37,66 @@ jobs:
       - run: chmod 400 ${TF_VAR_key_file}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+
+      - name: Write kube config to temp dir
+        run: |
+          import os
+          with open(os.environ['KUBE_CONFIG_FILE'], 'w') as fh:
+            fh.write(os.environ['KUBE_CONFIG_CONTENT'])
+        shell: python
+        env:
+          KUBE_CONFIG_CONTENT: "${{ secrets.KUBE_CONFIG }}"
+          KUBE_CONFIG_FILE: "${{ runner.temp }}/kube_config"
+      - name: Link kube config
+        run: |
+          mkdir ~/.kube
+          ln -s ${KUBE_CONFIG_FILE} ~/.kube/config
+        env:
+          KUBE_CONFIG_FILE: "${{ runner.temp }}/kube_config"
+
+      - name: Write clouds.yaml to temp dir
+        run: |
+          import os
+          with open(os.environ['KUBE_CONFIG_FILE'], 'w') as fh:
+            fh.write(os.environ['KUBE_CONFIG_CONTENT'])
+        shell: python
+        env:
+          CLOUDS_YAML_CONTENT: "${{ secrets.CLOUDS_YAML }}"
+          CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
+      - name: Link clouds.yaml
+        run: |
+          mkdir ~/.config/openstack
+          ln -s ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
+        env:
+          CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
+
       - run: echo "GITHUB_REF = $GITHUB_REF"
       - run: echo "GITHUB_REF_NAME = $GITHUB_REF_NAME"
       - run: echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
       - run: echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
       - run: echo "GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME"
-      - name: Write ansible secrets file
+
+      - name: Write ansible config file to temp dir
         run: |
-          cp secrets.yml.example secrets.yml
-          sed -i'' "s/CHANGEME_KEYCLOAK_ADMIN_PASSWORD/$KEYCLOAK_ADMIN_PASSWORD/" secrets.yml
-          sed -i'' "s/CHANGEME_LDAP_ADMIN_PASSWORD/$LDAP_ADMIN_PASSWORD/" secrets.yml
+          cp ondemand-config.yml.example ${ONDEMAND_CONFIG_FILE}
+          sed -i'' "s/CHANGEME_KEYCLOAK_ADMIN_PASSWORD/$KEYCLOAK_ADMIN_PASSWORD/" ondemand-config.yml
+          sed -i'' "s/CHANGEME_LDAP_ADMIN_PASSWORD/$LDAP_ADMIN_PASSWORD/" ondemand-config.yml
+          sed -i'' "s/CHANGEME_OIDC_CRYPTO_PASSPHRASE/$OIDC_CRYPTO_PASSPHRASE/" ondemand-config.yml
+          sed -i'' "s/CHANGEME_OPENSTACK_SSH_KEY_NAME/$KEY_PAIR_NAME/" ondemand-config.yml
         working-directory: vars
         env:
           KEYCLOAK_ADMIN_PASSWORD: '${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}'
           LDAP_ADMIN_PASSWORD: '${{ secrets.LDAP_ADMIN_PASSWORD }}'
-      - name: Write ansible ondemand config file
+          OIDC_CRYPTO_PASSPHRASE: '${{ secrets.OIDC_CRYPTO_PASSPHRASE }}'
+          KEY_PAIR_NAME: '${{ secrets.KEY_PAIR_NAME }}'
+          ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
+      - name: Link ondemand config
         run: |
-          cp ondemand-config.yml.example ondemand-config.yml
-          sed -i'' "s/CHANGEME_OIDC_CRYPTO_PASSPHRASE/$OIDC_CRYPTO_PASSPHRASE/" ondemand-config.yml
+          ln -s ${ONDEMAND_CONFIG_FILE} ondemand-config.yml
         working-directory: vars
         env:
-          OIDC_CRYPTO_PASSPHRASE: '${{ secrets.OIDC_CRYPTO_PASSPHRASE }}'
+          ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
+
       - name: Install ansible dependencies
         run: ansible-galaxy install -r requirements.yml
       - name: Terraform initialise
@@ -63,21 +104,20 @@ jobs:
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
         working-directory: terraform
+
       - name: Switch terraform workspace (making sure it exists)
         run: terraform workspace select -or-create=true ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
         working-directory: terraform
+
       - name: Destroy the environment first
-        run: ansible-playbook setup-infra.yml -e operation=destroy -e terraform_workspace=${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
+        run: ./deployment.sh destroy ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+
       - name: Create the environment
-        run: ansible-playbook setup-infra.yml -e operation=create -e terraform_workspace=${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
-        env:
-          TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      - name: Configure the environment
-        run: ansible-playbook -i host.ini -u $TF_VAR_vm_user --key-file $TF_VAR_key_file setup-training-environment.yml
+        run: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
           ANSIBLE_HOST_KEY_CHECKING: "False"
