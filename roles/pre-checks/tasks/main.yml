@@ -1,0 +1,33 @@
+---
+- name: Pre-Checks | Check for environment variables
+  include_tasks: precheck.yml
+
+- name: Pre-Checks | Decode the base64 encoded version of the YAML file and assign it to a variable
+  set_fact:
+    kube_config_content: "{{ kube_config_bas64 | b64decode | from_yaml }}"
+    
+- name: Pre-Checks | Decode the base64 encoded version of the YAML file and assign it to a variable
+  set_fact:
+    clouds_yaml_content: "{{ clouds_yaml_base64 | b64decode | from_yaml }}"
+
+- name: Pre-Checks | Creating {{ tmp_dir }} if it does not exist
+  file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Pre-Checks | Creating {{ kube_config_location }} if it does not exist
+  file:
+    path: "{{ kube_config_location }}"
+    state: directory
+    mode: 0755
+
+- name: Pre-Checks | Save kube_config_content to {{ kube_config_location }}
+  copy:
+    content: "{{ kube_config_content | to_nice_yaml }}"
+    dest: "{{ kube_config_location }}/config"
+
+- name: Pre-Checks | Save clouds_yaml_content to {{ clouds_yaml_location }}
+  copy:
+    content: "{{ clouds_yaml_content | to_nice_yaml }}"
+    dest: "{{ clouds_yaml_location }}"

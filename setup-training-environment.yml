@@ -34,6 +34,7 @@
   vars_files:
     - ondemand-config.yml
   roles:
+    - { role: pre-checks }
     - { role: kubectl }
     - { role: cluster-ctl/cli-install }
     - { role: capi-cluster/workload }

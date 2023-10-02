@@ -1,0 +1,8 @@
+---
+cluster_name: capi-cluster
+
+tmp_dir: "/tmp/{{ cluster_name }}"
+
+clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"
+
+kube_config_location: "~/.kube"

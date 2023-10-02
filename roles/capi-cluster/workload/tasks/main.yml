@@ -1,65 +1,6 @@
 ---
-- name: Workload | Creating {{ tmp_dir }} if it does not exist
-  file:
-    path: "{{ tmp_dir }}"
-    state: directory
-    mode: 0755
-
-- name: Workload | Ensure clouds.yaml file exists locally
-  delegate_to: localhost
-  stat:
-    path: "{{ clouds_yaml_local_location }}"
-  register: clouds_yaml_local_file
-
-- name: Workload | Copy local clouds.yaml to remote
-  copy:
-    src: "{{ clouds_yaml_local_location }}"
-    dest: "{{ clouds_yaml_location }}"
-    mode: 0640
-
-- name: Workload | Ensure clouds.yaml file exists remotely
-  stat:
-    path: "{{ clouds_yaml_location }}"
-  register: clouds_yaml_file
-  when: clouds_yaml_local_file.stat.exists
-  
-- name: Workload | Creating {{ kube_config_location }} if it does not exist
-  file:
-    path: "{{ kube_config_location }}"
-    state: directory
-    mode: 0755
-
-- name: Workload | Copy local kubectl config to remote
-  copy:
-    src: "{{ kube_config_local_location }}"
-    dest: "{{ kube_config_location }}/config"
-    mode: 0640
-
-- name: Workload | Ensure kubectl config file exists remotely
-  stat:
-    path: "{{ kube_config_location }}/config"
-  register: kube_config_file
-
-- name: Workload | Check kubectl config and clouds.yaml exists
-  assert:
-    that:
-      - clouds_yaml_local_file.stat.exists
-      - kube_config_file.stat.exists
-
-- name: Workload | Ensure yq is installed in {{ bin_dir }}
-  stat:
-    path: "{{ bin_dir }}/yq"
-  register: yq_binary
-
-- name: Workload | Download yq to specified location {{ bin_dir }}
-  get_url:
-    url: "{{ yq_repo }}"
-    dest: "{{ bin_dir }}/yq"
-    mode: 0755
-    force: true
-  become: true
-  when:
-    - not yq_binary.stat.exists
+- name: Workload | Prerequisites
+  include_tasks: prerequisites.yml
 
 - name: Workload | Create and initialize clusterctl and cloud manager
   block:
@@ -79,6 +20,5 @@
       include_tasks: install-cloud-manager.yml
   when:
     - clouds_yaml_file.stat.exists
-    - clouds_yaml_local_file.stat.exists
 
 
