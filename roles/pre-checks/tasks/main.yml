@@ -28,4 +28,3 @@
     src: "{{ clouds_yaml_local_location }}"
     dest: "{{ clouds_yaml_location }}"
     mode: 0640
-    remote_src: true
