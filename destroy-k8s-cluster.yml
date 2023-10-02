@@ -1,0 +1,9 @@
+- hosts: servicesnode
+  vars:
+    terraform_workspace: default
+  tasks:
+  - name: Destroy Kubernetes cluster   
+    shell: >-
+      kubectl delete cluster {{ terraform_workspace }}
+    when: (operation == "destroy")
+    register: destroy
