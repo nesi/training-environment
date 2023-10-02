@@ -31,6 +31,8 @@
 - hosts: servicesnode
   become_user: root
   any_errors_fatal: "true"
+  vars:
+    clouds_yaml_local_location: /home/runner/work/_temp/clouds.yaml
   vars_files:
     - ondemand-config.yml
   roles:
