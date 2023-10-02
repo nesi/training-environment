@@ -38,38 +38,6 @@ jobs:
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
 
-      - name: Write kube config to temp dir
-        run: |
-          import os
-          with open(os.environ['KUBE_CONFIG_FILE'], 'w') as fh:
-            fh.write(os.environ['KUBE_CONFIG_CONTENT'])
-        shell: python
-        env:
-          KUBE_CONFIG_CONTENT: "${{ secrets.KUBE_CONFIG }}"
-          KUBE_CONFIG_FILE: "${{ runner.temp }}/kube_config"
-      - name: Link kube config
-        run: |
-          mkdir ~/.kube
-          ln -s ${KUBE_CONFIG_FILE} ~/.kube/config
-        env:
-          KUBE_CONFIG_FILE: "${{ runner.temp }}/kube_config"
-
-      - name: Write clouds.yaml to temp dir
-        run: |
-          import os
-          with open(os.environ['CLOUDS_YAML_FILE'], 'w') as fh:
-            fh.write(os.environ['CLOUDS_YAML_CONTENT'])
-        shell: python
-        env:
-          CLOUDS_YAML_CONTENT: "${{ secrets.CLOUDS_YAML }}"
-          CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
-      - name: Link clouds.yaml
-        run: |
-          mkdir ~/.config/openstack
-          ln -s ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
-        env:
-          CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
-
       - run: echo "GITHUB_REF = $GITHUB_REF"
       - run: echo "GITHUB_REF_NAME = $GITHUB_REF_NAME"
       - run: echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
@@ -115,9 +83,13 @@ jobs:
         run: ./deployment.sh destroy ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+          CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
+          KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
 
       - name: Create the environment
         run: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
+          KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
