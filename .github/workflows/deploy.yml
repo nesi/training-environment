@@ -38,6 +38,22 @@ jobs:
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
 
+      - name: Write clouds.yaml to temp dir
+        run: |
+          import os
+          with open(os.environ['CLOUDS_YAML_FILE'], 'w') as fh:
+            fh.write(os.environ['CLOUDS_YAML_CONTENT'])
+        shell: python
+        env:
+          CLOUDS_YAML_CONTENT: "${{ secrets.CLOUDS_YAML }}"
+          CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
+      - name: Link clouds.yaml
+        run: |
+          mkdir -p ~/.config/openstack
+          ln -s ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
+        env:
+          CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
+
       - run: echo "GITHUB_REF = $GITHUB_REF"
       - run: echo "GITHUB_REF_NAME = $GITHUB_REF_NAME"
       - run: echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
