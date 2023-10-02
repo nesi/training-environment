@@ -3,7 +3,7 @@ keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
 
 oidc_hostname: ood-idp.flexi.nesi
-clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
+clouds_yaml_local_location: /home/runner/work/_temp/clouds.yaml
 
 # authentication settings
 oidc_uri: "/oidc"
