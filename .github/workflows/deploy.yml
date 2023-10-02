@@ -57,7 +57,7 @@ jobs:
       - name: Write clouds.yaml to temp dir
         run: |
           import os
-          with open(os.environ['KUBE_CONFIG_FILE'], 'w') as fh:
+          with open(os.environ['CLOUDS_YAML_FILE'], 'w') as fh:
             fh.write(os.environ['KUBE_CONFIG_CONTENT'])
         shell: python
         env:
