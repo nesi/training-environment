@@ -58,7 +58,7 @@ jobs:
         run: |
           import os
           with open(os.environ['CLOUDS_YAML_FILE'], 'w') as fh:
-            fh.write(os.environ['KUBE_CONFIG_CONTENT'])
+            fh.write(os.environ['CLOUDS_YAML_CONTENT'])
         shell: python
         env:
           CLOUDS_YAML_CONTENT: "${{ secrets.CLOUDS_YAML }}"
