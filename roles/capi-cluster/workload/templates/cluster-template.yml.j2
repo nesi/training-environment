@@ -116,7 +116,10 @@ spec:
     kind: Secret
     name: ${CLUSTER_NAME}-cloud-config
   managedSecurityGroups: true
-  nodeCidr: ${CLUSTER_NODE_CIDR}
+  network:
+    name: {{ cluster_network_name }}
+  router: 
+    name: {{ cluster_network_name }}
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha7
 kind: OpenStackMachineTemplate
@@ -132,6 +135,9 @@ spec:
         name: ${CLUSTER_NAME}-cloud-config
       image: ${OPENSTACK_IMAGE_NAME}
       sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
+      ports:
+      - network:
+          name: {{ cluster_network_name }}
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha7
 kind: OpenStackMachineTemplate
@@ -147,3 +153,6 @@ spec:
         name: ${CLUSTER_NAME}-cloud-config
       image: ${OPENSTACK_IMAGE_NAME}
       sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
+      ports:
+      - network:
+          name: {{ cluster_network_name }}

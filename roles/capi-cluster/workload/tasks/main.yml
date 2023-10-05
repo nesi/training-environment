@@ -13,11 +13,22 @@
       set_fact:
         file_contents: "{{ file_content['content'] | b64decode | from_yaml }}"
 
+    - name: Workload | Check cluster {{ cluster_name }} is initialized
+      shell: >-
+        kubectl get cluster {{ cluster_name }}
+      register: cluster_intialized
+      ignore_errors: true
+
+    # - debug:
+    #     var: cluster_intialized
+
     - name: Workload | Create and initialize clusterctl
       include_tasks: configure-install-clusterctl.yml
+      when: cluster_intialized.stdout == ''
 
     - name: Workload | Create and initialize cloud manager
       include_tasks: install-cloud-manager.yml
+      when: cluster_intialized.stdout == ''
   when:
     - clouds_yaml_file.stat.exists
 

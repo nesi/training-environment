@@ -1,0 +1,14 @@
+---
+- name: Pre-Check Install Cert | Setting facts for WILD_CERT_BASE64
+  set_fact:
+    wild_cert_bas64: "{{ lookup('ansible.builtin.env', 'WILD_CERT_BASE64') | default('') }}"
+
+- name: Pre-Check Install Cert | Setting facts for WILD_CERT_KEY_BASE64
+  set_fact:
+    wild_cert_key_bas64: "{{ lookup('ansible.builtin.env', 'WILD_CERT_KEY_BASE64') | default('') }}"
+
+- name: Pre-Check Install Cert | Check WILD_CERT variables are defined
+  assert:
+    that:
+      - wild_cert_bas64 is defined and wild_cert_bas64 != ''
+      - wild_cert_key_bas64 is defined and wild_cert_key_bas64 != ''

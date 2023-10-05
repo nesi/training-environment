@@ -4,6 +4,7 @@ capi_image_name: ubuntu-2204-kube-v1.26.7-ca
 
 capi_provider_version: v0.8.0
 
+cluster_rdc_project: NeSI-Training-Test
 cluster_name: capi-cluster
 cluster_namespace: default
 
@@ -16,8 +17,10 @@ cluster_worker_count: 2
 worker_flavour: balanced1.2cpu4ram
 
 cluster_node_cidr: 10.10.0.0/24
-
 cluster_pod_cidr: 192.168.0.0/16
+cluster_route_id: 3c0cb930-2bbe-4c9c-ac61-6dbc9410c3e9
+
+cluster_network_name: "{{ cluster_rdc_project }}"
 
 bin_dir: /usr/local/bin
 

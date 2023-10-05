@@ -1,0 +1,11 @@
+---
+cluster_name: capi-cluster
+
+tmp_dir: "/tmp/{{ cluster_name }}"
+
+ca_file_path: /usr/local/share/ca-certificates
+
+clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
+clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"
+
+kube_config_location: "~/.kube"

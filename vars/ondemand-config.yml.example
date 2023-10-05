@@ -2,8 +2,10 @@
 keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
 
-oidc_hostname: ood-idp.flexi.nesi
+oidc_hostname: "{{ hostvars['servicesnode']['ansible_host'] | replace('.', '-') }}.163-7-177-243.sslip.io"
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
+
+cluster_rdc_project: NeSI-Training-Test
 
 # authentication settings
 oidc_uri: "/oidc"
@@ -24,9 +26,9 @@ oidc_settings:
   OIDCPassRefreshToken: 'On'
 
 # ood portal config
-servername: ood.flexi.nesi
-ssl_cert: /etc/ssl/crt/apache-ood.crt
-ssl_cert_key: /etc/ssl/private/apache-ood.key
+servername: "{{ hostvars['webnode']['ansible_host'] | replace('.', '-') }}.163-7-177-243.sslip.io"
+ssl_cert: /etc/ssl/wild.163-7-177-243.sslip.io.crt
+ssl_cert_key: /etc/ssl/wild.163-7-177-243.sslip.io.key
 ssl:
 - "SSLCertificateFile {{ ssl_cert }}"
 - "SSLCertificateKeyFile {{ ssl_cert_key }}"
@@ -80,7 +82,7 @@ ood_install_apps:
 # Clusterctl config
 
 kubernetes_version: v1.26.7
-capi_image_name: ubuntu-2204-kube-v1.26.7
+capi_image_name: ubuntu-2204-kube-v1.26.7-rdc-ca
 
 capi_provider_version: v0.8.0
 
@@ -114,3 +116,10 @@ kube_oidc_username_claim: "{{ oidc_remote_user_claim }}"
 kube_oidc_username_prefix: "-"
 kube_oidc_groups_claim: groups
 kube_oidc_groups_prefix: 'oidc:'
+
+# Stuff to not change
+
+ca_file_path: /usr/local/share/ca-certificates
+
+rdc_private_key_path: "{{ ca_file_path }}/rdc-CA.key"
+rdc_certificate_path: "{{ ca_file_path }}/rdc-CA.crt"

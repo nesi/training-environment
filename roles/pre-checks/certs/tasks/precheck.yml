@@ -1,0 +1,19 @@
+---
+- name: Pre-Check Certs | Setting facts for CA_KEY_BASE64
+  set_fact:
+    ca_key_bas64: "{{ lookup('ansible.builtin.env', 'CA_KEY_BASE64') | default('') }}"
+
+- name: Pre-Check Certs | Setting facts for CA_CRT_BASE64
+  set_fact:
+    ca_crt_bas64: "{{ lookup('ansible.builtin.env', 'CA_CRT_BASE64') | default('') }}"
+
+- name: Pre-Check Certs | Setting facts for CA_PASSPHRASE
+  set_fact:
+    rdc_ca_passphrase: "{{ lookup('ansible.builtin.env', 'CA_PASSPHRASE') | default('') }}"
+
+- name: Pre-Check Certs | Check KUBE_CONFIG_BASE64 variables are defined
+  assert:
+    that:
+      - ca_key_bas64 is defined and ca_key_bas64 != ''
+      - ca_crt_bas64 is defined and ca_crt_bas64 != ''
+      - rdc_ca_passphrase is defined and rdc_ca_passphrase != ''

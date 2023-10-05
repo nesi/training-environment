@@ -1,0 +1,9 @@
+---
+- name: Pre-Check Kubernetes | Setting facts for KUBE_CONFIG_BASE64
+  set_fact:
+    kube_config_bas64: "{{ lookup('ansible.builtin.env', 'KUBE_CONFIG_BASE64') | default('') }}"
+
+- name: Pre-Check Kubernetes | Check variables are defined
+  assert:
+    that:
+      - kube_config_bas64 is defined and kube_config_bas64 != ''

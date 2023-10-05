@@ -1,0 +1,11 @@
+---
+- name: Pre-Check Openstack | Ensure clouds.yaml file exists
+  delegate_to: localhost
+  stat:
+    path: "{{ clouds_yaml_local_location }}"
+  register: clouds_yaml_local_file
+
+- name: Pre-Check Openstack | Check variables are defined
+  assert:
+    that:
+      - clouds_yaml_local_file.stat.exists

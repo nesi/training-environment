@@ -1,0 +1,23 @@
+---
+- name: Pre-Check Install Cert | Check for environment variables
+  include_tasks: precheck.yml
+
+- name: Pre-Check Install Cert | Decode the base64 encoded version of the cert file and assign it to a variable
+  set_fact:
+    wild_cert_content: "{{ wild_cert_bas64 | b64decode }}"
+
+- name: Pre-Check Install Cert | Decode the base64 encoded version of the cert key file and assign it to a variable
+  set_fact:
+    wild_cert_key_content: "{{ wild_cert_key_bas64 | b64decode }}"
+
+- name: Pre-Check Install Cert | Creating wild.163-7-177-243.sslip.io.crt with wild_cert_content
+  copy:
+    dest: "{{ cert_file_path }}/wild.163-7-177-243.sslip.io.crt"
+    content: "{{ wild_cert_content }}"
+  become: true
+
+- name: Pre-Check Install Cert | Creating wild.163-7-177-243.sslip.io.key with wild_cert_key_content
+  copy:
+    dest: "{{ cert_file_path }}/wild.163-7-177-243.sslip.io.key"
+    content: "{{ wild_cert_key_content }}"
+  become: true

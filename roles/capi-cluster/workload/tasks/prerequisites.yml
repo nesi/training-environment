@@ -5,18 +5,6 @@
     state: directory
     mode: 0755
 
-# - name: Workload | Ensure clouds.yaml file exists locally
-#   delegate_to: localhost
-#   stat:
-#     path: "{{ clouds_yaml_local_location }}"
-#   register: clouds_yaml_local_file
-
-# - name: Workload | Copy local clouds.yaml to remote
-#   copy:
-#     src: "{{ clouds_yaml_local_location }}"
-#     dest: "{{ clouds_yaml_location }}"
-#     mode: 0640
-
 - name: Workload | Ensure clouds.yaml file exists remotely
   stat:
     path: "{{ clouds_yaml_location }}"
@@ -27,12 +15,6 @@
     path: "{{ kube_config_location }}"
     state: directory
     mode: 0755
-
-# - name: Workload | Copy local kubectl config to remote
-#   copy:
-#     src: "{{ kube_config_local_location }}"
-#     dest: "{{ kube_config_location }}/config"
-#     mode: 0640
 
 - name: Workload | Ensure kubectl config file exists remotely
   stat:

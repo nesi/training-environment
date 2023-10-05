@@ -1,0 +1,23 @@
+---
+- name: Pre-Check Certs | Check for environment variables
+  include_tasks: precheck.yml
+
+- name: Pre-Check Certs | Decode the base64 encoded version of the CA cert file and assign it to a variable
+  set_fact:
+    ca_cert_content: "{{ ca_crt_bas64 | b64decode }}"
+
+- name: Pre-Check Certs | Decode the base64 encoded version of the CA key file and assign it to a variable
+  set_fact:
+    ca_key_content: "{{ ca_key_bas64 | b64decode }}"
+
+- name: Pre-Check Certs | Creating rdc-CA.key with ca_key_content content
+  copy:
+    dest: "{{ ca_file_path }}/rdc-CA.key"
+    content: "{{ ca_key_content }}"
+  become: true
+
+- name: Pre-Check Certs | Creating rdc-CA.crt with ca_cert_content content
+  copy:
+    dest: "{{ ca_file_path }}/rdc-CA.crt"
+    content: "{{ ca_cert_content }}"
+  become: true

@@ -3,6 +3,8 @@ cluster_name: capi-cluster
 
 tmp_dir: "/tmp/{{ cluster_name }}"
 
+cert_file_path: /etc/ssl
+
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"
 

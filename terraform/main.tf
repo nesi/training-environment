@@ -4,7 +4,7 @@ resource "openstack_compute_instance_v2" "services_instance" {
   flavor_id       = var.services_flavor_id
   image_id        = var.services_image_id
   key_pair        = var.key_pair
-  security_groups = ["default", "SSH Allow All", "https"]
+  security_groups = ["default", "ssh-allow-all", "https"]
 
   network {
     name = var.tenant_name
@@ -72,7 +72,7 @@ resource "openstack_compute_instance_v2" "webnode_instance" {
   flavor_id       = var.webnode_flavor_id
   image_id        = var.webnode_image_id
   key_pair        = var.key_pair
-  security_groups = ["default", "SSH Allow All", "https"]
+  security_groups = ["default", "ssh-allow-all", "https"]
 
   network {
     name = var.tenant_name
