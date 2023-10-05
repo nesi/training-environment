@@ -109,3 +109,5 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: "False"
           CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
           KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
+          WILD_CERT_BASE64: "${{ secrets.WILD_CERT_BASE64 }}"
+          WILD_CERT_KEY_BASE64: "${{ secrets.WILD_CERT_KEY_BASE64 }}"
