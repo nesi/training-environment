@@ -16,6 +16,7 @@ required_version = ">= 0.14.0"
     region = "us-east-1"
     force_path_style = "true"
     skip_credentials_validation = "true"
+    skip_requesting_account_id = "true"
   }
 }
 
