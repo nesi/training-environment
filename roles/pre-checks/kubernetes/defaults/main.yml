@@ -1,4 +1,6 @@
 ---
+k8s_ood_enable: false
+
 cluster_name: capi-cluster
 
 tmp_dir: "/tmp/{{ cluster_name }}"

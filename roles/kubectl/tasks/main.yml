@@ -1,15 +1,23 @@
 ---
-- name: Kubectl | Ensure Kubectl is installed
-  stat:
-    path: "{{ bin_dir }}/kubectl"
-  register: kubectl_binary
+- name: Kubectl | Setting kubernetes OOD enabled boolean to {{ k8s_ood_enable }}
+  set_fact:
+    enable_k8s_openondemand: "{{ k8s_ood_enable }}"
 
-- name: Kubectl | Download kubectl to specified location {{ bin_dir }}
-  get_url:
-    url: "{{ kubectl_url }}"
-    dest: "{{ bin_dir }}/kubectl"
-    mode: 0755
-    force: true
-  become: true    
+- name: Kubectl | Setting up Kubectl
+  block:
+  - name: Kubectl | Ensure Kubectl is installed
+    stat:
+      path: "{{ bin_dir }}/kubectl"
+    register: kubectl_binary
+
+  - name: Kubectl | Download kubectl to specified location {{ bin_dir }}
+    get_url:
+      url: "{{ kubectl_url }}"
+      dest: "{{ bin_dir }}/kubectl"
+      mode: 0755
+      force: true
+    become: true    
+    when:
+      - not kubectl_binary.stat.exists
   when:
-    - not kubectl_binary.stat.exists
+    - "enable_k8s_openondemand|default(false)|bool == true"

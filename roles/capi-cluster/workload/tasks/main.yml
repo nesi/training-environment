@@ -1,6 +1,13 @@
 ---
+- name: Workload | Setting kubernetes OOD enabled boolean to {{ k8s_ood_enable }}
+  set_fact:
+    enable_k8s_openondemand: "{{ k8s_ood_enable }}"
+
 - name: Workload | Prerequisites
   include_tasks: prerequisites.yml
+  when:
+    - "enable_k8s_openondemand|default(false)|bool == true"
+
 
 - name: Workload | Create and initialize clusterctl and cloud manager
   block:
@@ -30,6 +37,7 @@
       include_tasks: install-cloud-manager.yml
       when: cluster_intialized.stdout == ''
   when:
+    - "enable_k8s_openondemand|default(false)|bool == true"
     - clouds_yaml_file.stat.exists
 
 

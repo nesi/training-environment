@@ -22,6 +22,7 @@ oidc_settings:
   OIDCSSLValidateServer: 'Off'
   OIDCOAuthSSLValidateServer: 'Off'
   OIDCPassClaimsAs: environment
+  OIDCPassRefreshToken: 'On'
   OIDCStripCookies: mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1
   OIDCPassRefreshToken: 'On'
 
@@ -80,6 +81,8 @@ ood_install_apps:
     version: main
 
 # Clusterctl config
+
+k8s_ood_enable: false
 
 kubernetes_version: v1.26.7
 capi_image_name: ubuntu-2204-kube-v1.26.7-rdc-ca

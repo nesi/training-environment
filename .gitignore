@@ -14,3 +14,4 @@ users/password*
 vars/ondemand-config.yml
 pubkeys/*.pub
 config/k8s-admin.conf
+scratch-pad.md

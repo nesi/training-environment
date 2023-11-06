@@ -1,4 +1,6 @@
 ---
+k8s_ood_enable: false
+
 bin_dir: /usr/local/bin
 
 clusterctl_version: v1.5.1

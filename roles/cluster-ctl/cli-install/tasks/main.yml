@@ -1,19 +1,27 @@
 ---
-- name: CLI Install | Ensure clusterctl is installed
-  stat:
-    path: "{{ bin_dir }}/clusterctl"
-  register: clusterctl_binary
+- name: Pre-Check Kubernetes | Setting kubernetes OOD enabled boolean to {{ k8s_ood_enable }}
+  set_fact:
+    enable_k8s_openondemand: "{{ k8s_ood_enable }}"
 
-- name: CLI Install | Download clusterctl to specified location {{ bin_dir }}
-  get_url:
-    url: "{{ clusterctl_repo }}"
-    dest: "{{ bin_dir }}/clusterctl"
-    mode: 0755
-    force: true
-  become: true
+- name: CLI Install | CLI Install if kubernetes is enabled
+  block:
+  - name: CLI Install | Ensure clusterctl is installed
+    stat:
+      path: "{{ bin_dir }}/clusterctl"
+    register: clusterctl_binary
+
+  - name: CLI Install | Download clusterctl to specified location {{ bin_dir }}
+    get_url:
+      url: "{{ clusterctl_repo }}"
+      dest: "{{ bin_dir }}/clusterctl"
+      mode: 0755
+      force: true
+    become: true
+    when:
+      - not clusterctl_binary.stat.exists
+
+  - name: CLI Install | Installation has been finished
+    debug:
+      msg: "Installation of clusterctl version {{ clusterctl_version }} has been finished!"
   when:
-    - not clusterctl_binary.stat.exists
-
-- name: CLI Install | Installation has been finished
-  debug:
-    msg: "Installation of clusterctl version {{ clusterctl_version }} has been finished!"
+    - "enable_k8s_openondemand|default(false)|bool == true"
