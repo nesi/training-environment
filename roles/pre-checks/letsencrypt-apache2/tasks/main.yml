@@ -1,0 +1,45 @@
+---
+# setting up apache in front of keycloak
+- name: Pre-Check Apache2 | Install apache2
+  apt:
+    name:
+      - apache2
+    state: present
+  become: true
+
+- name: Pre-Check Apache2 | Create .well-known/acme-challenge directory
+  file:
+    path: /var/www/html/.well-known/acme-challenge
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  become: true
+
+- name: Pre-Check Apache2 | Install apache well-known config
+  template:
+    src: well-known-catch.conf.j2
+    dest: /etc/apache2/conf-available/well-known-catch.conf
+    owner: root
+    group: root
+  notify: restart apache
+  become: true
+
+- name: Pre-Check Apache2 | Enable apache keycloak site
+  command: a2enconf well-known-catch.conf
+  args:
+    creates: /etc/apache2/conf-enabled/well-known-catch.conf
+  notify: restart apache
+  become: true
+
+- name: Pre-Check Apache2 | Enable the Apache2 modules
+  community.general.apache2_module:
+    state: present
+    name: "{{ item }}"
+  notify: restart apache
+  loop:
+    - proxy_http
+    - ssl
+    - headers
+    - rewrite
+  become: true

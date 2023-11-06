@@ -1,18 +1,26 @@
 ---
-- name: Pre-Check Kubernetes | Check for environment variables
-  include_tasks: precheck.yml
-
-- name: Pre-Check Kubernetes | Decode the base64 encoded version of the YAML file and assign it to a variable
+- name: Pre-Check Kubernetes | Setting kubernetes OOD enabled boolean to {{ k8s_ood_enable }}
   set_fact:
-    kube_config_content: "{{ kube_config_bas64 | b64decode | from_yaml }}"
+    enable_k8s_openondemand: "{{ k8s_ood_enable }}"
 
-- name: Pre-Check Kubernetes | Creating {{ kube_config_location }} if it does not exist
-  file:
-    path: "{{ kube_config_location }}"
-    state: directory
-    mode: 0755
+- name: Pre-Check Kubernetes | Check variables for kubernetes
+  block:
+  - name: Pre-Check Kubernetes | Check for environment variables
+    include_tasks: precheck.yml
 
-- name: Pre-Check Kubernetes | Save kube_config_content to {{ kube_config_location }}
-  copy:
-    content: "{{ kube_config_content | to_nice_yaml }}"
-    dest: "{{ kube_config_location }}/config"
+  - name: Pre-Check Kubernetes | Decode the base64 encoded version of the YAML file and assign it to a variable
+    set_fact:
+      kube_config_content: "{{ kube_config_bas64 | b64decode | from_yaml }}"
+
+  - name: Pre-Check Kubernetes | Creating {{ kube_config_location }} if it does not exist
+    file:
+      path: "{{ kube_config_location }}"
+      state: directory
+      mode: 0755
+
+  - name: Pre-Check Kubernetes | Save kube_config_content to {{ kube_config_location }}
+    copy:
+      content: "{{ kube_config_content | to_nice_yaml }}"
+      dest: "{{ kube_config_location }}/config"
+  when:
+    - "enable_k8s_openondemand|default(false)|bool == true"

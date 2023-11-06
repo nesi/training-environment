@@ -149,6 +149,10 @@
     remember_me: true
     enabled: true
     state: present
+  register: lsresult
+  until: "lsresult is not failed"
+  retries: 10
+  delay: 10
 
 - name: Create LDAP user federation
   community.general.keycloak_user_federation:
@@ -174,6 +178,30 @@
       usernameLDAPAttribute: uid
       rdnLDAPAttribute: uid
       uuidLDAPAttribute: entryUUID
+  register: lsresult
+  until: "lsresult is not failed"
+  retries: 10
+  delay: 10
+
+- name: Add kubernetes as a client
+  community.general.keycloak_client:
+    auth_client_id: admin-cli
+    auth_keycloak_url: http://127.0.0.1:8080
+    auth_realm: master
+    auth_username: admin
+    auth_password: "{{ keycloak_admin_password }}"
+    state: present
+    realm: ondemand
+    client_id: kubernetes
+    protocol: openid-connect
+    public_client: false
+    redirect_uris:
+      - http://*
+      - https://*
+  register: lsresult
+  until: "lsresult is not failed"
+  retries: 10
+  delay: 10
 
 - name: Add ondemand as a client
   community.general.keycloak_client:
@@ -190,3 +218,17 @@
     redirect_uris:
       - https://{{ servername }}/oidc
       - https://{{ servername }}
+    protocol_mappers:
+      - config:
+          id.token.claim: False
+          access.token.claim: True
+          userinfo.token.claim: False
+          included.client.audience: kubernetes
+        protocol: openid-connect
+        name: kubernetes
+        protocolMapper: oidc-audience-mapper
+  register: lsresult
+  until: "lsresult is not failed"
+  retries: 10
+  delay: 10
+

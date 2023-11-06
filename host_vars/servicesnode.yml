@@ -1,0 +1,1 @@
+domain_name: "{{ hostvars['servicesnode']['ansible_host'] | replace('.', '-') }}.sslip.io"

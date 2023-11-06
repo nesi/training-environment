@@ -1,12 +1,17 @@
 ---
+k8s_ood_enable: false
+
 private_key_path: /etc/ssl/private
 certificate_path: /etc/ssl/crt
 wild_certificate_path: /etc/ssl
 
 ca_file_path: /usr/local/share/ca-certificates
 
-apache_keycloak_private_key_path: "{{ wild_certificate_path }}/wild.163-7-177-243.sslip.io.key"
-apache_keycloak_certificate_path: "{{ wild_certificate_path }}/wild.163-7-177-243.sslip.io.crt"
+# apache_keycloak_private_key_path: "{{ wild_certificate_path }}/wild.163-7-177-243.sslip.io.key"
+# apache_keycloak_certificate_path: "{{ wild_certificate_path }}/wild.163-7-177-243.sslip.io.crt"
+
+apache_keycloak_private_key_path: "{{ letsencrypt_keys_dir }}/{{ domain_name }}.key"
+apache_keycloak_certificate_path: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
 
 # apache_keycloak_private_key_path: "{{ private_key_path }}/apache-keycloak.key"
 # apache_keycloak_certificate_path: "{{ certificate_path }}/apache-keycloak.crt"

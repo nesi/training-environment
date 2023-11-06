@@ -92,60 +92,45 @@
   file:
     path: "{{ ood_hooks_dir }}/k8s-bootstrap"
     state: directory
-    mode: 0770
+    mode: 0755
 
 - name: Web Node | Create ood_pun_prehook
   template:
     src: "ood_pun_prehook.j2"
     dest: "{{ ood_hooks_dir }}/ood_pun_prehook"
-    mode: 0770
+    mode: 0755
 
 - name: Web Node | Create k8s-bootstrap-ondemand.sh
   copy:
     src: "files/k8s-bootstrap-ondemand.sh"
     dest: "{{ ood_k8s_hooks_dir }}/k8s-bootstrap-ondemand.sh"
-    mode: 0770
+    mode: 0755
 
 - name: Web Node | Create set-k8s-creds.sh
   copy:
     src: "files/set-k8s-creds.sh"
     dest: "{{ ood_k8s_hooks_dir }}/set-k8s-creds.sh"
-    mode: 0770
+    mode: 0755
 
-- name: Replace pun_pre_hook_root_cmd entry in ood_portal.yml
+- name: Web Node | Replace pun_pre_hook_root_cmd entry in ood_portal.yml
   lineinfile:
     path: "{{ ood_config_dir }}/ood_portal.yml"
     search_string: '# pun_pre_hook_root_cmd: null'
-    line: "pun_pre_hook_root_cmd: {{ ood_hooks_dir }}/ood_pun_prehook"
+    line: "pun_pre_hook_root_cmd: '{{ ood_hooks_dir }}/ood_pun_prehook'"
+  notify: restart apache
 
-- name: Replace pun_pre_hook_exports entry in ood_portal.yml
+- name: Web Node | Replace pun_pre_hook_exports entry in ood_portal.yml
   lineinfile:
     path: "{{ ood_config_dir }}/ood_portal.yml"
     search_string: '# pun_pre_hook_exports: null'
     line: "pun_pre_hook_exports: 'OIDC_ACCESS_TOKEN,OIDC_CLAIM_EMAIL,OIDC_REFRESH_TOKEN'"
-
-# - name: Web Node | Creating folder {{ ood_k8s_yaml_dir }} if it does not exist
-#   file:
-#     path: "{{ ood_k8s_yaml_dir }}"
-#     state: directory
-#     mode: 0755
+  notify: restart apache
 
 - name: Web Node | Copy k8s bootstrap yaml files
   copy: 
     src: "{{ item.src }}" 
     dest: "{{ item.dest }}"
+    mode: 0755
   loop:
     - src: files/yaml
       dest: "{{ ood_k8s_hooks_dir }}"
-
-# kubectl describe serviceaccount ondemand -n ondemand | grep Tokens | awk '{ print $2 }'
-
-# kubectl --kubeconfig ~/training-ml101.kubeconfig get cm kube-root-ca.crt -n kube-system -o jsonpath="{['data']['ca\.crt']}"
-# /etc/pki/tls/certs/k8s-cluster.crt
-
-# kubectl --kubeconfig ~/training-ml101.kubeconfig cluster-info | grep 'control plane' | awk -F 'https://' '{print $2}'
-
-# kubectl config set-cluster kubernetes --server=https://$CONTROLLER:6443 --certificate-authority=$CACERT
-# kubectl config set-credentials ondemand@kubernetes --token=$TOKEN
-# kubectl config set-context ondemand@kubernetes --cluster=kubernetes --user=ondemand@kubernetes
-# kubectl config use-context ondemand@kubernetes

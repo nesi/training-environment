@@ -1,0 +1,20 @@
+---
+- name: Defaults | Generate SSH key pair
+  community.crypto.openssh_keypair:
+    path: ~/.ssh/id_rsa
+    size: 4096
+    type: rsa
+
+- name: Defaults | Fetch the public key from the node to local
+  fetch:
+    src: "~/.ssh/id_rsa.pub"
+    dest: "pubkeys/{{ansible_hostname}}-id_rsa.pub"
+    flat: yes
+
+- name: Defaults | Copy the key to authorized_keys
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file','pubkeys/{{item}}-id_rsa.pub')}}"
+  with_items:
+    - "{{ groups['servers'] }}"

@@ -1,7 +1,7 @@
 ---
-- name: Web Node | Setting OOD enabled boolean to {{ ood_enabled }}
+- name: Web Node | Setting OOD enabled boolean to {{ k8s_ood_enable }}
   set_fact:
-    enable_openondemand: "{{ ood_enabled }}"
+    enable_openondemand: "{{ k8s_ood_enable }}"
 
 - name: Web Node | Bootstrapping OnDemand Web node
   block:

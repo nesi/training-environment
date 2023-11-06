@@ -1,5 +1,5 @@
 ---
-ood_enabled: true
+k8s_ood_enable: false
 
 cluster_name: capi-cluster
 

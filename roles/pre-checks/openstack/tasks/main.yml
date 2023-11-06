@@ -1,15 +1,23 @@
 ---
-- name: Pre-Check Openstack | Check for environment variables
-  include_tasks: precheck.yml
+- name: Pre-Check Openstack | Setting kubernetes OOD enabled boolean to {{ k8s_ood_enable }}
+  set_fact:
+    enable_k8s_openondemand: "{{ k8s_ood_enable }}"
 
-- name: Pre-Check Openstack | Creating {{ tmp_dir }} if it does not exist
-  file:
-    path: "{{ tmp_dir }}"
-    state: directory
-    mode: 0755
+- name: Pre-Check Openstack | Check variables for Openstack
+  block:
+  - name: Pre-Check Openstack | Check for environment variables
+    include_tasks: precheck.yml
 
-- name: Pre-Check Openstack | Copy clouds.yaml to {{ tmp_dir }}
-  copy:
-    src: "{{ clouds_yaml_local_location }}"
-    dest: "{{ clouds_yaml_location }}"
-    mode: 0640
+  - name: Pre-Check Openstack | Creating {{ tmp_dir }} if it does not exist
+    file:
+      path: "{{ tmp_dir }}"
+      state: directory
+      mode: 0755
+
+  - name: Pre-Check Openstack | Copy clouds.yaml to {{ tmp_dir }}
+    copy:
+      src: "{{ clouds_yaml_local_location }}"
+      dest: "{{ clouds_yaml_location }}"
+      mode: 0640
+  when:
+    - "enable_k8s_openondemand|default(false)|bool == true"

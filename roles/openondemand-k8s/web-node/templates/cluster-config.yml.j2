@@ -5,15 +5,15 @@ v2:
     title: "Kubernetes"
   job:
     adapter: "kubernetes"
-    bin: "{{ bin_dir }}kubectl"
+    bin: "{{ bin_dir }}/kubectl"
     all_namespaces: false
     cluster: "kubernetes"
     context: "kubernetes"
     namespace_prefix: "{{ k8s_namespace_prefix }}"
     auto_supplemental_groups: false
     server:
-      endpoint: "https://{{ kube_controller_url }}"
-      cert_authority_file: "{{ kube_root_ca_location }}"
+      endpoint: "https://{{ kube_controller_url_stripped }}"
+      cert_authority_file: "{{ kube_root_ca_location }}/k8s-cluster.crt"
     mounts: []
     auth:
       type: "oidc"

@@ -1,0 +1,18 @@
+---
+- name: Defaults | Set timezone
+  community.general.timezone:
+    name: Pacific/Auckland
+
+- name: Defaults | Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}.flexi.nesi"
+
+- name: Defaults | Upgrade System
+  include_tasks: upgrade_system.yml
+
+- name: Defaults | Setup /etc/hosts
+  include_tasks: setup-etc-hosts.yml
+
+- name: Defaults | Exchange SSH keys between servers
+  include_tasks: exchange-ssh-keys.yml
+

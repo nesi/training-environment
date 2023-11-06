@@ -1,41 +1,24 @@
 ---
+- name: Pre-Check LetsEncrypt Certs | Install acme-tiny
+  apt:
+    name:
+      - acme-tiny
+    state: present
+  become: true
+
 - name: Pre-Check LetsEncrypt Certs | Create required directories in /etc/letsencrypt
   file:
     path: "/etc/letsencrypt/{{ item }}"
     state: directory
     owner: root
     group: root
-    mode: u=rwx,g=x,o=x
+    mode: u=rwx,g=rx,o=rx
   with_items:
   - account
   - certs
   - csrs
   - keys
-
-- name: Pre-Check LetsEncrypt Certs | Generate a Let's Encrypt account key
-  shell: "if [ ! -f {{ letsencrypt_account_key }} ]; then openssl genrsa 4096 | sudo tee {{ letsencrypt_account_key }}; fi"
-
-- name: Pre-Check LetsEncrypt Certs | Generate Let's Encrypt private key
-  shell: "openssl genrsa 4096 | sudo tee /etc/letsencrypt/keys/{{ domain_name }}.key"
-
-- name: Pre-Check LetsEncrypt Certs | Generate Let's Encrypt CSR
-  shell: "openssl req -new -sha256 -key /etc/letsencrypt/keys/{{ domain_name }}.key -subj \"/CN={{ domain_name }}\" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf \"\n[SAN]\nsubjectAltName=DNS:{{ domain_name }}\")) | sudo tee /etc/letsencrypt/csrs/{{ domain_name }}.csr"
-  args:
-    executable: /bin/bash
-
-- name: Pre-Check LetsEncrypt Certs | Begin Let's Encrypt challenges
-  letsencrypt:
-    acme_directory: "{{ acme_directory }}"
-    acme_version: "{{ acme_version }}"
-    account_key_src: "{{ letsencrypt_account_key }}"
-    account_email: "{{ acme_email }}"
-    terms_agreed: 1
-    challenge: "{{ acme_challenge_type }}"
-    csr: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
-    dest: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
-    fullchain_dest: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}.crt"
-    remaining_days: 91
-  register: acme_challenge_your_domain
+  become: true
 
 - name: Pre-Check LetsEncrypt Certs | Create .well-known/acme-challenge directory
   file:
@@ -45,25 +28,31 @@
     group: root
     mode: u=rwx,g=rx,o=rx
 
-- name: Pre-Check LetsEncrypt Certs | Implement http-01 challenge files
-  copy:
-    content: "{{ acme_challenge_your_domain['challenge_data'][item]['http-01']['resource_value'] }}"
-    dest: "/var/www/html/{{ acme_challenge_your_domain['challenge_data'][item]['http-01']['resource'] }}"
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-  with_items:
-  - "{{ domain_name }}"
+- name: Pre-Check LetsEncrypt Certs | Check if {{ domain_name }} cert has been generated
+  stat: 
+    path: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
+  register: keycloak_cert
 
-- name: Pre-Check LetsEncrypt Certs | Complete Let's Encrypt challenges
-  letsencrypt:
-    acme_directory: "{{ acme_directory }}"
-    acme_version: "{{ acme_version }}"
-    account_key_src: "{{ letsencrypt_account_key }}"
-    account_email: "{{ acme_email }}"
-    challenge: "{{ acme_challenge_type }}"
-    csr: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
-    dest: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
-    chain_dest: "{{ letsencrypt_certs_dir }}/chain_{{ domain_name }}.crt"
-    fullchain_dest: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}"
-    data: "{{ acme_challenge_your_domain }}"
+- name: Pre-Check LetsEncrypt Certs | Generate LetsEncrypt {{ domain_name }} cert
+  block:
+    - name: Pre-Check LetsEncrypt Certs | Generate a Let's Encrypt account key
+      shell: "if [ ! -f {{ letsencrypt_account_key }} ]; then openssl genrsa 4096 | sudo tee {{ letsencrypt_account_key }}; fi"
+
+    - name: Pre-Check LetsEncrypt Certs | Generate Let's Encrypt private key
+      shell: "openssl genrsa 4096 | sudo tee /etc/letsencrypt/keys/{{ domain_name }}.key"
+
+    - name: Pre-Check LetsEncrypt Certs | Generate Let's Encrypt CSR
+      shell: "openssl req -new -sha256 -key /etc/letsencrypt/keys/{{ domain_name }}.key -subj \"/CN={{ domain_name }}\" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf \"\n[SAN]\nsubjectAltName=DNS:{{ domain_name }}\")) | sudo tee /etc/letsencrypt/csrs/{{ domain_name }}.csr"
+      args:
+        executable: /bin/bash
+
+    - name: Pre-Check LetsEncrypt Certs | Begin Let's Encrypt challenges
+      community.crypto.x509_certificate:
+        path: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
+        csr_path: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
+        provider: acme
+        acme_accountkey_path: "{{ letsencrypt_account_key }}"
+        acme_challenge_path: /var/www/html/.well-known/acme-challenge    
+        acme_directory: "{{ acme_directory }}"
+      become: true
+  when: not keycloak_cert.stat.exists
