@@ -12,7 +12,7 @@
       zone: data.nesi.org.nz
       record: "{{ item.domain }}.data.nesi.org.nz"
       type: A
-      ttl: 7200
+      ttl: 60
       value: "{{ item.dest }}"
       wait: true
       overwrite: true
@@ -50,7 +50,7 @@
       zone: data.nesi.org.nz
       record: "{{ item.domain }}.data.nesi.org.nz"
       type: A
-      ttl: 7200
+      ttl: 60
       value: "{{ item.dest }}"
       wait: true
     loop:
