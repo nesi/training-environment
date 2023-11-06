@@ -62,6 +62,18 @@ If you don't have any EC2 credentials then use the following CLI command to gene
 openstack ec2 credentials create
 ```
 
+Set environment variables for authenticating with AWS Route 53
+
+```
+export AWS_ROUTE53_KEY_ID="AWS_ROUTE53_KEY"
+export AWS_ROUTE53_SECRET_KEY="AWS_ROUTE53_SECRET"
+```
+
+where
+
+- `AWS_ROUTE53_KEY` is set to your AWS access token
+- `AWS_ROUTE53_SECRET` is set to your AWS secret token
+
 Install Ansible dependencies:
 
 ```

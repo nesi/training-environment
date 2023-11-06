@@ -1,0 +1,66 @@
+- hosts: localhost
+  vars:
+    terraform_workspace: default
+  tasks:
+  - name: Setup Route 53 host zones
+    vars:
+        ansible_python_interpreter: /usr/bin/python3 
+    amazon.aws.route53:
+      access_key: "{{ lookup('ansible.builtin.env', 'AWS_ROUTE53_KEY_ID') | default('') }}"
+      secret_key: "{{ lookup('ansible.builtin.env', 'AWS_ROUTE53_SECRET_KEY') | default('') }}"
+      state: present
+      zone: data.nesi.org.nz
+      record: "{{ item.domain }}.data.nesi.org.nz"
+      type: A
+      ttl: 7200
+      value: "{{ item.dest }}"
+      wait: true
+    loop:
+      - domain: "{{ hostvars['servicesnode']['hostname'] }}"
+        dest: "{{ hostvars['servicesnode']['ansible_host'] }}"
+      - domain: "{{ hostvars['webnode']['hostname'] }}"
+        dest: "{{ hostvars['webnode']['ansible_host'] }}"
+    when: (operation == "create")
+
+  - name: Create Route 53 host list
+    file:
+      path: "users/domains.txt"
+      state: touch
+    when: (operation == "create")
+
+  - name: Insert Route 53 hosts
+    lineinfile:
+      path: "users/domains.txt"
+      line: "{{ item.domain }}.data.nesi.org.nz"
+    loop:
+      - domain: "{{ hostvars['servicesnode']['hostname'] }}"
+        dest: "{{ hostvars['servicesnode']['ansible_host'] }}"
+      - domain: "{{ hostvars['webnode']['hostname'] }}"
+        dest: "{{ hostvars['webnode']['ansible_host'] }}"
+    when: (operation == "create")
+
+  - name: Remove Route 53 host zones
+    vars:
+        ansible_python_interpreter: /usr/bin/python3 
+    amazon.aws.route53:
+      access_key: "{{ lookup('ansible.builtin.env', 'AWS_ROUTE53_KEY_ID') | default('') }}"
+      secret_key: "{{ lookup('ansible.builtin.env', 'AWS_ROUTE53_SECRET_KEY') | default('') }}"
+      state: absent
+      zone: data.nesi.org.nz
+      record: "{{ item.domain }}.data.nesi.org.nz"
+      type: A
+      ttl: 7200
+      value: "{{ item.dest }}"
+      wait: true
+    loop:
+      - domain: "{{ hostvars['servicesnode']['hostname'] }}"
+        dest: "{{ hostvars['servicesnode']['ansible_host'] }}"
+      - domain: "{{ hostvars['webnode']['hostname'] }}"
+        dest: "{{ hostvars['webnode']['ansible_host'] }}"
+    when: (operation == "destroy")
+
+  - name: Cleanup Route 53 host list
+    file:
+      path: "users/domains.txt"
+      state: absent
+    when: (operation == "destroy")

@@ -2,7 +2,10 @@
 keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
 
-oidc_hostname: "{{ hostvars['servicesnode']['ansible_host'] | replace('.', '-') }}.163-7-177-243.sslip.io"
+# DNS Settings
+route_53_zone: data.nesi.org.nz
+
+oidc_hostname: "{{ hostvars['servicesnode']['hostname'] }}.{{ route_53_zone }}"
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 
 cluster_rdc_project: NeSI-Training-Test
@@ -27,9 +30,9 @@ oidc_settings:
   OIDCPassRefreshToken: 'On'
 
 # ood portal config
-servername: "{{ hostvars['webnode']['ansible_host'] | replace('.', '-') }}.163-7-177-243.sslip.io"
-ssl_cert: /etc/ssl/wild.163-7-177-243.sslip.io.crt
-ssl_cert_key: /etc/ssl/wild.163-7-177-243.sslip.io.key
+servername: "{{ hostvars['webnode']['hostname'] }}.{{ route_53_zone }}"
+ssl_cert: /etc/letsencrypt/certs/{{ servername }}.crt
+ssl_cert_key: /etc/letsencrypt/keys/{{ servername }}.key
 ssl:
 - "SSLCertificateFile {{ ssl_cert }}"
 - "SSLCertificateKeyFile {{ ssl_cert_key }}"
@@ -79,6 +82,11 @@ ood_install_apps:
   jupyter_ml101:
     repo: https://github.com/chrisdjscott/ood_ml101_test.git
     version: main
+
+# HTTPS LetsEncrypt Settings
+
+#acme_directory: https://acme-v02.api.letsencrypt.org/directory
+acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
 
 # Clusterctl config
 

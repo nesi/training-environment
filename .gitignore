@@ -10,7 +10,7 @@ env.sh
 .terraform.lock.hcl
 *.zip
 vars/secrets.yml
-users/password*
+users/*
 vars/ondemand-config.yml
 pubkeys/*.pub
 config/k8s-admin.conf

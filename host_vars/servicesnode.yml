@@ -1,1 +1,1 @@
-domain_name: "{{ hostvars['servicesnode']['ansible_host'] | replace('.', '-') }}.sslip.io"
+domain_name: "{{ hostvars['servicesnode']['hostname'] }}.data.nesi.org.nz"

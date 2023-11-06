@@ -110,7 +110,9 @@ resource "null_resource" "webnode_extra_keys" {
 locals {
   host_ini_all = templatefile("${path.module}/templates/all-hosts.tpl", {
     services_floating_ip = openstack_networking_floatingip_v2.services_floating_ip.address,
+    services_hostname = "${terraform.workspace}-ood-services"
     webnode_floating_ip = openstack_networking_floatingip_v2.webnode_floating_ip.address,
+    webnode_hostname = "${terraform.workspace}-ood-webnode"
     vm_private_key_file = var.key_file
   })
 }
@@ -119,7 +121,9 @@ locals {
 locals {
   host_ini_content = templatefile("${path.module}/templates/host.ini.tpl", {
     services_floating_ip = openstack_networking_floatingip_v2.services_floating_ip.address,
+    services_hostname = "${terraform.workspace}-ood-services"
     webnode_floating_ip = openstack_networking_floatingip_v2.webnode_floating_ip.address,
+    webnode_hostname = "${terraform.workspace}-ood-webnode"
     vm_private_key_file = var.key_file
   })
 }
