@@ -5,5 +5,7 @@
   - name: Destroy Kubernetes cluster   
     shell: >-
       kubectl delete cluster {{ terraform_workspace }}
-    when: (operation == "destroy")
+    when:
+      - (operation == "destroy")
+      - "enable_k8s_openondemand|default(false)|bool == true"
     register: destroy

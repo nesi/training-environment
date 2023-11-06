@@ -7,6 +7,12 @@ wild_certificate_path: /etc/ssl
 
 ca_file_path: /usr/local/share/ca-certificates
 
+letsencrypt_dir: /etc/letsencrypt
+letsencrypt_keys_dir: /etc/letsencrypt/keys
+letsencrypt_csrs_dir: /etc/letsencrypt/csrs
+letsencrypt_certs_dir: /etc/letsencrypt/certs
+letsencrypt_account_key: /etc/letsencrypt/account/rdc-account.key
+
 # apache_keycloak_private_key_path: "{{ wild_certificate_path }}/wild.163-7-177-243.sslip.io.key"
 # apache_keycloak_certificate_path: "{{ wild_certificate_path }}/wild.163-7-177-243.sslip.io.crt"
 
