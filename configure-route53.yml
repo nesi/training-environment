@@ -58,6 +58,7 @@
       - domain: "{{ hostvars['webnode']['hostname'] }}"
         dest: "{{ hostvars['webnode']['ansible_host'] }}"
     when: (operation == "destroy")
+    ignore_errors: true
 
   - name: Cleanup Route 53 host list
     file:
