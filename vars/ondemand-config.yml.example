@@ -27,7 +27,6 @@ oidc_settings:
   OIDCPassClaimsAs: environment
   OIDCPassRefreshToken: 'On'
   OIDCStripCookies: mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1
-  OIDCPassRefreshToken: 'On'
 
 # ood portal config
 servername: "{{ hostvars['webnode']['hostname'] }}.{{ route_53_zone }}"
@@ -41,7 +40,7 @@ httpd_auth:
   - 'Require valid-user'
 node_uri: '/node'
 rnode_uri: '/rnode'
-logout_redirect: '/oidc?logout=https%3A%2F%2Food.flexi.nesi'
+logout_redirect: '/oidc?logout=https%3A%2F%2F{{ servername }}'
 pun_pre_hook_exports: 'OIDC_ACCESS_TOKEN,OIDC_CLAIM_EMAIL,OIDC_REFRESH_TOKEN'
 
 httpd_port: 443
@@ -85,8 +84,8 @@ ood_install_apps:
 
 # HTTPS LetsEncrypt Settings
 
-#acme_directory: https://acme-v02.api.letsencrypt.org/directory
-acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
+acme_directory: https://acme-v02.api.letsencrypt.org/directory
+#acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
 
 # Clusterctl config
 
