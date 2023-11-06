@@ -23,6 +23,9 @@ jobs:
       TF_VAR_vm_user: ubuntu
     steps:
       - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.6.3"
       - run: python --version
 
       - name: Write private key file
