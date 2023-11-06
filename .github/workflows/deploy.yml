@@ -28,6 +28,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: "1.6.3"
+          terraform_wrapper: false
       - run: python --version
 
       - name: Write private key file
