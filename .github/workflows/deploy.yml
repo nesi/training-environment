@@ -101,6 +101,12 @@ jobs:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
         working-directory: terraform
 
+      - name: Install required Python library (botocore and boto3)
+        run:  |
+          pip install botocore
+          pip install boto3
+        working-directory: terraform
+
       - name: Destroy the environment first
         run: ./deployment.sh destroy ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
