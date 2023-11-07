@@ -82,6 +82,10 @@ ood_install_apps:
     repo: https://github.com/chrisdjscott/ood_ml101_test.git
     version: main
 
+  jupyter_ml102:
+    repo: https://github.com/chrisdjscott/ood_ml102_workshop.git
+    version: main
+
 # HTTPS LetsEncrypt Settings
 
 acme_directory: https://acme-v02.api.letsencrypt.org/directory

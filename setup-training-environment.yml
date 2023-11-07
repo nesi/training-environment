@@ -143,11 +143,12 @@
   roles:
     - keycloak
 
-- name: Install Apptainer
+- name: Install Workshops
   become: yes
   hosts: webnode
   roles:
     - apptainer
+    - ml102_workshop
 
 # run ondemand role
 - name: Install ondemand

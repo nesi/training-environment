@@ -1,0 +1,11 @@
+---
+- name: Create directory for ML102
+  file:
+    path: /opt/ml102_workshop
+    state: directory
+    mode: 0755
+- name: Pull ML102 image
+  command: 'apptainer pull ML102.sif oras://docker.io/cdjs/ml102_workshop:latest'
+  args:
+    chdir: /opt/ml102_workshop
+    creates: /opt/ml102_workshop/ML102.sif
