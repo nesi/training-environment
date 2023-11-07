@@ -60,21 +60,13 @@ clusters:
         ssh_hosts:
           - webnode.flexi.nesi
           - webnode
-        site_timeout: 7200
+        site_timeout: 72000
         debug: true
         singularity_bin: /usr/bin/singularity
         singularity_bindpath: /etc,/media,/mnt,/opt,/run,/srv,/usr,/var
         singularity_image: /opt/ood/linuxhost_adapter/ubuntu_22.04.sif
         strict_host_checking: false
         tmux_bin: /usr/bin/tmux
-
-  test_local: |
-    ---
-    v2:
-      metadata:
-        title: "Test Localhost Cluster"
-      login:
-        host: "localhost"
 
 # apps config
 ood_install_apps:
