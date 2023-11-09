@@ -1,4 +1,10 @@
 ---
+- name: Install acl utility
+  apt:
+    name:
+      - acl
+    state: present
+
 # add parent entries
 - name: Make sure we have a parent entry for users
   community.general.ldap_entry:
@@ -16,11 +22,21 @@
     bind_dn: cn=admin,dc=flexi,dc=nesi
     bind_pw: "{{ ldap_admin_password }}"
       
+# iterate here, creating trainers
+- name: Add trainers
+  include_tasks: add_trainer.yml
+  vars:
+    user_number: "{{ 2000 + item|int }}"
+    user_name: "trainer{{ item }}"
+    home_local: "{{ nfs_local_homes }}/trainer{{ item }}"
+    home_remote: "{{ nfs_remote_homes }}/trainer{{ item }}"
+  with_sequence: start=1 end={{ num_trainers_create }}
+
 # iterate here, creating users
 - name: Add users
   include_tasks: add_user.yml
   vars:
-    user_number: "{{ 2000 + item|int }}"
+    user_number: "{{ 3000 + item|int }}"
     user_name: "training{{ item }}"
     home_local: "{{ nfs_local_homes }}/training{{ item }}"
     home_remote: "{{ nfs_remote_homes }}/training{{ item }}"

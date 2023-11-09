@@ -69,38 +69,18 @@
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
     recurse: true
-
-# give trainer users read access to home directory
-- name: Give trainers access to the users home
-  ansible.posix.acl:
-    path: "{{ home_remote }}"
-    entity: "trainer{{ trainerid }}"
-    etype: user
-    permissions: r-X
-    recursive: true
-    state: present
-  with_sequence: start=1 end={{ num_trainers_create }}
-  loop_control:
-    loop_var: trainerid
-
 - name: "Create .ssh dir for user {{ user_name }}"
   file:
     path: "{{ home_remote }}/.ssh"
     state: directory
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
-    mode: "700"
+    mode: 0700
 - name: "Generate SSH keypair for user {{ user_name }}"
   community.crypto.openssh_keypair:
     path: "{{ home_remote }}/.ssh/id_rsa"
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
-- name: "Fix permissions on ~/.ssh/id_rsa"
-  file:
-    path: "{{ home_remote }}/.ssh/id_rsa"
-    owner: "{{ user_number }}"
-    group: "{{ user_number }}"
-    mode: "600"
 - name: "Add key to authorized_keys for user {{ user_name }}"
   copy:
     remote_src: true
