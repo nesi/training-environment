@@ -123,7 +123,7 @@ First, create the terraform resources:
 ./deployment.sh create [workspace_name]
 ```
 
-By default 2 users will be created, `training1` and `training2`. Passwords for these users will be
+By default 2 training user accounts will be created, `training1` and `training2`. Passwords for these users will be
 stored in the *users* sub-directory:
 
 ```
@@ -131,11 +131,10 @@ $ ls users/
 password_training1.txt  password_training2.txt
 ```
 
-More users can be added by overriding the `num_users_create` variable, e.g.
+More users can be added by changing the `num_users_create` variable in *vars/ondemand-config.yml*.
 
-```
-NUM_USERS=5 ./deployment.sh create [workspace_name]
-```
+Separate trainer user accounts are also created, controlled by `num_trainers_create` in *vars/ondemand-config.yml*.
+The trainer accounts differ in that they have read access to all the home directories of the training users.
 
 You will need to modify your hosts file with the IP addresses from *host.ini*, on Linux this file is
 */etc/hosts*, on Windows it is *C:\Windows\System32\drivers\etc\hosts*.

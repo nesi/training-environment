@@ -10,6 +10,10 @@ clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 
 cluster_rdc_project: NeSI-Training-Test
 
+# number of users
+num_users_create: 2
+num_trainers_create: 1
+
 # authentication settings
 oidc_uri: "/oidc"
 oidc_settings_samefile: true
