@@ -56,3 +56,8 @@
         acme_directory: "{{ acme_directory }}"
       become: true
   when: not keycloak_cert.stat.exists
+
+- name: Pre-Check LetsEncrypt Certs | Disbale catch all for well-known
+  command: a2disconf well-known-catch.conf
+  notify: restart apache
+  become: true
