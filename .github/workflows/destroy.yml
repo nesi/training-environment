@@ -1,10 +1,10 @@
-name: Deploy
+name: Destroy environment
 
 on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  destroy:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -104,19 +104,9 @@ jobs:
           pip install boto3
         working-directory: terraform
 
-#      - name: Destroy the environment first
-#        run: ./deployment.sh destroy ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
-#        env:
-#          TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-#          CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
-#          KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
-
-      - name: Create the environment
-        run: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
+      - name: Destroy the environment
+        run: ./deployment.sh destroy ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-          ANSIBLE_HOST_KEY_CHECKING: "False"
           CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
           KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
-          WILD_CERT_BASE64: "${{ secrets.WILD_CERT_BASE64 }}"
-          WILD_CERT_KEY_BASE64: "${{ secrets.WILD_CERT_KEY_BASE64 }}"
