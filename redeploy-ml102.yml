@@ -13,12 +13,14 @@
 - name: Get list of home directories on ML102 node
   become: yes
   hosts: webnode
-  find:
-    paths: /home/shared
-    file_type: directory
-    recurse: no
-  register: homes_find
+  tasks:
+    - name: List home directories
+      find:
+        paths: /home/shared
+        file_type: directory
+        recurse: no
+      register: homes_find
 
-- debug:
-    var: item.path
-  with_items: "{{ homes_find.files }}"
+    - debug:
+        var: item.path
+      with_items: "{{ homes_find.files }}"
