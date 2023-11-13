@@ -29,6 +29,7 @@
       ansible.builtin.file:
         path: "{{ item.path }}/ml102_workshop"
         state: absent
+        recurse: yes
       with_items: "{{ homes_find.files }}"
 
     - name: Remove the ML102 apptainer image
