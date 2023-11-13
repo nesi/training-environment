@@ -33,7 +33,8 @@ variable "services_image_id" {
 
 variable "webnode_flavor_id" {
   description = "FlexiHPC Flavor ID for services instance, Defaults to balanced1.4cpu8ram"
-  default     = "e07cfee1-43af-4bf6-baac-3bdf7c1b88f8" 
+#  default     = "e07cfee1-43af-4bf6-baac-3bdf7c1b88f8"
+  default     = "747ddc24-6c35-4609-8443-4d658cd46684"
 }
 
 variable "webnode_image_id" {
