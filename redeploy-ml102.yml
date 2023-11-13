@@ -1,0 +1,24 @@
+# workflow to redploy ML102 on the training environment
+#
+# 1. Get the list of all training/trainer home directories
+# 2. Delete any "ml102_workshop" directories in the homes
+# 3. Delete the ML102 apptainer image
+# 4. Pull the apptainer image
+#
+# Following this, any user that starts a new ML102 session
+# will get the version from the newly downloaded image
+#
+# Note: this doesn't redeploy the OOD ML102 app
+---
+- name: Get list of home directories on ML102 node
+  become: yes
+  hosts: webnode
+  find:
+    paths: /home/shared
+    file_type: directory
+    recurse: no
+  register: homes_find
+
+- debug:
+    var: item.path
+  with_items: "{{ homes_find.files }}"
