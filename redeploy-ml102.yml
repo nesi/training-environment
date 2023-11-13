@@ -1,8 +1,8 @@
 # workflow to redploy ML102 on the training environment
 #
 # 1. Get the list of all training/trainer home directories
-# 2. Delete any "ml102_workshop" directories in the homes
-# 3. Delete the ML102 apptainer image
+# 2. Remove any "ml102_workshop" directories in the homes
+# 3. Remove the ML102 apptainer image
 # 4. Pull the apptainer image
 #
 # Following this, any user that starts a new ML102 session
@@ -10,10 +10,10 @@
 #
 # Note: this doesn't redeploy the OOD ML102 app
 ---
-- name: Get list of home directories on ML102 node
+- name: Redeploy ML102
   become: yes
   hosts: webnode
-  tasks:
+  pre_tasks:
     - name: List home directories
       find:
         paths: /home/shared
@@ -24,3 +24,17 @@
     - debug:
         var: item.path
       with_items: "{{ homes_find.files }}"
+
+    - name: Remove any ML102 directories in homes
+      anisble.builtin.file:
+        path: "{{ item.path }}/ml102_workshop"
+        state: absent
+      with_items: "{{ homes_find.files }}"
+
+    - name: Remove the ML102 apptainer image
+      ansible.builtin.file:
+        path: /opt/ml102_workshop/ML102.sif
+        state: absent
+
+  roles:
+    - ml102_workshop
