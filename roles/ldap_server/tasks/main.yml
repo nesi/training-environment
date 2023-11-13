@@ -10,6 +10,7 @@
       - slapd
       - ldap-utils
       - python3-ldap
+      - debconf-utils
     state: present
 
 # debconf always shows passwords as having changes so do our own check
