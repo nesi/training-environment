@@ -5,6 +5,7 @@
     name:
       - apache2
     state: present
+    update_cache: true
   become: true
 
 - name: Pre-Check Apache2 | Create .well-known/acme-challenge directory
