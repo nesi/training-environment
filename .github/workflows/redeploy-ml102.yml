@@ -115,7 +115,7 @@ jobs:
           WILD_CERT_KEY_BASE64: "${{ secrets.WILD_CERT_KEY_BASE64 }}"
 
       - name: Redeploy ML102
-        run: ansible-playbook redeploy-ml102.yml
+        run: ansible-playbook -i host.ini redeploy-ml102.yml -u "${TF_VAR_vm_user}" --key-file '${TF_VAR_key_file}' -e terraform_workspace="${GITHUB_BASE_REF:-$GITHUB_REF_NAME}"
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
           ANSIBLE_HOST_KEY_CHECKING: "False"
