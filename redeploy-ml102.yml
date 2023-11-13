@@ -26,7 +26,7 @@
       with_items: "{{ homes_find.files }}"
 
     - name: Remove any ML102 directories in homes
-      anisble.builtin.file:
+      ansible.builtin.file:
         path: "{{ item.path }}/ml102_workshop"
         state: absent
       with_items: "{{ homes_find.files }}"
