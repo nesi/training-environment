@@ -10,32 +10,30 @@
 #
 # Note: this doesn't redeploy the OOD ML102 app
 ---
-- name: Redeploy ML102
+- name: Clean ML102 directories in homes
   become: yes
-  hosts: webnode
-  pre_tasks:
+  hosts: servicesnode
+  tasks:
     - name: List home directories
       find:
-        paths: /home/shared
+        paths: /srv/homes
         file_type: directory
         recurse: no
       register: homes_find
-
-    - debug:
-        var: item.path
-      with_items: "{{ homes_find.files }}"
 
     - name: Remove any ML102 directories in homes
       ansible.builtin.file:
         path: "{{ item.path }}/ml102_workshop"
         state: absent
-        recurse: yes
       with_items: "{{ homes_find.files }}"
 
+- name: Redeploy ML102 image
+  become: yes
+  hosts: webnode
+  pre_tasks:
     - name: Remove the ML102 apptainer image
       ansible.builtin.file:
         path: /opt/ml102_workshop/ML102.sif
         state: absent
-
   roles:
     - ml102_workshop
