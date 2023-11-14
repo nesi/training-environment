@@ -12,7 +12,7 @@ cluster_rdc_project: NeSI-Training-Test
 
 # number of users
 num_users_create: 30
-num_trainers_create: 3
+num_trainers_create: 5
 
 # authentication settings
 oidc_uri: "/oidc"
@@ -31,6 +31,10 @@ oidc_settings:
   OIDCPassClaimsAs: environment
   OIDCPassRefreshToken: 'On'
   OIDCStripCookies: mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1
+
+# customisation
+dashboard_title: "NeSI Training Environment"
+dashboard_logo: "https://www.nesi.org.nz/sites/default/themes/nesi_bootstrap/img/logo.png"
 
 # ood portal config
 servername: "{{ hostvars['webnode']['hostname'] }}.{{ route_53_zone }}"
