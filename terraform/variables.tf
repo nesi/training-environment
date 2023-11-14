@@ -24,7 +24,8 @@ variable "key_file" {
 variable "services_flavor_id" {
   description = "FlexiHPC Flavor ID for services instance, Defaults to devtest1.4cpu4ram"
 #  default     = "4ec785be-a422-4207-9daa-cbb71c61f9ed" 
-  default     = "2d02e6a4-3937-4ed3-951a-8e27867ff53e"
+#  default     = "2d02e6a4-3937-4ed3-951a-8e27867ff53e"
+  default     = "674fa81a-69c7-4bf7-b3a9-59989fb63618"
 }
 
 variable "services_image_id" {
