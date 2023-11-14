@@ -28,7 +28,8 @@ variable "services_flavor_id" {
 
 variable "services_image_id" {
   description = "FlexiHPC Image ID for services instance, Defaults to ubuntu-jammy-server-cloudimg"
-  default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd" 
+#  default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd"
+  default     = "2d02e6a4-3937-4ed3-951a-8e27867ff53e"
 }
 
 variable "webnode_flavor_id" {
