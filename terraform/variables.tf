@@ -35,7 +35,8 @@ variable "services_image_id" {
 
 variable "services_volume_size" {
   description = "The size of the services volume in gigabytes, defaults to 30"
-  default     = "30" 
+#  default     = "30"
+  default     = "60"
 }
 
 variable "webnode_flavor_id" {
@@ -51,7 +52,8 @@ variable "webnode_image_id" {
 
 variable "webnode_volume_size" {
   description = "The size of the webnode volume in gigabytes, defaults to 30"
-  default     = "30" 
+#  default     = "30"
+  default     = "60"
 }
 
 variable "vm_user" {
