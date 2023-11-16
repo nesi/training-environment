@@ -41,6 +41,11 @@ variable "webnode_image_id" {
   default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd" 
 }
 
+variable "webnode_volume_size" {
+  description = "The size of the webnode volume in gigabytes, defaults to 30"
+  default     = "30" 
+}
+
 variable "vm_user" {
   description = "FlexiHPC VM user"
   default = "ubuntu"

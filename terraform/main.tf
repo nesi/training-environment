@@ -38,41 +38,21 @@ resource "null_resource" "services_extra_keys" {
   }
 }
 
-# copy kube config and cloud.yaml
-# resource "null_resource" "services_kube_cloud" {
-#   depends_on = [openstack_compute_floatingip_associate_v2.services_floating_ip_association]
-
-#   connection {
-#     user = var.vm_user
-#     private_key = file(var.key_file)
-#     host = "${openstack_networking_floatingip_v2.services_floating_ip.address}"
-#   }
-
-#   provisioner "remote-exec" {
-#     inline = [
-#       "mkdir -p ~/.kube",
-#       "mkdir -p ~/.config/openstack",
-#     ]
-#   }
-
-#   provisioner "file" {
-#     source = var.clouds_yaml
-#     destination = "/home/${var.vm_user}/.config/openstack/clouds.yaml"
-#   }
-
-#   provisioner "file" {
-#     source = var.kube_config
-#     destination = "/home/${var.vm_user}/.kube/config"
-#   }
-# }
-
 # Create webnode instance
 resource "openstack_compute_instance_v2" "webnode_instance" {
   name            = "${terraform.workspace}-ood-webnode"
   flavor_id       = var.webnode_flavor_id
-  image_id        = var.webnode_image_id
   key_pair        = var.key_pair
   security_groups = ["default", "ssh-allow-all", "https", "http"]
+
+  block_device {
+    uuid                  = var.webnode_image_id
+    source_type           = "image"
+    destination_type      = "volume"
+    boot_index            = 0
+    volume_size           = var.webnode_volume_size
+    delete_on_termination = true
+  }
 
   network {
     name = var.tenant_name
