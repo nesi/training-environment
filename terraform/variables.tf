@@ -33,6 +33,11 @@ variable "services_image_id" {
   default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd"
 }
 
+variable "services_volume_size" {
+  description = "The size of the services volume in gigabytes, defaults to 30"
+  default     = "30" 
+}
+
 variable "webnode_flavor_id" {
   description = "FlexiHPC Flavor ID for services instance, Defaults to balanced1.4cpu8ram"
 #  default     = "e07cfee1-43af-4bf6-baac-3bdf7c1b88f8"
@@ -42,6 +47,11 @@ variable "webnode_flavor_id" {
 variable "webnode_image_id" {
   description = "FlexiHPC Image ID for services instance, Defaults to ubuntu-jammy-server-cloudimg"
   default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd" 
+}
+
+variable "webnode_volume_size" {
+  description = "The size of the webnode volume in gigabytes, defaults to 30"
+  default     = "30" 
 }
 
 variable "vm_user" {
