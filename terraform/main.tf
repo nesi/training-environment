@@ -2,9 +2,17 @@
 resource "openstack_compute_instance_v2" "services_instance" {
   name            = "${terraform.workspace}-ood-services"
   flavor_id       = var.services_flavor_id
-  image_id        = var.services_image_id
   key_pair        = var.key_pair
   security_groups = ["default", "ssh-allow-all", "https", "http"]
+
+  block_device {
+    uuid                  = var.services_image_id
+    source_type           = "image"
+    destination_type      = "volume"
+    boot_index            = 0
+    volume_size           = var.services_volume_size
+    delete_on_termination = true
+  }
 
   network {
     name = var.tenant_name

@@ -1,2 +1,5 @@
 key_pair    = "NeSI_RDC_KEYPAIR_NAME"
 key_file    = "/path/to/nesi-rdc/private_key"
+
+services_volume_size = 30
+webnode_volume_size  = 30
