@@ -1,4 +1,4 @@
-name: JSM-Deploy
+name: JSM-Destroy
 
 on:
   workflow_dispatch:
@@ -135,14 +135,10 @@ jobs:
           pip install boto3
         working-directory: terraform
 
-      # - name: Create the environment
-      #   run: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
+      # - name: Destroy the environment
+      #   run: ./deployment.sh destroy ${ENVIRONMENT}
       #   env:
       #     TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
-      #     ANSIBLE_HOST_KEY_CHECKING: "False"
       #     CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
       #     KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
-      #     WILD_CERT_BASE64: "${{ secrets.WILD_CERT_BASE64 }}"
-      #     WILD_CERT_KEY_BASE64: "${{ secrets.WILD_CERT_KEY_BASE64 }}"
       #     ENVIRONMENT: ${{ inputs.environment }}
-      #     ATTENDEES: ${{ inputs.attendees }}
