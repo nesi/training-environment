@@ -16,10 +16,6 @@ on:
         description: 'Training environment name'
         type: string
         required: true
-      attendees:
-        description: 'Attendees for the training environment'
-        type: string
-        required: true
 
 jobs:
   log-the-inputs:
@@ -28,12 +24,10 @@ jobs:
       - run: |
           echo "Log level: $LEVEL"
           echo "Environment: $ENVIRONMENT"
-          echo "Attendees: $ATTENDEES"
         env:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
           ENVIRONMENT: ${{ inputs.environment }}
-          ATTENDEES: ${{ inputs.attendees }}
   deploy:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
