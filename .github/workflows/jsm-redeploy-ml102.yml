@@ -1,4 +1,4 @@
-name: Redploy ML102
+name: JSM Redeploy ML102
 
 on:
   workflow_dispatch:
