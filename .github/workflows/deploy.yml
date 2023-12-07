@@ -30,9 +30,10 @@ jobs:
 
       - run: which ansible-playbook
       - run: ansible-playbook --version
+      - run: pipx install ansible-core==2.15.7
       #- run: ansible-community --version
-      - run: sudo add-apt-repository --yes --update ppa:ansible/ansible
-      - run: sudo apt-get install ansible-core=2.15.7-1ppa~jammy
+      #- run: sudo add-apt-repository --yes --update ppa:ansible/ansible
+      #- run: sudo apt-get install ansible-core=2.15.7-1ppa~jammy
       - run: ansible-playbook --version
       #- run: ansible-community --version
 
