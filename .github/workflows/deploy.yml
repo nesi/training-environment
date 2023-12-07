@@ -27,7 +27,13 @@ jobs:
           terraform_version: "1.6.3"
           terraform_wrapper: false
       - run: python --version
+
       - run: ansible-playbook --version
+      - run: ansible-community --version
+      - run: sudo add-apt-repository --yes --update ppa:ansible/ansible-2.15
+      - run: sudo apt-get install ansible-core ansible
+      - run: ansible-playbook --version
+      - run: ansible-community --version
 
       - name: Write private key file
         run: |
