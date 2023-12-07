@@ -28,6 +28,7 @@ jobs:
           terraform_wrapper: false
       - run: python --version
 
+      - run: which ansible-playbook
       - run: ansible-playbook --version
       #- run: ansible-community --version
       - run: sudo add-apt-repository --yes --update ppa:ansible/ansible
