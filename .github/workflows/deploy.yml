@@ -30,8 +30,8 @@ jobs:
 
       - run: ansible-playbook --version
       #- run: ansible-community --version
-      - run: sudo add-apt-repository --yes --update ppa:ansible/ansible-2.15
-      - run: sudo apt-get install ansible-core ansible
+      - run: sudo add-apt-repository --yes --update ppa:ansible/ansible
+      - run: sudo apt-get install ansible-core=2.15.7-1ppa~jammy
       - run: ansible-playbook --version
       #- run: ansible-community --version
 
