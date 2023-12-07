@@ -1,0 +1,12 @@
+---
+- name: Create directory for RStudio app
+  file:
+    path: /opt/rstudio_app
+    state: directory
+    mode: 0755
+
+- name: Pull RStudio server image
+  command: 'apptainer pull rstudio.sif docker://ghcr.io/rocker-org/tidyverse:4.3.2'
+  args:
+    chdir: /opt/rstudio_app
+    creates: /opt/rstudio_app/rstudio.sif
