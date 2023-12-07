@@ -27,6 +27,7 @@ jobs:
           terraform_version: "1.6.3"
           terraform_wrapper: false
       - run: python --version
+      - run: ansible-playbook --version
 
       - name: Write private key file
         run: |
