@@ -82,6 +82,10 @@ ood_install_apps:
     repo: https://github.com/chrisdjscott/ood_ml102_workshop.git
     version: main
 
+  bc_k8s_jupyter_test:
+    repo: https://github.com/lbrick/bc_k8s_jupyter.git
+    version: '20230910-NeSI-OOD'
+
 pinned_apps:
   - sys/jupyter_ml101
   - sys/jupyter_ml102
