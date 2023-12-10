@@ -76,7 +76,7 @@
     path: "{{ home_remote }}"
     entity: "trainer{{ trainerid }}"
     etype: user
-    permissions: r-X
+    permissions: rwX
     recursive: true
     state: present
   with_sequence: start=1 end={{ num_trainers_create }}
