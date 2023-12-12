@@ -79,8 +79,8 @@
 - name: Web Node | Create cluster config
   template:
     src: "cluster-config.yml.j2"
-    dest: "{{ ood_cluster_config_dir }}/{{ cluster_name }}-cluster.yml"
-    mode: 0640
+    dest: "{{ ood_cluster_config_dir }}/my-k8s-cluster.yml"
+    mode: 0644
 
 - name: Web Node | Create hook.env
   template:
