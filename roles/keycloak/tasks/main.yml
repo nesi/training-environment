@@ -150,6 +150,8 @@
     enabled: true
     sso_session_idle_timeout: 3000000
     sso_session_max_lifespan: 3000000
+    access_code_lifespan: 3000000
+    access_token_lifespan: 3000000
     state: present
   register: lsresult
   until: "lsresult is not failed"
