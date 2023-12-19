@@ -141,6 +141,8 @@ spec:
         name: ${CLUSTER_NAME}-cloud-config
       image: ${OPENSTACK_IMAGE_NAME}
       sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
+      securityGroups:
+      - name: default
       ports:
       - network:
           name: {{ cluster_network_name }}
@@ -159,6 +161,8 @@ spec:
         name: ${CLUSTER_NAME}-cloud-config
       image: ${OPENSTACK_IMAGE_NAME}
       sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
+      securityGroups:
+      - name: default
       ports:
       - network:
           name: {{ cluster_network_name }}

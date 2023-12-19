@@ -147,5 +147,9 @@ if [[ "$CAPO_APPLICATION_CREDENTIAL_SECRET" != "" && "$CAPO_APPLICATION_CREDENTI
   echo "application-credential-secret=\"${CAPO_APPLICATION_CREDENTIAL_SECRET}\"" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}
 fi
 
+## Setup LB settings
+echo "[LoadBalancer]" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}
+echo "lb-provider=\"ovn\"" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}
+echo "lb-method=\"SOURCE_IP_PORT\"" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}
 
 cat ${CAPO_CLOUD_PROVIDER_CONF_TMP}
