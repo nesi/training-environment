@@ -148,6 +148,8 @@
     login_with_email_allowed: false
     remember_me: true
     enabled: true
+    sso_session_idle_timeout: 3000000
+    sso_session_max_lifespan: 3000000
     state: present
   register: lsresult
   until: "lsresult is not failed"
