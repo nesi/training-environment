@@ -82,13 +82,14 @@ ood_install_apps:
     repo: https://github.com/chrisdjscott/ood_ml102_workshop.git
     version: main
 
-  bc_k8s_jupyter_test:
-    repo: https://github.com/lbrick/bc_k8s_jupyter.git
-    version: '20230910-NeSI-OOD'
+  jupyter_ml102_k8s:
+    repo: https://github.com/chrisdjscott/ood_ml102_workshop_k8s.git
+    version: main
 
 pinned_apps:
   - sys/jupyter_ml101
   - sys/jupyter_ml102
+  - sys/jupyter_ml102_k8s
 
 # HTTPS LetsEncrypt Settings
 
