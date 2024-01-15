@@ -84,7 +84,7 @@ ood_install_apps:
 
   jupyter_ml102_k8s:
     repo: https://github.com/chrisdjscott/ood_ml102_workshop_k8s.git
-    version: main
+    version: '19f0d26357685fc3071e74234930577ac3504ff2'
 
 pinned_apps:
   - sys/jupyter_ml101
