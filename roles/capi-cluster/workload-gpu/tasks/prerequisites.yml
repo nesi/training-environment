@@ -1,0 +1,30 @@
+---
+- name: Workload GPU | Creating {{ tmp_dir }} if it does not exist
+  file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Workload GPU | Ensure kubectl config file exists
+  stat:
+    path: "{{ kube_config_location }}/config"
+  register: kube_config_file
+
+- name: Workload GPU | Check kubectl config and clouds.yaml exists
+  assert:
+    that:
+      - kube_config_file.stat.exists
+
+- name: Workload GPU | Download Helm command line tool
+  ansible.builtin.uri:
+    url: "{{ helm_cli_repo }}"
+    return_content: true
+  register: helm_installer
+
+- name: Workload GPU | Install Helm
+  ansible.builtin.command:
+    cmd: bash
+    stdin: "{{ helm_installer.content }}"
+    creates: /usr/local/bin/helm
+  environment:
+    DESIRED_VERSION: "{{ helm_version | default('') }}"

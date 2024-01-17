@@ -94,6 +94,7 @@ acme_directory: https://acme-v02.api.letsencrypt.org/directory
 # Clusterctl config
 
 k8s_ood_enable: false
+enable_gpu_nodes: false
 
 kubernetes_version: v1.26.7
 capi_image_name: ubuntu-2204-kube-v1.26.7-rdc-ca

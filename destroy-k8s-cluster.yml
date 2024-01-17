@@ -1,4 +1,4 @@
-- hosts: servicesnode
+- hosts: localhost
   vars:
     terraform_workspace: default
   tasks:

@@ -1,0 +1,22 @@
+---
+- name: Workload | Setting Add k8s nodes to ansible ansible inventory to {{ k8s_ood_enable }}
+  set_fact:
+    add_to_inventory: "{{ k8s_ood_enable }}"
+
+- name: Workload | Get nodes and add them to ldap_clients group
+  block:
+  - name: Workload | Get Node IPs
+    shell: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig get nodes -o wide | awk '{ print $6 }' | grep 10.1
+    register: nodes_var
+  
+  - name: Workload | Create in-memory Ansible inventory
+    add_host:
+      name: "{{ item }}"
+      groups: ldap_clients
+      ansible_user: "{{ capi_ssh_user }}"
+      instance_name: "{{ item }}"
+    loop: "{{ nodes_var.stdout_lines }}"
+  when:
+    - "add_to_inventory|default(false)|bool == true"
+
+

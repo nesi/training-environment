@@ -1,0 +1,43 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  name: {{ cluster_name }}-md-gpu-0
+spec:
+  clusterName: {{ cluster_name }}
+  replicas: {{ cluster_gpu_worker_count }}
+  selector:
+    matchLabels: null
+  template:
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfigTemplate
+          name: {{ cluster_name }}-md-0
+      clusterName: {{ cluster_name }}
+      failureDomain: nova
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha7
+        kind: OpenStackMachineTemplate
+        name: {{ cluster_name }}-md-gpu-0
+      version: {{ kubernetes_version }}
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha7
+kind: OpenStackMachineTemplate
+metadata:
+  name: {{ cluster_name }}-md-gpu-0
+spec:
+  template:
+    spec:
+      cloudName: openstack
+      flavor: {{ gpu_worker_flavour }}
+      identityRef:
+        kind: Secret
+        name: {{ cluster_name }}-cloud-config
+      image: {{ capi_gpu_image_name }}
+      sshKeyName: {{ openstack_ssh_key }}
+      securityGroups:
+      - name: default
+      ports:
+      - network:
+          name: {{ cluster_network_name }}
