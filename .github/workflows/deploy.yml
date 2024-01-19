@@ -8,7 +8,7 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     env:
       OS_APPLICATION_CREDENTIAL_ID: ${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}
       OS_APPLICATION_CREDENTIAL_NAME: ${{ secrets.OS_APPLICATION_CREDENTIAL_NAME }}
