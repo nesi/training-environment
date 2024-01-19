@@ -53,7 +53,7 @@ jobs:
       - name: Link clouds.yaml
         run: |
           mkdir -p ~/.config/openstack
-          ln -s ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
+          ln -sf ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
         env:
           CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
 
@@ -79,7 +79,7 @@ jobs:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
       - name: Link ondemand config
         run: |
-          ln -s ${ONDEMAND_CONFIG_FILE} ondemand-config.yml
+          ln -sf ${ONDEMAND_CONFIG_FILE} ondemand-config.yml
         working-directory: vars
         env:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
