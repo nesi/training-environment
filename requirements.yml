@@ -10,3 +10,6 @@ collections:
   - name: amazon.aws
     version: 7.0.0
     type: galaxy
+  - name: community.crypto.x509_certificate
+    version: 2.16.1
+    type: galaxy
