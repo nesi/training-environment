@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: servicesnode
   vars:
     terraform_workspace: default
   tasks:
@@ -6,6 +6,5 @@
     shell: >-
       kubectl delete cluster {{ terraform_workspace }}
     when:
-      - (operation == "destroy")
       - "enable_k8s_openondemand|default(false)|bool == true"
     register: destroy

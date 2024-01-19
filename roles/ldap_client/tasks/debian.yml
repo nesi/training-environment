@@ -1,0 +1,48 @@
+---
+- name: Full system upgrade
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    upgrade: dist
+    
+- name: Install LDAP client packages
+  apt:
+    name:
+      - libpam-ldap
+      - ldap-utils
+      - nscd
+      - nslcd
+      - libnss-ldapd
+    state: present
+
+- name: Configure nslcd uri
+  lineinfile:
+    path: /etc/nslcd.conf
+    regexp: '^uri'
+    line: 'uri ldap://{{ hostvars["servicesnode"]["ansible_default_ipv4"]["address"] }}/'
+  notify: restart nslcd
+
+- name: Configure basedn
+  lineinfile:
+    path: /etc/nslcd.conf
+    regexp: '^base'
+    line: 'base {{ ldap_base_dn }}'
+  notify: restart nslcd
+
+- name: Configure passwd in nsswitch.conf
+  lineinfile:
+    path: /etc/nsswitch.conf
+    regexp: '^passwd:'
+    line: 'passwd: files systemd ldap'
+
+- name: Configure group in nsswitch.conf
+  lineinfile:
+    path: /etc/nsswitch.conf
+    regexp: '^group:'
+    line: 'group: files systemd ldap'
+
+- name: Configure common-password
+  replace:
+    path: /etc/pam.d/common-password
+    regexp: '(use_authtok\s*)'
+    replace: ''
