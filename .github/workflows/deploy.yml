@@ -90,6 +90,10 @@ jobs:
 
       - name: Install ansible dependencies
         run: ansible-galaxy install -r requirements.yml
+
+      # - name: Install ansible collection dependencies
+      #   run: ansible-galaxy collection install community.general
+
       - name: Terraform initialise
         run: terraform init -input=false
         env:
