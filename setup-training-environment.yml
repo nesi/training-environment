@@ -102,7 +102,7 @@
   tasks:
     - name: Copy key to servicesnode
       copy:
-        src: ~/.ssh/id_flexi
+        src: "{{ lookup('ansible.builtin.env', 'TF_VAR_key_file', default='~/.ssh/id_flexi') }}"
         dest: ~/.ssh/id_flexi
         mode: '0600'
 
