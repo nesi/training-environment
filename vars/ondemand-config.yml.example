@@ -84,7 +84,7 @@ ood_install_apps:
 
   jupyter_ml102_k8s:
     repo: https://github.com/chrisdjscott/ood_ml102_workshop_k8s.git
-    version: '19f0d26357685fc3071e74234930577ac3504ff2'
+    version: 'ca202976ba5167ea5bd508e0795148e5d4dc4f33'
 
 pinned_apps:
   - sys/jupyter_ml101
@@ -114,7 +114,7 @@ cluster_control_plane_count: 1
 control_plane_flavor: balanced1.2cpu4ram
 
 cluster_worker_count: 2
-worker_flavour: balanced1.2cpu4ram
+worker_flavour: balanced1.8cpu16ram
 
 cluster_node_cidr: 10.1.0.0/24
 cluster_pod_cidr: 172.0.0.0/16
