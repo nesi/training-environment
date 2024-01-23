@@ -1,0 +1,4 @@
+---
+- name: Ensure paramiko pip module is present
+  ansible.builtin.pip:
+    name: paramiko
