@@ -82,9 +82,14 @@ ood_install_apps:
     repo: https://github.com/chrisdjscott/ood_ml102_workshop.git
     version: main
 
+  jupyter_ml102_k8s:
+    repo: https://github.com/chrisdjscott/ood_ml102_workshop_k8s.git
+    version: '19f0d26357685fc3071e74234930577ac3504ff2'
+
 pinned_apps:
   - sys/jupyter_ml101
   - sys/jupyter_ml102
+  - sys/jupyter_ml102_k8s
 
 # HTTPS LetsEncrypt Settings
 
@@ -93,7 +98,7 @@ acme_directory: https://acme-v02.api.letsencrypt.org/directory
 
 # Clusterctl config
 
-k8s_ood_enable: false
+k8s_ood_enable: true
 enable_gpu_nodes: false
 
 kubernetes_version: v1.28.5
