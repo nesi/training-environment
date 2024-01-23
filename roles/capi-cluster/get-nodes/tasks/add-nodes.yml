@@ -17,5 +17,6 @@
     remote_user: "{{ capi_ssh_user }}"
     host: "{{ item }}"
     identity_file: "~/.ssh/id_flexi"
+    strict_host_key_checking: "no"
     state: present
   loop: "{{ nodes_var.stdout_lines }}"
