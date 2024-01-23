@@ -11,12 +11,12 @@
     instance_name: "{{ item }}"
   loop: "{{ nodes_var.stdout_lines }}"
 
-- name: Add a host in the configuration
-  community.general.ssh_config:
-    user: ubuntu
-    remote_user: "{{ capi_ssh_user }}"
-    host: "{{ item }}"
-    identity_file: "~/.ssh/id_flexi"
-    strict_host_key_checking: "no"
-    state: present
-  loop: "{{ nodes_var.stdout_lines }}"
+# - name: Add a host in the configuration
+#   community.general.ssh_config:
+#     user: ubuntu
+#     remote_user: "{{ capi_ssh_user }}"
+#     host: "{{ item }}"
+#     identity_file: "~/.ssh/id_flexi"
+#     strict_host_key_checking: "no"
+#     state: present
+#   loop: "{{ nodes_var.stdout_lines }}"
