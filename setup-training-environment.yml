@@ -125,7 +125,6 @@
 - name: Setup k8s LDAP clients
   become: yes
   hosts: ldap_clients
-  gather_facts: no
   vars_files:
     - ondemand-config.yml
   roles:

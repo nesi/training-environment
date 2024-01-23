@@ -146,6 +146,7 @@ fi
 if [[ "$CAPO_APPLICATION_CREDENTIAL_SECRET" != "" && "$CAPO_APPLICATION_CREDENTIAL_SECRET" != "null" ]]; then
   echo "application-credential-secret=\"${CAPO_APPLICATION_CREDENTIAL_SECRET}\"" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}
 fi
+echo "tls-insecure=true" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}
 
 ## Setup LB settings
 echo "[LoadBalancer]" >> ${CAPO_CLOUD_PROVIDER_CONF_TMP}

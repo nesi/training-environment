@@ -16,6 +16,16 @@
       ansible_user: "{{ capi_ssh_user }}"
       instance_name: "{{ item }}"
     loop: "{{ nodes_var.stdout_lines }}"
+
+  # - name: Add a host in the configuration
+  #   community.general.ssh_config:
+  #     user: cloud-user
+  #     host: "example.com"
+  #     hostname: "github.com"
+  #     identity_file: "/home/akasurde/.ssh/id_rsa"
+  #     port: '2223'
+  #     state: present
+  #   loop: "{{ nodes_var.stdout_lines }}"
   when:
     - "add_to_inventory|default(false)|bool == true"
 

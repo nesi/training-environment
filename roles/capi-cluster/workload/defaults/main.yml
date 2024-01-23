@@ -1,8 +1,8 @@
 ---
 k8s_ood_enable: false
 
-kubernetes_version: v1.26.7
-capi_image_name: ubuntu-2204-kube-v1.26.7-ca
+kubernetes_version: v1.28.5
+capi_image_name: rocky-93-kube-v1.28.5-rdc-ca
 
 capi_provider_version: v0.8.0
 

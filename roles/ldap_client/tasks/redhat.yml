@@ -2,19 +2,13 @@
 - name: Full system upgrade
   dnf:
     update_cache: yes
-    cache_valid_time: 3600
-    upgrade: dist
     
 - name: Install LDAP client packages
   dnf:
     name:
-      - libpam-ldap
-      - ldap-utils
-      - nscd
-      - nslcd
-      - libnss-ldapd
+      - nss-pam-ldapd
     state: present
-
+    
 - name: Configure nslcd uri
   lineinfile:
     path: /etc/nslcd.conf
@@ -41,8 +35,20 @@
     regexp: '^group:'
     line: 'group: files systemd ldap'
 
-- name: Configure common-password
+- name: Configure passwd
   replace:
-    path: /etc/pam.d/common-password
+    path: /etc/pam.d/passwd
     regexp: '(use_authtok\s*)'
     replace: ''
+
+- name: Configure password-auth
+  replace:
+    path: /etc/pam.d/password-auth
+    regexp: '(use_authtok\s*)'
+    replace: ''
+
+- name: Enable service nslcd, and start
+  ansible.builtin.service:
+    name: nslcd
+    enabled: yes
+    state: started
