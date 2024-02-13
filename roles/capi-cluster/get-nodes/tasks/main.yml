@@ -1,0 +1,17 @@
+---
+- name: Get Nodes | Setting Add k8s nodes to ansible ansible inventory to {{ k8s_ood_enable }}
+  set_fact:
+    add_to_inventory: "{{ k8s_ood_enable }}"
+
+- name: Get Nodes | Get k8s nodes and add them to ldap_clients group
+  block:
+  - name: Get Nodes | Prerequisites
+    include_tasks: prerequisites.yml
+
+  - name: Get Nodes | Add nodes to inventory
+    include_tasks: add-nodes.yml
+
+  when:
+    - "add_to_inventory|default(false)|bool == true"
+
+

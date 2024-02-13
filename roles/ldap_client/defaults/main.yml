@@ -1,2 +1,4 @@
 ---
 ldap_base_dn: "dc=flexi,dc=nesi"
+
+ldap_base_uri: ldap://{{ hostvars["servicesnode"]["ansible_default_ipv4"]["address"] }}/

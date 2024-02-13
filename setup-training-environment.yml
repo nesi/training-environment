@@ -48,6 +48,8 @@
     - { role: pre-checks/kubernetes }
     - { role: cluster-ctl/cli-install }
     - { role: capi-cluster/workload }
+    - { role: capi-cluster/workload-gpu }
+    - { role: capi-cluster/get-nodes }
     - { role: openondemand-k8s/kuberenetes }
 
 - name: Setup /etc/hosts
@@ -95,6 +97,15 @@
       with_items:
         - "{{ groups['servers'] }}"
 
+- name: Copy SSH key to servicesnode to act as jumphost 
+  hosts: servicesnode
+  tasks:
+    - name: Copy key to servicesnode
+      copy:
+        src: "{{ lookup('ansible.builtin.env', 'TF_VAR_key_file', default='~/.ssh/id_flexi') }}"
+        dest: ~/.ssh/id_flexi
+        mode: '0600'
+
 - name: Setup LDAP server
   become: yes
   hosts: servicesnode
@@ -106,6 +117,14 @@
 - name: Setup LDAP clients
   become: yes
   hosts: servers
+  vars_files:
+    - ondemand-config.yml
+  roles:
+    - ldap_client
+
+- name: Setup k8s LDAP clients
+  become: yes
+  hosts: ldap_clients
   vars_files:
     - ondemand-config.yml
   roles:

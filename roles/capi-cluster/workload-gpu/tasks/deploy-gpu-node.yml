@@ -1,0 +1,12 @@
+---
+- name: Workload GPU | Create clusterctl yaml file
+  template:
+    src: "cluster-template-extra-node.yml.j2"
+    dest: "{{ tmp_dir }}/{{ cluster_name }}-template-extra-node.yml"
+    mode: 0640
+
+- name: Workload GPU  | Init {{ cluster_name }} GPU nodes
+  shell: >-
+    kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply -f {{ tmp_dir }}/{{ cluster_name }}-template-extra-node.yml
+
+

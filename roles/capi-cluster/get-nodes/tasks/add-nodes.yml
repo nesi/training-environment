@@ -1,0 +1,22 @@
+---
+- name: Workload | Get Node IPs
+  shell: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig get nodes -o wide | awk '{ print $6 }' | grep 10.1
+  register: nodes_var
+
+- name: Workload | Create in-memory Ansible inventory
+  add_host:
+    name: "{{ item }}"
+    groups: ldap_clients
+    ansible_user: "{{ capi_ssh_user }}"
+    instance_name: "{{ item }}"
+  loop: "{{ nodes_var.stdout_lines }}"
+
+# - name: Add a host in the configuration
+#   community.general.ssh_config:
+#     user: ubuntu
+#     remote_user: "{{ capi_ssh_user }}"
+#     host: "{{ item }}"
+#     identity_file: "~/.ssh/id_flexi"
+#     strict_host_key_checking: "no"
+#     state: present
+#   loop: "{{ nodes_var.stdout_lines }}"

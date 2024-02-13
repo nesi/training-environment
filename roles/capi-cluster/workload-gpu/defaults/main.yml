@@ -1,0 +1,36 @@
+---
+enable_gpu_nodes: false
+
+kubernetes_version: v1.27.6
+capi_gpu_image_name: rocky-89-kube-nvidia-v1.27.7
+
+cluster_rdc_project: NeSI-Training-Test
+cluster_name: capi-cluster
+cluster_namespace: default
+
+openstack_ssh_key: kahus-key
+
+cluster_gpu_worker_count: 1
+gpu_worker_flavour: gpu1.44cpu240ram.a40.1g.48gb
+
+cluster_node_cidr: 10.10.0.0/24
+cluster_pod_cidr: 192.168.0.0/16
+cluster_route_id: 3c0cb930-2bbe-4c9c-ac61-6dbc9410c3e9
+
+cluster_network_name: "{{ cluster_rdc_project }}"
+
+bin_dir: /usr/local/bin
+
+tmp_dir: "/tmp/{{ cluster_name }}"
+
+clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
+clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"
+clouds_yaml_cloud: openstack
+
+kube_config_local_location: ~/.kube/config
+kube_config_location: "~/.kube"
+
+yq_version: v4.2.0 
+yq_repo: "https://github.com/mikefarah/yq/releases/download/{{ yq_version }}/yq_linux_amd64"
+
+helm_cli_repo: "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3"

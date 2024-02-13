@@ -8,7 +8,7 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     env:
       OS_APPLICATION_CREDENTIAL_ID: ${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}
       OS_APPLICATION_CREDENTIAL_NAME: ${{ secrets.OS_APPLICATION_CREDENTIAL_NAME }}
@@ -29,7 +29,7 @@ jobs:
       - run: python --version
       
       # pin ansible version to 2.15, there seems to be an issue related to debconf with 2.16, need to investigate
-      - run: sudo pipx install --force ansible-core==2.15.7
+      - run: pipx install --force ansible-core==2.15.7
       - run: ansible-playbook --version
 
       - name: Write private key file
@@ -57,7 +57,7 @@ jobs:
       - name: Link clouds.yaml
         run: |
           mkdir -p ~/.config/openstack
-          ln -s ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
+          ln -sf ${CLOUDS_YAML_FILE} ~/.config/openstack/clouds.yaml
         env:
           CLOUDS_YAML_FILE: "${{ runner.temp }}/clouds.yaml"
 
@@ -83,13 +83,17 @@ jobs:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
       - name: Link ondemand config
         run: |
-          ln -s ${ONDEMAND_CONFIG_FILE} ondemand-config.yml
+          ln -sf ${ONDEMAND_CONFIG_FILE} ondemand-config.yml
         working-directory: vars
         env:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
 
       - name: Install ansible dependencies
         run: ansible-galaxy install -r requirements.yml
+
+      # - name: Install ansible collection dependencies
+      #   run: ansible-galaxy collection install community.general
+
       - name: Terraform initialise
         run: terraform init -input=false
         env:
