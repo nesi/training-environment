@@ -21,7 +21,7 @@ resource "openstack_compute_instance_v2" "services_instance" {
 
 # Create floating ip
 resource "openstack_networking_floatingip_v2" "services_floating_ip" {
-  pool  = "external"
+  pool  = "external-DONT-USE"
 }
 
 # Assign floating ip
@@ -69,7 +69,7 @@ resource "openstack_compute_instance_v2" "webnode_instance" {
 
 # Create floating ip
 resource "openstack_networking_floatingip_v2" "webnode_floating_ip" {
-  pool  = "external"
+  pool  = "external-DONT-USE"
 }
 
 # Assign floating ip
