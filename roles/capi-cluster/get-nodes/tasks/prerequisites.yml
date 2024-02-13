@@ -6,6 +6,7 @@
       - python3-pip
     state: present
   when: ansible_os_family == "RedHat"
+  become: true
 
 - name: Ensure pip is installed
   ansible.builtin.apt:
@@ -13,6 +14,7 @@
       - python3-pip
     state: present
   when: ansible_os_family == "Debian"
+  become: true
 
 - name: Ensure paramiko pip module is present
   ansible.builtin.pip:
