@@ -74,22 +74,17 @@ clusters:
 
 # apps config
 ood_install_apps:
-  jupyter_ml101:
-    repo: https://github.com/chrisdjscott/ood_ml101_test.git
-    version: main
-
-  jupyter_ml102:
-    repo: https://github.com/chrisdjscott/ood_ml102_workshop.git
-    version: main
-
   jupyter_ml102_k8s:
     repo: https://github.com/chrisdjscott/ood_ml102_workshop_k8s.git
     version: 'ca202976ba5167ea5bd508e0795148e5d4dc4f33'
 
+  rstudio:
+    repo: https://github.com/nesi/training-environment-rstudio-app.git
+    version: 'a3e0c234269cacaa99fbe238695667e114f3de6f'
+
 pinned_apps:
-  - sys/jupyter_ml101
-  - sys/jupyter_ml102
   - sys/jupyter_ml102_k8s
+  - sys/rstudio
 
 # HTTPS LetsEncrypt Settings
 
