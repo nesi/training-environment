@@ -80,7 +80,7 @@ ood_install_apps:
 
   rstudio:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
-    version: 'a3e0c234269cacaa99fbe238695667e114f3de6f'
+    version: 'e125a08c41b589492b41b1d927780bbe704f5a3b'
 
 pinned_apps:
   - sys/jupyter_ml102_k8s
