@@ -19,3 +19,20 @@
 - name: Ensure paramiko pip module is present
   ansible.builtin.pip:
     name: paramiko
+
+- name: Creating {{ tmp_dir }} if it does not exist
+  file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Check that the {{ cluster_namespace }} {{ cluster_name }}-kubeconfig exists
+  stat:
+    path: "{{ tmp_dir }}/{{ cluster_name }}.kubeconfig"
+  register: new_cluster_config
+
+- name: Get {{ cluster_name }} cluster kubeconfig yaml 
+  shell: >-
+    kubectl get secret -n {{ cluster_namespace }} {{ cluster_name }}-kubeconfig 
+    -o jsonpath='{.data.value}'|base64 -d > {{ tmp_dir }}/{{ cluster_name }}.kubeconfig
+  when: not new_cluster_config.stat.exists
