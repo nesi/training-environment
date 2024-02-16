@@ -1,9 +1,9 @@
 ---
-- name: Workload | Get Node IPs
+- name: Get Nodes | Get Node IPs
   shell: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig get nodes -o wide | awk '{ print $6 }' | grep 10.1
   register: nodes_var
 
-- name: Workload | Create in-memory Ansible inventory
+- name: Get Nodes | Create in-memory Ansible inventory
   add_host:
     name: "{{ item }}"
     groups: ldap_clients
