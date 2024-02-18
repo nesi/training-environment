@@ -58,6 +58,9 @@ clusters:
     v2:
       metadata:
         title: "Localhost Linux Cluster"
+        hidden: false
+      login:
+        host: "webnode.flexi.nesi"
       job:
         adapter: "linux_host"
         submit_host: "webnode.flexi.nesi"
@@ -80,7 +83,7 @@ ood_install_apps:
 
   rstudio:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
-    version: 'e125a08c41b589492b41b1d927780bbe704f5a3b'
+    version: 'f0bcf0fb5346ad6b7ae4dacee48c5a0f4017a982'
 
 pinned_apps:
   - sys/jupyter_ml102_k8s
