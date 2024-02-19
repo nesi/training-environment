@@ -30,6 +30,7 @@ TMPFILE=$(mktemp "/tmp/k8-ondemand-bootstrap-${ONDEMAND_USERNAME}.XXXXXX")
 envsubst < "${YAML_DIR}/namespace.yaml" > "$TMPFILE"
 envsubst < "${YAML_DIR}/network-policy.yaml" >> "$TMPFILE"
 envsubst < "${YAML_DIR}/rolebinding.yaml" >> "$TMPFILE"
+envsubst < "${YAML_DIR}/namespace-quota.yaml" >> "$TMPFILE"
 
 if [ "$USE_POD_SECURITY_POLICY" = "true" ] ; then
   PASSWD=$(getent passwd "$ONDEMAND_USERNAME")

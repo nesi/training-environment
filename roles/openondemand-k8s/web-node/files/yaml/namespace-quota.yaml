@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  namespace: $NAMESPACE
+  name: "$ONDEMAND_USERNAME-quota"
+spec:
+  hard:
+    pods: "1"
