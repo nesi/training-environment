@@ -90,7 +90,7 @@ ood_install_apps:
     version: 'v0.1.0'
 
 pinned_apps:
-  - sys/jupyter_m101
+  - sys/jupyter_ml101
   - sys/jupyter_ml102
   - sys/rstudio
 
