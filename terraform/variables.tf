@@ -23,7 +23,7 @@ variable "key_file" {
 
 variable "services_flavor_id" {
   description = "FlexiHPC Flavor ID for services instance, Defaults to devtest1.4cpu4ram"
-  default     = "4ec785be-a422-4207-9daa-cbb71c61f9ed" 
+  default     = "2d02e6a4-3937-4ed3-951a-8e27867ff53e" 
 }
 
 variable "services_image_id" {
@@ -33,12 +33,12 @@ variable "services_image_id" {
 
 variable "services_volume_size" {
   description = "The size of the services volume in gigabytes, defaults to 30"
-  default     = "30" 
+  default     = "400" 
 }
 
 variable "webnode_flavor_id" {
   description = "FlexiHPC Flavor ID for services instance, Defaults to balanced1.4cpu8ram"
-  default     = "e07cfee1-43af-4bf6-baac-3bdf7c1b88f8" 
+  default     = "674fa81a-69c7-4bf7-b3a9-59989fb63618" 
 }
 
 variable "webnode_image_id" {
