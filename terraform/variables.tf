@@ -1,6 +1,6 @@
 variable "tenant_name" {
   description = "FlexiHPC project Name"
-  default = "NeSI-Training-Test"
+  default = "NeSI-Training-Test-DONT-USE"
 }
 
 variable "auth_url" {

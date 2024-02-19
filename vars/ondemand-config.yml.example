@@ -8,7 +8,7 @@ route_53_zone: data.nesi.org.nz
 oidc_hostname: "{{ hostvars['servicesnode']['hostname'] }}.{{ route_53_zone }}"
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 
-cluster_rdc_project: NeSI-Training-Test
+cluster_rdc_project: NeSI-Training-Test-DONT-USE
 
 # number of users
 num_users_create: 2
