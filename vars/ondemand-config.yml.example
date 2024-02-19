@@ -110,7 +110,7 @@ cluster_namespace: default
 
 openstack_ssh_key: CHANGEME_OPENSTACK_SSH_KEY_NAME
 
-cluster_control_plane_count: 2
+cluster_control_plane_count: 3
 control_plane_flavor: balanced1.2cpu4ram
 
 cluster_worker_count: 4
