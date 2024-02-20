@@ -7,15 +7,6 @@
   block:
     - name: Web Node | Bootstrapping ondemand k8s
       include_tasks: bootstrap-ondemand-k8s.yml
-
-    - name: Web Node | Setting pod reaper enabled boolean to {{ use_job_pod_reaper }}
-      set_fact:
-        enable_pod_reaper: "{{ use_job_pod_reaper }}"
-
-    - name: Web Node | Install pod reaper
-      include_tasks: job-pod-reaper.yml
-      when:
-        - "enable_pod_reaper|default(false)|bool == true"
   when:
     - "enable_openondemand|default(false)|bool == true"
   become: true
