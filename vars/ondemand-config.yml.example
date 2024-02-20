@@ -87,7 +87,7 @@ ood_install_apps:
 
   rstudio:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
-    version: 'v0.1.0'
+    version: 'v0.2.0'
 
 pinned_apps:
   - sys/jupyter_ml101
