@@ -16,6 +16,7 @@ rules:
   resources:
   - namespaces
   - serviceaccounts
+  - resourcequotas
   verbs:
   - get
   - create
@@ -35,6 +36,7 @@ rules:
 - apiGroups: [""]
   resources:
   - services
+  - resourcequotas
   verbs:
   - list
 # rules necessary to give these permissions to ondemand users
