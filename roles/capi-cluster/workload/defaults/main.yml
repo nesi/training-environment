@@ -2,7 +2,7 @@
 k8s_ood_enable: false
 
 kubernetes_version: v1.28.5
-capi_image_name: rocky-93-kube-v1.28.5-rdc-ca
+capi_image_name: rocky-93-kube-v1.28.5
 
 capi_provider_version: v0.8.0
 
