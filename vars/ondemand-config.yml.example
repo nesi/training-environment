@@ -11,8 +11,8 @@ clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 cluster_rdc_project: NeSI-Training-Test-DONT-USE
 
 # number of users
-num_users_create: 34
-num_trainers_create: 6
+num_users_create: 6
+num_trainers_create: 3
 
 # authentication settings
 oidc_uri: "/oidc"
@@ -79,7 +79,7 @@ clusters:
 ood_install_apps:
   jupyter_ml101:
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
-    version: 'v0.1.0'
+    version: 'v0.2.1'
 
   jupyter_ml102:
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
@@ -118,8 +118,8 @@ openstack_ssh_key: CHANGEME_OPENSTACK_SSH_KEY_NAME
 cluster_control_plane_count: 3
 control_plane_flavor: balanced1.2cpu4ram
 
-cluster_worker_count: 4
-worker_flavour: balanced1.32cpu64ram
+cluster_worker_count: 2
+worker_flavour: balanced1.8cpu16ram
 
 cluster_node_cidr: 10.1.0.0/24
 cluster_pod_cidr: 172.0.0.0/16
