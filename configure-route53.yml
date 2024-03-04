@@ -15,6 +15,7 @@
       ttl: 60
       value: "{{ item.dest }}"
       wait: true
+      overwrite: true
     loop:
       - domain: "{{ hostvars['servicesnode']['hostname'] }}"
         dest: "{{ hostvars['servicesnode']['ansible_host'] }}"
