@@ -30,22 +30,6 @@ resource "openstack_compute_floatingip_associate_v2" "services_floating_ip_assoc
   instance_id  = openstack_compute_instance_v2.services_instance.id
 }
 
-# add extra public keys to services instance
-resource "null_resource" "services_extra_keys" {
-  depends_on = [openstack_compute_floatingip_associate_v2.services_floating_ip_association]
-  count = length(var.extra_public_keys) > 0 ? 1 : 0
-
-  connection {
-    user = var.vm_user
-    private_key = file(var.key_file)
-    host = "${openstack_networking_floatingip_v2.services_floating_ip.address}"
-  }
-
-  provisioner "remote-exec" {
-    inline = [for pkey in var.extra_public_keys : "echo ${pkey} >> $HOME/.ssh/authorized_keys"]
-  }
-}
-
 # Create webnode instance
 resource "openstack_compute_instance_v2" "webnode_instance" {
   name            = "${terraform.workspace}-ood-webnode"
