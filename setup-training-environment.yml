@@ -9,11 +9,12 @@
 - name: Install admin SSH keys
   hosts: all
   tasks:
-    authorized_key:
-      user: "{{ ansible_user }}"
-      state: present
-      key: "{{ lookup('file', '{{ item }}')}}"
-    with_fileglob: 'pubkeys/*.pub'
+    - name: Install admin SSH keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ lookup('file', '{{ item }}')}}"
+      with_fileglob: 'pubkeys/*.pub'
 
 - name: Set timezone
   hosts: all
