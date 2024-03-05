@@ -56,12 +56,6 @@ variable "vm_user" {
   default = "ubuntu"
 }
 
-variable "extra_public_keys" {
-  description = "Additional SSH public keys to add to the authorized_keys file on provisioned nodes"
-  type = list(string)
-  default = []
-}
-
 # variable "kube_config" {
 #   description = "kube config file"
 # }

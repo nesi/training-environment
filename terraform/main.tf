@@ -78,22 +78,6 @@ resource "openstack_compute_floatingip_associate_v2" "webnode_floating_ip_associ
   instance_id  = openstack_compute_instance_v2.webnode_instance.id
 }
 
-# add extra public keys to webnode instance
-resource "null_resource" "webnode_extra_keys" {
-  depends_on = [openstack_compute_floatingip_associate_v2.webnode_floating_ip_association]
-  count = length(var.extra_public_keys) > 0 ? 1 : 0
-
-  connection {
-    user = var.vm_user
-    private_key = file(var.key_file)
-    host = "${openstack_networking_floatingip_v2.webnode_floating_ip.address}"
-  }
-
-  provisioner "remote-exec" {
-    inline = [for pkey in var.extra_public_keys : "echo ${pkey} >> $HOME/.ssh/authorized_keys"]
-  }
-}
-
 # Generate ansible hosts
 locals {
   host_ini_all = templatefile("${path.module}/templates/all-hosts.tpl", {

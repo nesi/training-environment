@@ -12,6 +12,6 @@ env.sh
 vars/secrets.yml
 users/*
 vars/ondemand-config.yml
-pubkeys/*.pub
+tmp/pubkeys/*.pub
 config/k8s-admin.conf
 scratch-pad.md
