@@ -83,6 +83,10 @@ ood_install_apps:
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.1.0'
 
+  rstudio_rnaseq:
+    repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
+    version: 'v0.1.0'
+
   rstudio:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.2.0'
@@ -90,6 +94,7 @@ ood_install_apps:
 pinned_apps:
   - sys/jupyter_ml101
   - sys/jupyter_ml102
+  - sys/rstudio_rnaseq
   - sys/rstudio
 
 # HTTPS LetsEncrypt Settings
