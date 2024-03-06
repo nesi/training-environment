@@ -1,0 +1,10 @@
+---
+- name: Install script to list user accounts
+  ansible.builtin.copy:
+    src: nesi-list-users
+    dest: /usr/local/bin/nesi-list-users
+    owner: root
+    group: root
+    mode: '0755'
+
+

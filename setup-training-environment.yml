@@ -172,12 +172,11 @@
   roles:
     - keycloak
 
-- name: Install Workshops
+- name: Setup linux host cluster
   become: yes
   hosts: webnode
   roles:
     - apptainer
-    - ml102_workshop
 
 # run ondemand role
 - name: Install ondemand
@@ -219,3 +218,9 @@
         state: present
   roles:
     - { role: openondemand-k8s/web-node }
+
+- name: Install utility scripts
+  hosts: servicesnode
+  become: yes
+  roles:
+    - utils

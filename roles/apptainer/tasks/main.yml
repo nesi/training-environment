@@ -19,22 +19,3 @@
   command: apptainer pull /opt/ood/linuxhost_adapter/ubuntu_22.04.sif docker://ubuntu:22.04
   args:
     creates: /opt/ood/linuxhost_adapter/ubuntu_22.04.sif
-# TODO: better to push the image to a repo and pull from there
-#- name: Clone ML101 repo
-#  ansible.builtin.git:
-#    repo: 'https://github.com/nesi/sklearn_tutorial.git'
-#    dest: /opt/sklearn_tutorial
-#    version: ml_20230509
-#- name: Copy apptainer def file for ML101
-#  copy:
-#    src: ML101.def
-#    dest: /opt/sklearn_tutorial/ML101.def
-#- name: Copy requirements.txt file for ML101
-#  copy:
-#    src: requirements.txt
-#    dest: /opt/sklearn_tutorial/requirements.txt
-#- name: Build ML101 image
-#  command: 'apptainer build ML101.sif ML101.def'
-#  args:
-#    chdir: /opt/sklearn_tutorial
-#    creates: /opt/sklearn_tutorial/ML101.sif
