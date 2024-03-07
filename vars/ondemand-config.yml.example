@@ -85,7 +85,7 @@ ood_install_apps:
 
   rstudio_rnaseq:
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
-    version: 'v0.1.0'
+    version: 'v0.2.0'
 
   rstudio:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
