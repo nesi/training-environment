@@ -57,8 +57,10 @@ clusters:
     ---
     v2:
       metadata:
-        title: "Localhost Linux Cluster"
+        title: "Webnode Linux Cluster"
         hidden: false
+      login:
+        host: 'webnode.flexi.nesi'
       job:
         adapter: "linux_host"
         submit_host: "webnode.flexi.nesi"
