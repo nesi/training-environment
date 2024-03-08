@@ -1,0 +1,37 @@
+---
+- name: Copy sshd config that denies training users
+  ansible.builtin.copy:
+    src: sshd_deny_training_users.conf
+    dest: /etc/ssh/sshd_config.d/deny_training_users.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: sshd_config
+
+- name: Reload sshd if config changed
+  ansible.builtin.service:
+    name: ssh
+    state: reloaded
+  when: sshd_config.changed
+
+- name: Create locales directory
+  ansible.builtin.file:
+    path: /etc/ood/config/locales
+    state: directory
+    mode: '0755'
+
+- name: Copy locales override file
+  ansible.builtin.copy:
+    src: locales_en.yml
+    dest: /etc/ood/config/locales/en.yml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy NeSI ondemand config file
+  ansible.builtin.copy:
+    src: ondemand_nesi.yml
+    dest: /etc/ood/config/ondemand.d/nesi.yml
+    owner: root
+    group: root
+    mode: '0644'

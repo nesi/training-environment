@@ -218,6 +218,7 @@
         state: present
   roles:
     - { role: openondemand-k8s/web-node }
+    - { role: openondemand-webnode-config }
 
 - name: Install utility scripts
   hosts: servicesnode
