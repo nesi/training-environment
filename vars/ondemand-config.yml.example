@@ -57,8 +57,10 @@ clusters:
     ---
     v2:
       metadata:
-        title: "Localhost Linux Cluster"
+        title: "Webnode Linux Cluster"
         hidden: false
+      login:
+        host: 'webnode.flexi.nesi'
       job:
         adapter: "linux_host"
         submit_host: "webnode.flexi.nesi"
@@ -85,7 +87,7 @@ ood_install_apps:
 
   rstudio_rnaseq:
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
-    version: 'v0.1.0'
+    version: 'v0.2.2'
 
   rstudio:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
