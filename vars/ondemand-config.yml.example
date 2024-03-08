@@ -57,7 +57,7 @@ clusters:
     ---
     v2:
       metadata:
-        title: "Webnode Linux Cluster"
+        title: "Webnode"
         hidden: false
       login:
         host: 'webnode.flexi.nesi'
