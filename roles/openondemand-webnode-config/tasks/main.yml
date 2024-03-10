@@ -35,3 +35,11 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Copy announcement file
+  ansible.builtin.copy:
+    src: announcement.md
+    dest: /etc/ood/config/announcement.md
+    owner: root
+    group: root
+    mode: '0644'
