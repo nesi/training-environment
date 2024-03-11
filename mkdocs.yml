@@ -1,0 +1,14 @@
+site_name: NeSI Training Environment
+
+nav:
+  - Overview: 'index.md'
+  - Apps:
+    - Overview: 'apps/index.md'
+    - "Example: conda based JupyterLab app for ML101": 'apps/example-conda-jupyterlab-ml101.md'
+    - "Example: venv based JupyterLab app for ML102": 'apps/example-venv-jupyterlab-ml102.md'
+    - "Example: RStudio based app for RNA-Seq": 'apps/example-rstudio-rna-seq.md'
+  - Deployment: 'deployment.md'
+  - Notes for trainers: 'notes-for-trainers.md'
+
+theme:
+  name: "material"
