@@ -1,2 +1,8 @@
 dashboard_logo: "https://www.nesi.org.nz/sites/default/themes/nesi_bootstrap/img/logo.png"
 dashboard_title: "NeSI Training"
+
+help_menu:
+  - group: "Documentation"
+  - title: "Training Environment docs"
+    icon: "fas://book"
+    url: "https://nesi.github.io/training-environment/"
