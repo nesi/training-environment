@@ -19,7 +19,7 @@ The training environment consists of multiple VMs:
 
 ## Apps
 
-Open OnDemand [interactive applications](https://osc.github.io/ood-documentation/latest/index.html), such as JupyterLab and RStudio, are used for the training courses. More information about apps can be found [here](/apps).
+Open OnDemand [interactive applications](https://osc.github.io/ood-documentation/latest/index.html), such as JupyterLab and RStudio, are used for the training courses. More information about apps can be found [here](/apps/index.md).
 
 ## User accounts
 

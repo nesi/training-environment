@@ -19,3 +19,7 @@ On the following pages are some examples of apps that have been developed to run
     * the */etc/nsswitch.conf* file from the kubernetes worked node is bound into the container
     * LDAP client packages are installed inside the container (nslcd, etc)
 - All home directories are bound into the container (so *trainer* users can access *training* users' homes from within the apps if needed)
+
+## General structure of Open OnDemand apps
+
+TODO
