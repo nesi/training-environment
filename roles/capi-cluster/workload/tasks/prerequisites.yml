@@ -5,7 +5,7 @@
     state: directory
     mode: 0755
 
-- name: Workload | Ensure clouds.yaml file exists remotely
+- name: Workload | Ensure clouds.yaml file exists
   stat:
     path: "{{ clouds_yaml_location }}"
   register: clouds_yaml_file
@@ -16,7 +16,7 @@
     state: directory
     mode: 0755
 
-- name: Workload | Ensure kubectl config file exists remotely
+- name: Workload | Ensure kubectl config file exists
   stat:
     path: "{{ kube_config_location }}/config"
   register: kube_config_file

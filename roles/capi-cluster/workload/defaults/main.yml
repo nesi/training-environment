@@ -1,8 +1,11 @@
 ---
-k8s_ood_enable: false
+enable_gpu_nodes: false
 
-kubernetes_version: v1.28.5
-capi_image_name: rocky-93-kube-v1.28.5
+kubernetes_version: v1.27.6
+capi_image_name: rocky-89-kube-v1.27.6 #ubuntu-2204-kube-v1.26.7-ca
+
+gpu_kubernetes_version: v1.27.7
+capi_gpu_image_name: rocky-89-kube-nvidia-v1.27.7
 
 capi_provider_version: v0.8.0
 
@@ -10,19 +13,29 @@ cluster_rdc_project: NeSI-Training-Test
 cluster_name: capi-cluster
 cluster_namespace: default
 
+capi_management_cluster: training-env-management
+
 openstack_ssh_key: kahus-key
 
 cluster_control_plane_count: 1
 control_plane_flavor: balanced1.2cpu4ram
 
 cluster_worker_count: 2
+cluster_max_worker_count: 3
 worker_flavour: balanced1.2cpu4ram
+
+cluster_gpu_worker_count: 1
+gpu_worker_flavour: gpu1.44cpu240ram.a40.1g.48gb
 
 cluster_node_cidr: 10.10.0.0/24
 cluster_pod_cidr: 192.168.0.0/16
 cluster_route_id: 3c0cb930-2bbe-4c9c-ac61-6dbc9410c3e9
 
+cluster_external_network_id: 3f405cc9-28a3-4973-b5a1-7f50f112e5d5
+
 cluster_network_name: "{{ cluster_rdc_project }}"
+
+cluster_settle_timeout_base: 3
 
 bin_dir: /usr/local/bin
 
@@ -30,6 +43,7 @@ tmp_dir: "/tmp/{{ cluster_name }}"
 
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"
+clouds_yaml_cloud: openstack
 
 kube_config_local_location: ~/.kube/config
 kube_config_location: "~/.kube"
@@ -37,13 +51,18 @@ kube_config_location: "~/.kube"
 yq_version: v4.2.0 
 yq_repo: "https://github.com/mikefarah/yq/releases/download/{{ yq_version }}/yq_linux_amd64"
 
+helm_cli_repo: "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3"
+
 ca_cert_dir: /usr/local/share/ca-certificates
 ca_cert_file: "{{ ca_cert_dir }}/zero_ca.crt"
+
+autoscaler_ns: "kube-system"
+autoscaler_image: "registry.k8s.io/autoscaling/cluster-autoscaler:v1.29.0"
 
 ## Variables for OpenID Connect Configuration https://kubernetes.io/docs/admin/authentication/
 ## To use OpenID you have to deploy additional an OpenID Provider (e.g Dex, Keycloak, ...)
 
-kube_oidc_auth: true
+kube_oidc_auth: false
 kube_oidc_hostname: ood-idp.training.data.nesi.org.nz
 kube_oidc_url: https://{{ kube_oidc_hostname }}/realms/ondemand
 kube_oidc_client_id: kubernetes

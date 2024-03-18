@@ -15,7 +15,7 @@
 
     - name: Workload | Prep clouds.yaml for kube secret
       shell: >-
-        {{ tmp_dir }}/create_cloud_conf.sh {{ clouds_yaml_location }} openstack > {{ tmp_dir }}/cloud.conf
+        {{ tmp_dir }}/create_cloud_conf.sh {{ clouds_yaml_location }} {{ clouds_yaml_cloud }} > {{ tmp_dir }}/cloud.conf
 
     - name: Workload | Generate clouds.yaml secret
       shell: >-

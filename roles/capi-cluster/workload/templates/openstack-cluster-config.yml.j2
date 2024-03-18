@@ -5,7 +5,7 @@ OPENSTACK_CLOUD_CACERT_B64: {{ base64_ca_cert.stdout }}
 KUBERNETES_VERSION: "{{ kubernetes_version }}"
 OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR: "{{ control_plane_flavor }}"
 OPENSTACK_DNS_NAMESERVERS: 130.216.1.1
-OPENSTACK_EXTERNAL_NETWORK_ID: 3f405cc9-28a3-4973-b5a1-7f50f112e5d5
+OPENSTACK_EXTERNAL_NETWORK_ID: "{{ cluster_external_network_id }}"
 OPENSTACK_FAILURE_DOMAIN: nova
 OPENSTACK_IMAGE_NAME: "{{ capi_image_name }}"
 OPENSTACK_NODE_MACHINE_FLAVOR: "{{ worker_flavour }}"
@@ -14,5 +14,6 @@ CLUSTER_NAMESPACE: "{{ cluster_namespace }}"
 CLUSTER_NAME: "{{ cluster_name }}"
 CONTROL_PLANE_MACHINE_COUNT: "{{ cluster_control_plane_count }}"
 WORKER_MACHINE_COUNT: "{{ cluster_worker_count }}"
+WORKER_MAX_MACHINE_COUNT: "{{ cluster_max_worker_count }}"
 CLUSTER_NODE_CIDR: "{{ cluster_node_cidr }}"
 CLUSTER_POD_CIDR: "{{ cluster_pod_cidr }}"

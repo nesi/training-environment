@@ -46,6 +46,9 @@ apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineDeployment
 metadata:
   name: ${CLUSTER_NAME}-md-0
+  annotations:
+    cluster.x-k8s.io/cluster-api-autoscaler-node-group-max-size: "${WORKER_MAX_MACHINE_COUNT}"
+    cluster.x-k8s.io/cluster-api-autoscaler-node-group-min-size: "${WORKER_MACHINE_COUNT}"
 spec:
   clusterName: ${CLUSTER_NAME}
   replicas: ${WORKER_MACHINE_COUNT}
