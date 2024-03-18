@@ -197,10 +197,29 @@
         validate_certs: false
       register: keycloak_secret
       no_log: true
+      
     - name: Set keycloak client secret fact for ondemand
       set_fact:
         oidc_client_secret: "{{ keycloak_secret.clientsecret_info.value }}"
       no_log: true
+
+    - name: Set ood_install_apps variable
+      set_fact:
+        ood_install_apps: "{{ ood_install_apps +
+                            [{ item.key: { 'repo': item.value.repo,
+                              'version': item.value.version }}] }}"
+      with_items: "{{ ood_apps | dict2items }}"
+      when: item.value.enabled == true
+      vars:
+        ood_install_apps: []
+
+    - name: Set pinned_apps variable
+      set_fact:
+        pinned_apps: "{{ pinned_apps + [ 'sys/' + item.key ] }}"
+      with_items: "{{ ood_apps | dict2items }}"
+      when: item.value.enabled == true
+      vars:
+        pinned_apps: []
   roles:
     - osc.open_ondemand
 

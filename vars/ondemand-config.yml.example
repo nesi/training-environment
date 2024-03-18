@@ -76,28 +76,54 @@ clusters:
         tmux_bin: /usr/bin/tmux
 
 # apps config
-ood_install_apps:
+ood_apps:
   jupyter_ml101:
+    k8s_container: https://somelocation.org.nz/for/container
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.1'
+    enabled: false
 
   jupyter_ml102:
+    k8s_container: https://somelocation.org.nz/for/container
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.1.0'
+    enabled: false
 
   rstudio_rnaseq:
+    k8s_container: https://somelocation.org.nz/for/container
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'v0.2.2'
-
+    enabled: false
+    
   rstudio:
+    k8s_container: https://somelocation.org.nz/for/container
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.2.0'
+    enabled: false
 
-pinned_apps:
-  - sys/jupyter_ml101
-  - sys/jupyter_ml102
-  - sys/rstudio_rnaseq
-  - sys/rstudio
+
+#ood_install_apps:
+#  jupyter_ml101:
+#    repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
+#    version: 'v0.2.1'
+
+#  jupyter_ml102:
+#    repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
+#    version: 'v0.1.0'
+
+#  rstudio_rnaseq:
+#    repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
+#    version: 'v0.2.2'
+
+#  rstudio:
+#    repo: https://github.com/nesi/training-environment-rstudio-app.git
+#    version: 'v0.2.0'
+
+#pinned_apps:
+#  - sys/jupyter_ml101
+#  - sys/jupyter_ml102
+#  - sys/rstudio_rnaseq
+#  - sys/rstudio
 
 # HTTPS LetsEncrypt Settings
 
