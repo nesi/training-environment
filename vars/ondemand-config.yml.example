@@ -78,25 +78,25 @@ clusters:
 # apps config
 ood_apps:
   jupyter_ml101:
-    k8s_container: https://somelocation.org.nz/for/container
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.1
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.1'
     enabled: false
 
   jupyter_ml102:
-    k8s_container: https://somelocation.org.nz/for/container
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.1.0'
     enabled: false
 
   rstudio_rnaseq:
-    k8s_container: https://somelocation.org.nz/for/container
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.2
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'v0.2.2'
     enabled: false
-    
+
   rstudio:
-    k8s_container: https://somelocation.org.nz/for/container
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.2.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.2.0'
     enabled: false
