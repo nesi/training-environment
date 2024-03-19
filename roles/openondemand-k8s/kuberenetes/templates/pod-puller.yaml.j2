@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: prepuller
+spec:
+  selector:
+    matchLabels:
+      name: prepuller
+  template:
+    metadata:
+      labels:
+        name: prepuller
+    spec:
+      # Configure an init container for each image you want to pull
+      initContainers:
+      {% for item in ood_enabled_apps %}
+        - name: prepuller-{{ item.name }}
+          image: {{ item.container_url }}
+          # Use a known command that will exit successfully immediately
+          # Any no-op command will do but YMMV with scratch based containers
+          command: ["sh", "-c", "'true'"]
+      {% endfor %}
+      
+      # Use the pause container to ensure the Pod goes into a `Running` phase
+      # but doesn't take up resource on the cluster
+      containers:
+        - name: pause
+          image: gcr.io/google_containers/pause:3.2
+          resources:
+            limits:
+              cpu: 1m
+              memory: 8Mi
+            requests:
+              cpu: 1m
+              memory: 8Mi

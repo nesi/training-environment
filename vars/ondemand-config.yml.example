@@ -101,6 +101,7 @@ ood_apps:
     version: 'v0.2.0'
     enabled: false
 
+enable_pod_pre_pull: false
 
 #ood_install_apps:
 #  jupyter_ml101:

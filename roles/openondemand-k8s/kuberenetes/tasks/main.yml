@@ -27,6 +27,15 @@
         kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
         -f {{ tmp_dir }}/ondemand-secret.yml
 
+    - name: Kubernetes | Setting pod pre-puller enabled boolean to {{ enable_pod_pre_pull }}
+      set_fact:
+        enable_pod_pre_pull: "{{ enable_pod_pre_pull }}"
+
+    - name: Kubernetes | Install pod pre-puller
+      include_tasks: pod-pre-puller.yml
+      when:
+        - "enable_pod_pre_pull|default(false)|bool == true"
+
     - name: Kubernetes | Setting pod reaper enabled boolean to {{ use_job_pod_reaper }}
       set_fact:
         enable_pod_reaper: "{{ use_job_pod_reaper }}"

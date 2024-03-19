@@ -9,3 +9,12 @@ kube_oidc_auth: true
 cluster_name: capi-cluster
 
 use_job_pod_reaper: false
+
+enable_pod_pre_pull: false
+
+ood_apps:
+  jupyter_ml101:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.1
+    repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
+    version: 'v0.2.1'
+    enabled: false

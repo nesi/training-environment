@@ -1,0 +1,20 @@
+---
+- name: Kubernetes | Set ood_enabled_apps variable
+  set_fact:
+      ood_enabled_apps: "{{ ood_enabled_apps +
+                        [{ 'name': item.key, 'container_url': item.value.k8s_container }] }}"
+  with_items: "{{ ood_apps | dict2items }}"
+  when: item.value.enabled == true
+  vars:
+    ood_enabled_apps: []
+
+- name: Kubernetes | Create clusterctl config
+  template:
+    src: "pod-puller.yaml.j2"
+    dest: "/tmp/pod-puller.yaml"
+    mode: 0640
+
+- name: Kubernetes| kubectl apply pod-puller.yaml
+  shell: >-
+    kubectl apply -f /tmp/pod-puller.yaml
+  become: true
