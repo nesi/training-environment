@@ -14,7 +14,7 @@ Other browsers and extensions (ad blockers, etc) could cause issues. For example
 
 ## Session limits
 
-Each user (both *trainer* and *training* users) are limited to one running session (app) at a time, to ensure there are enough resources for everyone to run something. To restart an app, or stop and app so that you can start another one, you should:
+Each user (both *trainer* and *training* users) are limited to one running session (app) at a time, to ensure there are enough resources for everyone to run something. To restart an app, or stop an app so that you can start another one, you should:
 
 - browse to the "My Interactive Sessions" tab
 - click "Delete" on the running session

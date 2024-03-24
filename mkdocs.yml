@@ -9,6 +9,7 @@ nav:
     - "Example: RStudio based app for RNA-Seq": 'apps/example-rstudio-rna-seq.md'
   - Deployment: 'deployment.md'
   - Notes for trainers: 'notes-for-trainers.md'
+  - Troubleshooting: 'troubleshooting.md'
 
 theme:
   name: "material"
