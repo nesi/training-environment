@@ -12,7 +12,7 @@ cluster_rdc_project: NeSI-Training-Test
 
 # number of users
 num_users_create: 34
-num_trainers_create: 6
+num_trainers_create: 8
 
 # authentication settings
 oidc_uri: "/oidc"
