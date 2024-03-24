@@ -1,2 +1,12 @@
 dashboard_logo: "https://www.nesi.org.nz/sites/default/themes/nesi_bootstrap/img/logo.png"
 dashboard_title: "NeSI Training"
+
+dashboard_layout:
+  rows:
+    - columns:
+      - width: 7
+        widgets:
+          - pinned_apps
+      - width: 5
+        widgets:
+          - sessions
