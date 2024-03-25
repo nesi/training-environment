@@ -79,7 +79,7 @@ clusters:
 ood_install_apps:
   jupyter_ml101:
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
-    version: 'v0.2.1'
+    version: 'v0.2.2'
 
   jupyter_ml102:
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
