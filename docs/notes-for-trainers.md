@@ -1,8 +1,14 @@
 # Notes for trainers
 
-TODO:
+## Viewing training user's files
 
-- notes for trainers (where to find password), recommended browsers, etc
+All *trainer* users should have read access on all *training* users home directories to help with debugging issues, checking progress, etc. The paths to the home directories will look like:
+
+```
+/home/shared/training1
+/home/shared/training2
+...
+```
 
 ## Recommended browsers
 
