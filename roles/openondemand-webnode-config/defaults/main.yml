@@ -1,0 +1,3 @@
+apache_max_request_workers: 256
+apache_server_limit: 8
+apache_threads_per_child: 32
