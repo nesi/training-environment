@@ -204,13 +204,9 @@
 
     - name: Set ood_install_apps variable
       set_fact:
-        ood_install_apps: "{{ ood_install_apps +
-                            [{ item.key: { 'repo': item.value.repo,
-                              'version': item.value.version }}] }}"
+        ood_install_apps: "{{ ood_install_apps|default({}) | ansible.builtin.combine({ item.key: { 'repo': item.value.repo, 'version': item.value.version } }) }}"
       with_items: "{{ ood_apps | dict2items }}"
       when: item.value.enabled == true
-      vars:
-        ood_install_apps: []
 
     - name: Set pinned_apps variable
       set_fact:
