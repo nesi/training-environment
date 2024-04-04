@@ -13,7 +13,7 @@ cluster_rdc_project: NeSI-Training-Test
 cluster_name: capi-cluster
 cluster_namespace: default
 
-capi_management_cluster: training-env-management
+capi_management_cluster: training-mgmt-cluster
 
 openstack_ssh_key: kahus-key
 
