@@ -58,7 +58,6 @@
     - { role: pre-checks/kubernetes }
     - { role: cluster-ctl/cli-install }
     - { role: capi-cluster/workload }
-    - { role: capi-cluster/workload-gpu }
     - { role: capi-cluster/get-nodes }
     - { role: openondemand-k8s/kuberenetes }
 
