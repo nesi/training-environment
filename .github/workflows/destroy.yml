@@ -21,8 +21,8 @@ jobs:
       TF_VAR_extra_public_keys: '${{ vars.EXTRA_PUBLIC_KEYS }}'
       TF_VAR_vm_user: ubuntu
     steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.6.3"
           terraform_wrapper: false

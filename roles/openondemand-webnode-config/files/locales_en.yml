@@ -7,3 +7,4 @@ en:
     shell_app_title: "%{cluster_title} Shell Access (trainers only)"
 
     pinned_apps_title: 'Training Course Apps'
+    pinned_apps_caption_html: ''

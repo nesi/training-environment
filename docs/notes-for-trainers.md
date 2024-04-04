@@ -1,8 +1,14 @@
 # Notes for trainers
 
-TODO:
+## Viewing training user's files
 
-- notes for trainers (where to find password), recommended browsers, etc
+All *trainer* users should have read access on all *training* users home directories to help with debugging issues, checking progress, etc. The paths to the home directories will look like:
+
+```
+/home/shared/training1
+/home/shared/training2
+...
+```
 
 ## Recommended browsers
 
@@ -14,12 +20,14 @@ Other browsers and extensions (ad blockers, etc) could cause issues. For example
 
 ## Session limits
 
-Each user (both *trainer* and *training* users) are limited to one running session (app) at a time, to ensure there are enough resources for everyone to run something. To restart an app, or stop and app so that you can start another one, you should:
+Each user (both *trainer* and *training* users) are limited to one running session (app) at a time, to ensure there are enough resources for everyone to run something. To restart an app, or stop an app so that you can start another one, you should:
 
 - browse to the "My Interactive Sessions" tab
 - click "Delete" on the running session
 - **important:** wait for approx one minute for the underlying pod to get properly deleted by the kubernetes cluster (otherwise you will get an error at the next step)
 - launch the new app
+
+If you try to launch the new app too soon after deleting, or while a session is already running, you will get a [Failed to submit session](troubleshooting.md#failed-to-submit-session) error.
 
 ## Browser based terminal app
 

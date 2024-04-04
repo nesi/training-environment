@@ -6,3 +6,13 @@ help_menu:
   - title: "Training Environment docs"
     icon: "fas://book"
     url: "https://nesi.github.io/training-environment/"
+
+dashboard_layout:
+  rows:
+    - columns:
+      - width: 7
+        widgets:
+          - pinned_apps
+      - width: 5
+        widgets:
+          - sessions

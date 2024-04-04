@@ -1,0 +1,12 @@
+<IfModule mpm_event_module>
+  # ServerLimit is MaxRequestWorkers / ThreadsPerChild
+  ServerLimit            {{ apache_server_limit }}
+  StartServers           2
+  MaxRequestWorkers      {{ apache_max_request_workers }}
+  MinSpareThreads        25
+  MaxSpareThreads        75
+  ThreadsPerChild        {{ apache_threads_per_child }}
+  MaxRequestsPerChild    0
+  ThreadLimit            256
+  ListenBacklog          255
+</IfModule>

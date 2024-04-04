@@ -43,3 +43,18 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Apache mpm event configuration
+  ansible.builtin.template:
+    src: mpm_event.conf.j2
+    dest: /etc/apache2/mods-available/mpm_event.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: apache_mpm_event_config
+
+- name: Reload apache service
+  ansible.builtin.service:
+    name: apache2
+    state: reloaded
+  when: apache_mpm_event_config.changed
