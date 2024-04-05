@@ -56,5 +56,5 @@
 - name: Reload apache service
   ansible.builtin.service:
     name: apache2
-    state: reloaded
+    state: restarted
   when: apache_mpm_event_config.changed
