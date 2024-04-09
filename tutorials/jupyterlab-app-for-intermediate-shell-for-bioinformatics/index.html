@@ -685,6 +685,18 @@ We allow the user to choose a value between 4 and 12 hours and the form will be 
 </code></pre>
 <p>Different widgets are available. See also the upstream <a href="https://osc.github.io/ood-documentation/develop/how-tos/app-development/interactive/form.html">documentation</a>.</p>
 <h2 id="manifestyml">manifest.yml</h2>
+<p>The <em>manifest.yml</em> files defines how the app shows up in the user interface, e.g. what name it will have</p>
+<pre><code class="language-yml">name: Intermediate shell for bioinformatics
+</code></pre>
+<p>For the training environment we just leave the following:</p>
+<pre><code class="language-yml">category: Interactive Apps
+subcategory: Servers
+role: batch_connect
+</code></pre>
+<p>but can edit the description to be something relevant:</p>
+<pre><code class="language-yml">description: |
+  This app will launch a Jupyter Lab server for the intermediate shell for bioinformatics workshop
+</code></pre>
 <h2 id="submitymlerb">submit.yml.erb</h2>
 <h2 id="viewhtmlerb">view.html.erb</h2>
 <h2 id="templatescriptsherb">template/script.sh.erb</h2>
