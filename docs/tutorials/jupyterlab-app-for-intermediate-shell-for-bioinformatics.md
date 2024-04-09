@@ -58,6 +58,26 @@ Different widgets are available. See also the upstream [documentation](https://o
 
 ## manifest.yml
 
+The *manifest.yml* files defines how the app shows up in the user interface, e.g. what name it will have
+
+```yml
+name: Intermediate shell for bioinformatics
+```
+
+For the training environment we just leave the following:
+
+```yml
+category: Interactive Apps
+subcategory: Servers
+role: batch_connect
+```
+
+but can edit the description to be something relevant:
+
+```yml
+description: |
+  This app will launch a Jupyter Lab server for the intermediate shell for bioinformatics workshop
+```
 
 ## submit.yml.erb
 
