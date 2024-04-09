@@ -11,8 +11,8 @@ clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 cluster_rdc_project: NeSI-Training-Test
 
 # number of users
-num_users_create: 6
-num_trainers_create: 3
+num_users_create: 1
+num_trainers_create: 2
 
 # authentication settings
 oidc_uri: "/oidc"
@@ -101,6 +101,12 @@ ood_apps:
     version: 'v0.3.0'
     enabled: true
 
+  shell4b:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.1
+    repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
+    version: 'v0.3.1'
+    enabled: true
+
 enable_pod_pre_pull: false
 
 # HTTPS LetsEncrypt Settings
@@ -127,7 +133,7 @@ openstack_ssh_key: CHANGEME_OPENSTACK_SSH_KEY_NAME
 cluster_control_plane_count: 1
 control_plane_flavor: balanced1.2cpu4ram
 
-cluster_worker_count: 2
+cluster_worker_count: 1
 worker_flavour: balanced1.8cpu16ram
 
 cluster_node_cidr: 10.1.0.0/24
