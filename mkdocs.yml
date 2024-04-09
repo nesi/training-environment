@@ -1,7 +1,12 @@
 site_name: NeSI Training Environment
 
+markdown_extensions:
+  - admonition
+
 nav:
   - Overview: 'index.md'
+  - Tutorials:
+    - "JupyterLab app for Intermediate Shell for Bioinformatics": "tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics.md"
   - Apps:
     - Overview: 'apps/index.md'
     - "Example: conda based JupyterLab app for ML101": 'apps/example-conda-jupyterlab-ml101.md'
