@@ -13,7 +13,7 @@ In this tutorial we will go through the different files in the above repo and ho
 
 !!! note "Files with .erb extension"
 
-    Files with a *.erb* extension below are run through the Embedded Ruby template system. If you don't need this you can remove the *.erb* extension, or add it to files where you need it.
+    Files with a *.erb* extension below are run through the Embedded Ruby template engine. If you don't need this you can remove the *.erb* extension, or add it to files where you need it.
 
 ## form.yml
 
