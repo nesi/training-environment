@@ -104,7 +104,7 @@ ood_apps:
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.2
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
-    version: 'v0.3.1'
+    version: 'v0.3.2'
     enabled: true
 
 enable_pod_pre_pull: false
