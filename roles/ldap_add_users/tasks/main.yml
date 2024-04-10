@@ -8,18 +8,30 @@
 # add parent entries
 - name: Make sure we have a parent entry for users
   community.general.ldap_entry:
-    dn: ou=people,dc=flexi,dc=nesi
+    dn: ou=people,{{ ldap_base_dn }}
     objectClass: organizationalUnit
     server_uri: ldap://servicesnode.flexi.nesi/
-    bind_dn: cn=admin,dc=flexi,dc=nesi
+    bind_dn: cn=admin,{{ ldap_base_dn }}
     bind_pw: "{{ ldap_admin_password }}"
 
 - name: Make sure we have a parent entry for groups
   community.general.ldap_entry:
-    dn: ou=groups,dc=flexi,dc=nesi
+    dn: ou=groups,{{ ldap_base_dn }}
     objectClass: organizationalUnit
     server_uri: ldap://servicesnode.flexi.nesi/
-    bind_dn: cn=admin,dc=flexi,dc=nesi
+    bind_dn: cn=admin,{{ ldap_base_dn }}
+    bind_pw: "{{ ldap_admin_password }}"
+
+- name: "Create a group for trainer users"
+  community.general.ldap_entry:
+    dn: "cn=trainers,ou=groups,{{ ldap_base_dn }}"
+    objectClass:
+      - posixGroup
+    attributes:
+      cn: trainers
+      gidNumber: "10001"
+    server_uri: ldap://servicesnode.flexi.nesi/
+    bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
       
 # iterate here, creating trainers
