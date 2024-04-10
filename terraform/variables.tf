@@ -27,8 +27,8 @@ variable "services_flavor_id" {
 }
 
 variable "services_image_id" {
-  description = "FlexiHPC Image ID for services instance, Defaults to ubuntu-jammy-server-cloudimg"
-  default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd" 
+  description = "FlexiHPC Image ID for services instance, Defaults to NeSI-FlexiHPC-Ubuntu-Jammy_22.04"
+  default     = "ee420ef7-8baa-4a7d-adf1-2fde47f58fa5"
 }
 
 variable "services_volume_size" {
@@ -42,8 +42,8 @@ variable "webnode_flavor_id" {
 }
 
 variable "webnode_image_id" {
-  description = "FlexiHPC Image ID for services instance, Defaults to ubuntu-jammy-server-cloudimg"
-  default     = "1a0480d1-55c8-4fd7-8c7a-8c26e52d8cbd" 
+  description = "FlexiHPC Image ID for services instance, Defaults to NeSI-FlexiHPC-Ubuntu-Jammy_22.04"
+  default     = "ee420ef7-8baa-4a7d-adf1-2fde47f58fa5"
 }
 
 variable "webnode_volume_size" {
