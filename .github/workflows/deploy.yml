@@ -87,10 +87,8 @@ jobs:
         env:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
 
-      - name: Cleanup ansible roles and collections
-        run: rm -rf ~/.ansible/{roles,collections}/*
       - name: Install ansible dependencies
-        run: ansible-galaxy install -r requirements.yml
+        run: ansible-galaxy install --force -r requirements.yml
 
       # - name: Install ansible collection dependencies
       #   run: ansible-galaxy collection install community.general
