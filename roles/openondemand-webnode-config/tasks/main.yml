@@ -28,7 +28,15 @@
     group: root
     mode: '0644'
 
-- name: Copy NeSI ondemand config file
+- name: Copy NeSI logo
+  ansible.builtin.copy:
+    src: nesi.svg
+    dest: /var/www/ood/public/nesi.svg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy NeSI ondemand customisations file
   ansible.builtin.copy:
     src: ondemand_nesi.yml
     dest: /etc/ood/config/ondemand.d/nesi.yml
