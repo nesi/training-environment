@@ -1,5 +1,3 @@
-cancel_session_enabled: true
-
 dashboard_logo: "/public/nesi.svg"
 dashboard_logo_height: 200
 dashboard_title: "NeSI Training"

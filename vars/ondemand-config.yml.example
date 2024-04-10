@@ -47,6 +47,8 @@ rnode_uri: '/rnode'
 logout_redirect: '/oidc?logout=https%3A%2F%2F{{ servername }}'
 pun_pre_hook_exports: 'OIDC_ACCESS_TOKEN,OIDC_CLAIM_EMAIL,OIDC_REFRESH_TOKEN'
 
+cancel_session_enabled: true
+
 httpd_port: 443
 server_aliases:
   - webnode.flexi.nesi
