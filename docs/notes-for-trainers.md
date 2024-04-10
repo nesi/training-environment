@@ -34,3 +34,24 @@ If you try to launch the new app too soon after deleting, or while a session is 
 ![webnode shell access](webnode-shell-access.png)
 
 The browser based terminal in the OnDemand web interface runs on the webnode and can be used to monitor progress and assist *training* users from outside the apps. These terminal sessions run on the OnDemand web node and do not have any resource restrictions, so nothing resource intensive should be run there. Only *trainer* users can use this feature; if *training* users try to use it they will get an error.
+
+## List running sessions
+
+You can list running sessions, for example to see how many training users have successfully started a session, via the [browser based terminal app](#browser-based-terminal-app) using the following commands:
+
+- `nesi-get-pods`
+- `nesi-get-pods-wide`
+
+These will list all pods on the kubernetes cluster. You could filter them by looking just for training user pods and just those that are currently running, for example:
+
+```
+nesi-get-pods | grep user-training | grep Running
+```
+
+will show just training user pods that are running, while
+
+```
+nesi-get-pods | grep user-
+```
+
+will show both training and trainer pods, including those in all states (not just running).
