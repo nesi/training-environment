@@ -27,13 +27,13 @@
   lineinfile:
     path: /etc/nsswitch.conf
     regexp: '^passwd:'
-    line: 'passwd: files systemd ldap'
+    line: 'passwd: files ldap'
 
 - name: Configure group in nsswitch.conf
   lineinfile:
     path: /etc/nsswitch.conf
     regexp: '^group:'
-    line: 'group: files systemd ldap'
+    line: 'group: files ldap'
 
 - name: Configure passwd
   replace:
