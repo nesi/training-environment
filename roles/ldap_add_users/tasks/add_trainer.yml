@@ -60,6 +60,12 @@
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
 
+- name: "Add user {{ user_name }} to trainers group"
+  community.general.ldap_attrs:
+    dn: "cn=trainers,ou=groups,{{ ldap_base_dn }}"
+    attributes:
+      memberUid: "{{ user_name }}"
+
 # create home and add ssh keys
 - name: "Create home for user {{ user_name }}"
   copy:
