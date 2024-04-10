@@ -66,3 +66,28 @@
     name: apache2
     state: restarted
   when: apache_mpm_event_config.changed
+
+- name: Setup sudoers rule for listing running pods
+  community.general.sudoers:
+    name: trainers-get-pods
+    state: present
+    group: trainers
+    commands:
+      - /usr/local/bin/kubectl get pods -A
+      - /usr/local/bin/kubectl get pods -A -o wide
+
+- name: Copy nesi-get-pods script
+  ansible.builtin.copy:
+    src: nesi-get-pods.sh
+    dest: /usr/local/bin/nesi-get-pods
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy nesi-get-pods-wide script
+  ansible.builtin.copy:
+    src: nesi-get-pods-wide.sh
+    dest: /usr/local/bin/nesi-get-pods-wide
+    owner: root
+    group: root
+    mode: '0755'

@@ -68,6 +68,7 @@
     server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
+  notify: Invalidate nscd group cache
 
 # create home and add ssh keys
 - name: "Create home for user {{ user_name }}"

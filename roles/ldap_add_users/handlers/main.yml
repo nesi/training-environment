@@ -1,0 +1,2 @@
+- name: Invalidate nscd group cache
+  shell: "nscd --invalidate=group"
