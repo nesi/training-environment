@@ -11,8 +11,8 @@ clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 cluster_rdc_project: NeSI-Training-Test
 
 # number of users
-num_users_create: 1
-num_trainers_create: 2
+num_users_create: 34
+num_trainers_create: 6
 
 # authentication settings
 oidc_uri: "/oidc"
@@ -131,10 +131,10 @@ cluster_namespace: default
 openstack_ssh_key: CHANGEME_OPENSTACK_SSH_KEY_NAME
 
 cluster_control_plane_count: 1
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
-cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
+cluster_worker_count: 3
+worker_flavour: balanced1.32cpu64ram
 
 cluster_node_cidr: 10.1.0.0/24
 cluster_pod_cidr: 172.0.0.0/16
