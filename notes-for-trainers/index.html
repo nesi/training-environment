@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
       
       
 
@@ -501,6 +501,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#list-running-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      List running sessions
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -591,6 +600,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#list-running-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      List running sessions
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -629,6 +647,19 @@
 <h2 id="browser-based-terminal-app">Browser based terminal app</h2>
 <p><img alt="webnode shell access" src="../webnode-shell-access.png" /></p>
 <p>The browser based terminal in the OnDemand web interface runs on the webnode and can be used to monitor progress and assist <em>training</em> users from outside the apps. These terminal sessions run on the OnDemand web node and do not have any resource restrictions, so nothing resource intensive should be run there. Only <em>trainer</em> users can use this feature; if <em>training</em> users try to use it they will get an error.</p>
+<h2 id="list-running-sessions">List running sessions</h2>
+<p>You can list running sessions, for example to see how many training users have successfully started a session, via the <a href="#browser-based-terminal-app">browser based terminal app</a> using the following commands:</p>
+<ul>
+<li><code>nesi-get-pods</code></li>
+<li><code>nesi-get-pods-wide</code></li>
+</ul>
+<p>These will list all pods on the kubernetes cluster. You could filter them by looking just for training user pods and just those that are currently running, for example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nesi-get-pods | grep user-training | grep Running
+</span></code></pre></div>
+<p>will show just training user pods that are running, while</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>nesi-get-pods | grep user-
+</span></code></pre></div>
+<p>will show both training and trainer pods, including those in all states (not just running).</p>
 
 
 
@@ -678,7 +709,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      <script src="../assets/javascripts/bundle.3220b9d7.min.js"></script>
       
     
   </body>
