@@ -243,5 +243,7 @@
 - name: Setup container apps
   become: yes
   hosts: k8s_nodes
+  vars_files:
+    - ondemand-config.yml
   roles:
     - container-apps/k8s
