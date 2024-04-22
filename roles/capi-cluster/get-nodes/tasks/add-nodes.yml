@@ -6,7 +6,9 @@
 - name: Get Nodes | Create in-memory Ansible inventory
   add_host:
     name: "{{ item }}"
-    groups: ldap_clients
+    groups:
+      - ldap_clients
+      - k8s_nodes
     ansible_user: "{{ capi_ssh_user }}"
     instance_name: "{{ item }}"
   loop: "{{ nodes_var.stdout_lines }}"

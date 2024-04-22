@@ -1,0 +1,40 @@
+---
+- name: Add trainer users to subuid
+  ansible.builtin.lineinfile:
+    path: /etc/subuid
+    owner: root
+    group: root
+    mode: '0644'
+    regexp: "^{{ item }}:.*"
+    line: "{{ item|int }}:{{ item | int | bitwise_shift_left(16) }}:65536"
+  with_sequence: start=2001 end={{ 2000 + num_trainers_create }}
+
+- name: Add trainer users to subgid
+  ansible.builtin.lineinfile:
+    path: /etc/subgid
+    owner: root
+    group: root
+    mode: '0644'
+    regexp: "^{{ item }}:.*"
+    line: "{{ item }}:{{ item | int | bitwise_shift_left(16) }}:65536"
+  with_sequence: start=2001 end={{ 2000 + num_trainers_create }}
+
+- name: Add training users to subuid
+  ansible.builtin.lineinfile:
+    path: /etc/subuid
+    owner: root
+    group: root
+    mode: '0644'
+    regexp: "^{{ item }}:.*"
+    line: "{{ item }}:{{ item | int | bitwise_shift_left(16) }}:65536"
+  with_sequence: start=3001 end={{ 3000 + num_users_create }}
+
+- name: Add trainer users to subgid
+  ansible.builtin.lineinfile:
+    path: /etc/subgid
+    owner: root
+    group: root
+    mode: '0644'
+    regexp: "^{{ item }}:.*"
+    line: "{{ item }}:{{ item | int | bitwise_shift_left(16) }}:65536"
+  with_sequence: start=3001 end={{ 3000 + num_users_create }}

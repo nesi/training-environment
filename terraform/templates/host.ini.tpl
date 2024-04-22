@@ -12,3 +12,8 @@ ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/
 vm_private_key_file=${vm_private_key_file}
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
+[k8s_nodes]
+
+[k8s_nodes:vars]
+vm_private_key_file=${vm_private_key_file}
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
