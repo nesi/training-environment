@@ -13,11 +13,12 @@ spec:
     spec:
       # Configure an init container for each image you want to pull
       initContainers:
+        - name: prepuller-utils
+          image: ghcr.io/nesi/training-environment-k8s-utils:v0.1.0
+          command: ["sh", "-c", "'true'"]
       {% for item in ood_enabled_apps %}
         - name: prepuller-{{ item.name }}
           image: {{ item.container_url }}
-          # Use a known command that will exit successfully immediately
-          # Any no-op command will do but YMMV with scratch based containers
           command: ["sh", "-c", "'true'"]
       {% endfor %}
       

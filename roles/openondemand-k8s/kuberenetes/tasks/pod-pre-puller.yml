@@ -16,5 +16,5 @@
 
 - name: Kubernetes| kubectl apply pod-puller.yaml
   shell: >-
-    kubectl apply -f /tmp/pod-puller.yaml
+    kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply -f /tmp/pod-puller.yaml
   become: true
