@@ -116,9 +116,12 @@ ood_apps:
     enabled: true
 
 # this is currently required for containers app to run properly (fakeroot)
-enable_privileged_pods: true
+# Note: you should probably set to false unless you are running a containers workshop
+enable_privileged_pods: false
 
-enable_pod_pre_pull: true
+# pull the images defined in ood_apps onto all k8s worker nodes
+# Note: make sure the worker nodes have enough disk space (especially if many apps are enabled)
+enable_pod_pre_pull: false
 
 # HTTPS LetsEncrypt Settings
 
