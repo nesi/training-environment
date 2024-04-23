@@ -16,11 +16,11 @@ spec:
         - name: prepuller-utils
           image: ghcr.io/nesi/training-environment-k8s-utils:v0.1.0
           command: ["sh", "-c", "'true'"]
-      {% for item in ood_enabled_apps %}
+{% for item in ood_enabled_apps %}
         - name: prepuller-{{ item.name }}
           image: {{ item.container_url }}
           command: ["sh", "-c", "'true'"]
-      {% endfor %}
+{% endfor %}
       
       # Use the pause container to ensure the Pod goes into a `Running` phase
       # but doesn't take up resource on the cluster
