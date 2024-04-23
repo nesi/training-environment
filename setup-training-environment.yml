@@ -245,8 +245,6 @@
   hosts: k8s_nodes
   vars_files:
     - ondemand-config.yml
-  set_fact:
-    enable_privileged_pods: "{{ enable_privileged_pods|default(false) }}"
   roles:
     - container-apps/k8s
   when: enable_privileged_pods == true
@@ -256,8 +254,6 @@
   hosts: webnode
   vars_files:
     - ondemand-config.yml
-  set_fact:
-    enable_privileged_pods: "{{ enable_privileged_pods|default(false) }}"
   roles:
     - container-apps/webnode
   when: enable_privileged_pods == true
