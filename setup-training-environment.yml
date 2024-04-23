@@ -240,10 +240,24 @@
   roles:
     - utils
 
-- name: Setup container apps
+- name: Setup k8s nodes for containers apps
   become: yes
   hosts: k8s_nodes
   vars_files:
     - ondemand-config.yml
+  set_fact:
+    enable_privileged_pods: "{{ enable_privileged_pods|default(false) }}"
   roles:
     - container-apps/k8s
+  when: enable_privileged_pods == true
+
+- name: Setup webnode for containers apps
+  become: yes
+  hosts: webnode
+  vars_files:
+    - ondemand-config.yml
+  set_fact:
+    enable_privileged_pods: "{{ enable_privileged_pods|default(false) }}"
+  roles:
+    - container-apps/webnode
+  when: enable_privileged_pods == true

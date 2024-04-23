@@ -1,0 +1,2 @@
+---
+pod_template_path: /opt/ood/gems/gems/ood_core-0.25.0/lib/ood_core/job/adapters/kubernetes/templates/pod.yml.erb

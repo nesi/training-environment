@@ -115,6 +115,9 @@ ood_apps:
     version: 'v0.1.0'
     enabled: true
 
+# this is currently required for containers app to run properly (fakeroot)
+enable_privileged_pods: true
+
 enable_pod_pre_pull: false
 
 # HTTPS LetsEncrypt Settings
