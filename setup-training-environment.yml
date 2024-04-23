@@ -247,7 +247,6 @@
     - ondemand-config.yml
   roles:
     - container-apps/k8s
-  when: enable_privileged_pods == true
 
 - name: Setup webnode for containers apps
   become: yes
@@ -256,4 +255,3 @@
     - ondemand-config.yml
   roles:
     - container-apps/webnode
-  when: enable_privileged_pods == true
