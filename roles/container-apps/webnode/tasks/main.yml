@@ -14,16 +14,16 @@
     - name: Patch the pod template file to run the container as privileged
       ansible.builtin.replace:
         path: "{{ pod_template_path }}"
-        regexp: "^      privileged: false$"
-        replace: "      privileged: true"
-        before: "^  initContainers:$"
+        regexp: "privileged: false"
+        replace: "privileged: true"
+        before: "  initContainers:"
 
     - name: Patch the pod template file to allow privilege escalation
       ansible.builtin.replace:
         path: "{{ pod_template_path }}"
-        regexp: "^      allowPrivilegeEscalation: false$"
-        replace: "      allowPrivilegeEscalation: true"
-        before: "^  initContainers:$"
+        regexp: "allowPrivilegeEscalation: false"
+        replace: "allowPrivilegeEscalation: true"
+        before: "  initContainers:"
 
   when:
     - "enable_privileged_pods|default(false)|bool == true"
