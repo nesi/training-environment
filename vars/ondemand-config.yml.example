@@ -84,36 +84,42 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.2'
     enabled: true
+    pre_pull: false
 
   jupyter_ml102:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.2.0
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.2.0'
     enabled: true
+    pre_pull: false
 
   rstudio_rnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.2
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'v0.2.2'
     enabled: true
+    pre_pull: false
 
   rstudio:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.3.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.3.0'
     enabled: true
+    pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.3
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
     version: 'v0.3.3'
     enabled: true
+    pre_pull: false
 
   containers:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
     version: 'v0.1.0'
-    enabled: true
+    enabled: false
+    pre_pull: false
 
 # this is currently required for containers app to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop

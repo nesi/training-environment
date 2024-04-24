@@ -4,7 +4,6 @@ host.ini
 terraform/terraform.tfstate
 terraform/terraform.tfstate.d/*
 terraform/terraform.tfstate.backup
-terraform/terraform.tfvars
 env.sh
 .terraform
 .terraform.lock.hcl
