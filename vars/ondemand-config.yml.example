@@ -113,7 +113,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
     version: 'v0.1.0'
-    enabled: true
+    enabled: false
 
 # this is currently required for containers app to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
