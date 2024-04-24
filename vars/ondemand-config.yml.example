@@ -91,7 +91,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.2.0'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   rstudio_rnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.2
@@ -127,7 +127,7 @@ enable_privileged_pods: false
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough disk space (especially if many apps are enabled)
-enable_pod_pre_pull: false
+enable_pod_pre_pull: true
 
 # HTTPS LetsEncrypt Settings
 
