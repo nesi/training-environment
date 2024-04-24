@@ -39,7 +39,7 @@ cluster_settle_timeout_base: 3
 
 bin_dir: /usr/local/bin
 
-tmp_dir: "/tmp/{{ cluster_name }}"
+tmp_dir: "/var/nesi/{{ cluster_name }}"
 
 clouds_yaml_local_location: ~/.config/openstack/clouds.yaml
 clouds_yaml_location: "{{ tmp_dir }}/clouds.yaml"

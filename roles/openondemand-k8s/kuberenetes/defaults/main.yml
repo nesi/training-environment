@@ -2,7 +2,7 @@
 k8s_ood_enable: false
 
 bin_dir: /usr/local/bin
-tmp_dir: "/tmp/{{ cluster_name }}"
+tmp_dir: "/var/nesi/{{ cluster_name }}"
 
 kube_oidc_auth: true
 
