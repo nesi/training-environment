@@ -36,3 +36,10 @@
     kubectl get secret -n {{ cluster_namespace }} {{ cluster_name }}-kubeconfig 
     -o jsonpath='{.data.value}'|base64 -d > {{ tmp_dir }}/{{ cluster_name }}.kubeconfig
   when: not new_cluster_config.stat.exists
+
+- name: Copy {{ cluster_name }} cluster kubeconfig yaml to persistent location
+  ansible.builtin.copy:
+    src: "{{ tmp_dir }}/{{ cluster_name }}.kubeconfig"
+    dest: "~/.kube/{{ cluster_name }}.kubeconfig"
+    mode: '0640'
+    remote_src: yes
