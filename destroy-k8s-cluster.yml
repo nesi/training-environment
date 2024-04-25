@@ -8,5 +8,5 @@
     shell: >-
       kubectl delete cluster {{ terraform_workspace }}
     when:
-      - "enable_k8s_openondemand|default(false)|bool == true"
+      - "k8s_ood_enable|default(false)|bool == true"
     register: destroy

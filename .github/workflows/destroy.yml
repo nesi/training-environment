@@ -85,7 +85,7 @@ jobs:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
 
       - name: Install ansible dependencies
-        run: ansible-galaxy install -r requirements.yml
+        run: ansible-galaxy install --force -r requirements.yml
       - name: Terraform initialise
         run: terraform init -input=false
         env:
