@@ -39,7 +39,7 @@
         name: "{{ inventory_hostname }}.flexi.nesi"
 
 - hosts: servers
-  become: yes
+  become_user: root
   any_errors_fatal: "true"
   vars_files:
     - ondemand-config.yml
@@ -49,7 +49,7 @@
     - { role: kubectl }
 
 - hosts: servicesnode
-  become: yes
+  become_user: root
   any_errors_fatal: "true"
   vars_files:
     - ondemand-config.yml
