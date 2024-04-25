@@ -4,7 +4,9 @@
       ood_enabled_apps: "{{ ood_enabled_apps +
                         [{ 'name': item.key, 'container_url': item.value.k8s_container }] }}"
   with_items: "{{ ood_apps | dict2items }}"
-  when: item.value.enabled == true
+  when:
+    - item.value.enabled == true
+    - item.value.pre_pull == true
   vars:
     ood_enabled_apps: []
 
