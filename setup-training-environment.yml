@@ -232,9 +232,11 @@
     - { role: openondemand-k8s/web-node }
     - { role: openondemand-webnode-config }
 
-- name: Install utility scripts
+- name: Install/run utility scripts/functions
   hosts: servicesnode
   become: yes
+  vars_files:
+    - ondemand-config.yml
   roles:
     - utils
 
