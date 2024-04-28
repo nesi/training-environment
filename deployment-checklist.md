@@ -1,5 +1,7 @@
 # Deployment checklist
 
+Create a branch based of the *main* branch, the branch name you choose will be shown in the training environment URL (e.g. https://*branch*-ood-webnode.data.nesi.org.nz), choose something simple and related to the training you are running, avoid special characters, etc. (e.g. *ml101*, *introtor*, etc). Edit, commit and push the following files to your branch.
+
 In *vars/ondemand-config.yml.example*:
 
 - adjust `num_users_create` and `num_trainers_create`
