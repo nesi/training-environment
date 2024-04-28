@@ -29,7 +29,7 @@
     line: "{{ item }}:{{ item | int | bitwise_shift_left(16) }}:65536"
   with_sequence: start=3001 end={{ 3000 + num_users_create }}
 
-- name: Add trainer users to subgid
+- name: Add training users to subgid
   ansible.builtin.lineinfile:
     path: /etc/subgid
     owner: root
