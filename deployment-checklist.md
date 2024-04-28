@@ -5,9 +5,9 @@ In *vars/ondemand-config.yml.example*:
 - adjust `num_users_create` and `num_trainers_create`
 - adjust `ood_apps`
   - check `version` and `k8s_container`
-  - enable required apps
-  - set which images to pre-pull (don't choose too many, we have limited space currently on the worker nodes and pre-pulling will fail if you exhaust it)
-- set `enable_pod_prepull` if desired (should default to on probably, sometimes we have experience really slow pulls, this helps with that)
+  - enable required apps (usually just leave them all enabled, except for containers)
+  - set which images to pre-pull (just choose the one you will be using, we have limited space currently on the worker nodes and pre-pulling will fail if you exhaust it)
+- set `enable_pod_prepull` to "true" (sometimes we have experienced really slow image pulls, this helps with that)
 - set `control_plane_flavor`, usually to `balanced1.4cpu8ram` for production
 - set `cluster_worker_count` and `worker_flavor` to have enough capacity for the number of users
 

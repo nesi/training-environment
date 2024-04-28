@@ -143,6 +143,64 @@ description: |
 
 ## submit.yml.erb
 
+Most of the configuration for the app happens in this file. It will look quite different depending on the type of app, e.g. JupyterLab vs RStudio. Notice the *.erb* extension which means this file will run through the ERB template engine.
+
+The top section of the file (above the "---") should not need to be changed. In this section we set some ruby variables that are used in the templates later on, e.g. a reference to the current user, the IP address of the services node, etc.
+
+```yaml
+<%
+   pwd_cfg = "c.ServerApp.password=u\'sha1:${SALT}:${PASSWORD_SHA1}\'"
+   host_port_cfg = "c.ServerApp.base_url=\'/node/${HOST_CFG}/${PORT_CFG}/\'"
+
+   configmap_filename = "ondemand_config.py"
+   configmap_data = "c.NotebookApp.port = 8080"
+   utility_img = "ghcr.io/nesi/training-environment-k8s-utils:v0.1.0"
+
+   user = OodSupport::User.new
+
+   services_node = Resolv.getaddress("servicesnode")
+%>
+---
+```
+
+The config happens in the `script:` entry, usually the `accounting_id` and `wall_time` should not need to change
+
+```yaml
+script:
+  accounting_id: "<%= account %>"
+  wall_time: "<%= wall_time.to_i * 3600 %>"
+```
+
+Inside the `native:` entry is where we configure the pod that will run the app on the kubernetes cluster, for example we define the container with:
+
+```yaml
+  native:
+    container:
+      name: "intermshell"
+      image: "ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.3"
+      command: ["/bin/bash","-l","<%= staged_root %>/job_script_content.sh"]
+      working_dir: "<%= Etc.getpwnam(ENV['USER']).dir %>"
+      restart_policy: 'OnFailure'
+```
+
+- Using a unique `name` is a good idea to tell the running apps apart
+- `image` should point the docker image that should be used
+- `command` should not be changed
+- `working_dir` is usually left as the home directory but could be changed
+- `restart_policy` is usually left the same
+
+!!! info "Note about developing apps"
+
+    When developing an app it can be useful to set the image tag to point to a branch name and to set the `image_pull_policy` to alway, for example:
+
+    ```yaml
+    image: "ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:dev"
+    image_pull_policy: "Always"
+    ```
+
+    This way, whenever you push a change to the *dev* branch in your app repo, it will rebuild the docker image with the *dev* tag and then you can just restart your app in the training environment to pick up the changes. Do not do this in production though, pulling images can be slow.
+
+UNFINISHED
 
 ## view.html.erb
 
