@@ -232,14 +232,6 @@
     - { role: openondemand-k8s/web-node }
     - { role: openondemand-webnode-config }
 
-- name: Install/run utility scripts/functions
-  hosts: servicesnode
-  become: yes
-  vars_files:
-    - ondemand-config.yml
-  roles:
-    - utils
-
 - name: Setup k8s nodes for containers apps
   become: yes
   hosts: k8s_nodes
@@ -256,7 +248,7 @@
   roles:
     - container-apps/webnode
 
-# should be a way to do this without rebooting
+# should be a way to do this without rebooting (at the end because rebooting deletes the kubeconfig in /tmp...)
 - name: Verify trainers group
   become: yes
   hosts: servers
@@ -269,3 +261,12 @@
     - name: Reboot if trainer1 not in trainers group
       ansible.builtin.reboot:
       when: trainers_group_test.rc == 1
+
+# at the very end so the slack notification goes after the reboot
+- name: Install/run utility scripts/functions
+  hosts: servicesnode
+  become: yes
+  vars_files:
+    - ondemand-config.yml
+  roles:
+    - utils
