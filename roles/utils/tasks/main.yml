@@ -13,7 +13,7 @@
 
 - name: Write user accounts to file
   ansible.builtin.copy:
-    content: {{ list_users.stdout }}
+    content: "{{ list_users.stdout }}"
     dest: /etc/ldap/accounts.txt
     owner: root
     group: root
