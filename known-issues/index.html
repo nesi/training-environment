@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../apps/example-rstudio-rna-seq/">
+        <link rel="prev" href="../notes-for-trainers/">
       
       
-        <link rel="next" href="../notes-for-trainers/">
+        <link rel="next" href="../troubleshooting/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Deployment - NeSI Training Environment</title>
+        <title>Known issues - NeSI Training Environment</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deployment" class="md-skip">
+        <a href="#known-issues-and-limitations" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deployment
+              Known issues
             
           </span>
         </div>
@@ -397,19 +397,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -418,7 +409,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -447,10 +437,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Known issues
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -459,6 +469,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#timeouts-on-login-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timeouts on login page
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sharing-the-link-to-the-training-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sharing the link to the training environment
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -503,6 +551,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#timeouts-on-login-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timeouts on login page
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sharing-the-link-to-the-training-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sharing the link to the training environment
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -516,11 +590,13 @@
                   
 
 
-<h1 id="deployment">Deployment</h1>
-<p>TODO:</p>
-<ul>
-<li>process, configuring (num users, etc)</li>
-</ul>
+<h1 id="known-issues-and-limitations">Known issues and limitations</h1>
+<h2 id="timeouts-on-login-page">Timeouts on login page</h2>
+<p>If you leave the login page open for a while without logging you may encounter a timeout error when you do eventually login.
+Opening a new tab and navigating to the webnode URL should fix this. It is usually a good idea to login immediately after opening the training environment URL until we have fixed this timeout issue.</p>
+<h2 id="sharing-the-link-to-the-training-environment">Sharing the link to the training environment</h2>
+<p>Make sure you only share webnode URL, which will look like "https://<name>-ood-webnode.data.nesi.org.nz".</p>
+<p><em>Do not</em> share the services URL (which is the URL you see on the login screen) that looks like "https://<name>-ood-services.data.nesi.org.nz". If you share link it will almost certainly not work for others.</p>
 
 
 
