@@ -161,6 +161,20 @@
   roles:
     - ldap_add_users
 
+# should be a way to do this without rebooting
+- name: Verify trainers group
+  become: yes
+  hosts: servers
+  tasks:
+    - name: Check trainer1 in trainers group
+      ansible.builtin.shell: groups trainer1 | grep trainers
+      register: trainers_group_test
+      failed_when: trainers_group_test.rc != 0 and trainers_group_test.rc != 1
+
+    - name: Reboot if trainer1 not in trainers group
+      ansible.builtin.reboot:
+      when: trainers_group_test.rc == 1
+
 - name: Setup keycloak
   become: yes
   hosts: servicesnode

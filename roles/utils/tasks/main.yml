@@ -26,7 +26,7 @@
     msg: |-
       *Don't use these accounts unless they were created for you* - you will likely cause problems for workshop attendees if you do
 
-      {{ servername }}
+      https://{{ servername }}
 
       ```
       {{ list_users.stdout | replace('&', '&amp;') | replace('<', '&lt;') | replace('>', '&gt;') }}
