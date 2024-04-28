@@ -192,10 +192,6 @@ cluster_namespace: default
 openstack_ssh_key: CHANGEME_OPENSTACK_SSH_KEY_NAME
 
 cluster_control_plane_count: 1
-control_plane_flavor: balanced1.2cpu4ram
-
-cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
 
 cluster_node_cidr: 10.1.0.0/24
 cluster_pod_cidr: 172.0.0.0/16
