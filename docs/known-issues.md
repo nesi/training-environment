@@ -9,4 +9,4 @@ Opening a new tab and navigating to the webnode URL should fix this. It would be
 
 Make sure you only share webnode URL, which will look like "https://*name*-ood-**webnode**.data.nesi.org.nz".
 
-*Do not* share the services URL (which is the URL you see on the login screen) that looks like "https://*name*-ood-**services**.data.nesi.org.nz". If you share link it will almost certainly not work for others.
+**Do not** share the services URL (which is the URL you see on the login screen) that looks like "https://*name*-ood-**services**.data.nesi.org.nz". If you share link it will almost certainly not work for others.
