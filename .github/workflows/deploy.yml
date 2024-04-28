@@ -73,12 +73,14 @@ jobs:
           sed -i'' "s/CHANGEME_LDAP_ADMIN_PASSWORD/$LDAP_ADMIN_PASSWORD/" ${ONDEMAND_CONFIG_FILE}
           sed -i'' "s/CHANGEME_OIDC_CRYPTO_PASSPHRASE/$OIDC_CRYPTO_PASSPHRASE/" ${ONDEMAND_CONFIG_FILE}
           sed -i'' "s/CHANGEME_OPENSTACK_SSH_KEY_NAME/$KEY_PAIR_NAME/" ${ONDEMAND_CONFIG_FILE}
+          sed -i'' "s/CHANGEME_SLACK_TOKEN/$SLACK_TOKEN/" ${ONDEMAND_CONFIG_FILE}
         working-directory: vars
         env:
           KEYCLOAK_ADMIN_PASSWORD: '${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}'
           LDAP_ADMIN_PASSWORD: '${{ secrets.LDAP_ADMIN_PASSWORD }}'
           OIDC_CRYPTO_PASSPHRASE: '${{ secrets.OIDC_CRYPTO_PASSPHRASE }}'
           KEY_PAIR_NAME: '${{ secrets.KEY_PAIR_NAME }}'
+          SLACK_TOKEN: '${{ secrets.SLACK_TOKEN }}'
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
       - name: Link ondemand config
         run: |

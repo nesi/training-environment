@@ -94,6 +94,8 @@ enable_pod_pre_pull: false
 # variables below this line should not usually need to be changed
 ###############################################################################
 
+slack_notify: yes
+slack_token: "CHANGEME_SLACK_TOKEN"
 keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
 

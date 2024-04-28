@@ -7,4 +7,28 @@
     group: root
     mode: '0755'
 
+- name: Get list of all user accounts
+  ansible.builtin.command: /usr/local/bin/nesi-list-users
+  register: list_users
 
+- name: Write user accounts to file
+  ansible.builtin.copy:
+    content: {{ list_users.stdout }}
+    dest: /etc/ldap/accounts.txt
+    owner: root
+    group: root
+    mode: '0600'
+  register: accounts_file
+
+- name: Post the accounts to slack
+  community.general.slack:
+    token: "{{ slack_token }}"
+    msg: |-
+      *Don't use these accounts unless they were created for you* - you will likely cause problems for workshop attendees if you do
+
+      {{ servername }}
+
+      ```
+      {{ list_users.stdout | replace('&', '&amp;') | replace('<', '&lt;') | replace('>', '&gt;') }}
+      ```
+  when: accounts_file.changed and slack_notify
