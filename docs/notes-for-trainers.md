@@ -55,3 +55,7 @@ nesi-get-pods | grep user-
 ```
 
 will show both training and trainer pods, including those in all states (not just running).
+
+## Known issues and limitations
+
+See [known issues](known-issues.md)
