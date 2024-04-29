@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../example-venv-jupyterlab-ml102/">
+        <link rel="prev" href="../..">
       
       
-        <link rel="next" href="../../deployment/">
+        <link rel="next" href="../jupyterlab-app-for-intermediate-shell-for-bioinformatics/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Example: RStudio based app for RNA-Seq - NeSI Training Environment</title>
+        <title>Adding a new app - NeSI Training Environment</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rstudio-based-app-for-rna-seq" class="md-skip">
+        <a href="#adding-a-new-app" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Example: RStudio based app for RNA-Seq
+              Adding a new app
             
           </span>
         </div>
@@ -208,17 +208,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -232,161 +234,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Tutorials
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorials/adding-new-app/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Adding a new app
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    JupyterLab app for Intermediate Shell for Bioinformatics
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Apps
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Apps
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Overview
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../example-conda-jupyterlab-ml101/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Example: conda based JupyterLab app for ML101
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../example-venv-jupyterlab-ml102/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Example: venv based JupyterLab app for ML102
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -408,7 +261,7 @@
           
   
   <span class="md-ellipsis">
-    Example: RStudio based app for RNA-Seq
+    Adding a new app
   </span>
   
 
@@ -419,7 +272,7 @@
         
   
   <span class="md-ellipsis">
-    Example: RStudio based app for RNA-Seq
+    Adding a new app
   </span>
   
 
@@ -449,10 +302,193 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#what-needs-to-be-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs to be changed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-tagrelease-of-your-new-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a tag/release of your new app
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-your-app-to-the-training-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding your app to the training environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jupyterlab-app-for-intermediate-shell-for-bioinformatics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JupyterLab app for Intermediate Shell for Bioinformatics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Apps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apps/example-conda-jupyterlab-ml101/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example: conda based JupyterLab app for ML101
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apps/example-venv-jupyterlab-ml102/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example: venv based JupyterLab app for ML102
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apps/example-rstudio-rna-seq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example: RStudio based app for RNA-Seq
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -580,6 +616,42 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#what-needs-to-be-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs to be changed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-tagrelease-of-your-new-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a tag/release of your new app
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-your-app-to-the-training-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding your app to the training environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -595,9 +667,114 @@
                   
 
 
-<h1 id="rstudio-based-app-for-rna-seq">RStudio based app for RNA-Seq</h1>
+<h1 id="adding-a-new-app">Adding a new app</h1>
 <h2 id="overview">Overview</h2>
-<p>App developed for the <a href="https://genomicsaotearoa.github.io/RNA-seq-workshop/">RNA-Seq</a> workshop using RStudio.</p>
+<p>The suggested approach is to copy the existing app that most closely resembles your new app and modify that, we will document this approach here.
+Some of the existing apps are:</p>
+<ul>
+<li><a href="https://github.com/nesi/training-environment-jupyter-containers-app">Apptainer workshop app</a><ul>
+<li>based on JupyterLab</li>
+</ul>
+</li>
+<li><a href="https://github.com/nesi/training-environment-jupyter-intermediate-shell-app">Intermediate shell workshop app</a><ul>
+<li>based on JupyterLab</li>
+<li>there is a <a href="../jupyterlab-app-for-intermediate-shell-for-bioinformatics/">tutorial</a> for this app</li>
+</ul>
+</li>
+<li><a href="https://github.com/nesi/training-environment-jupyter-ml101-app">Jupyter ML101 app</a><ul>
+<li>based on JupyterLab</li>
+<li>uses Miniconda to install dependencies</li>
+</ul>
+</li>
+<li><a href="https://github.com/nesi/training-environment-jupyter-ml102-app">Jupyter ML102 app</a><ul>
+<li>based on JupyterLab</li>
+<li>uses Python virtualenv and pip to install dependencies</li>
+</ul>
+</li>
+<li><a href="https://github.com/nesi/training-environment-rstudio-rnaseq-app">RStudio RNA-Seq app</a><ul>
+<li>based on RStudio</li>
+<li>includes data files in the docker image</li>
+<li>uses Miniconda to install some dependencies such as <code>samtools</code> and <code>fastqc</code></li>
+<li>uses <code>BiocManager</code> and <code>install.packages</code> to install R dependencies</li>
+</ul>
+</li>
+<li><a href="https://github.com/nesi/training-environment-rstudio-scrnaseq-app">RStudio scRNA-Seq app</a></li>
+<li><a href="https://github.com/nesi/training-environment-rstudio-app">RStudio intro and intermediate R app</a></li>
+</ul>
+<h2 id="what-needs-to-be-changed">What needs to be changed</h2>
+<p>Here we summarise what is most likely to need to be changed when copying an existing app.
+Assuming the app your are copying is based on the same web application (i.e. JupyterLab vs RStudio, etc.) then not much should need to change.</p>
+<ul>
+<li><em>view.html.erb</em><ul>
+<li>change the line that contains the string <em>Connect to <app specific string></em>, replacing <em><app specific string></em> with something specific to your app</li>
+</ul>
+</li>
+<li><em>manifest.yml</em><ul>
+<li>change the <code>name</code> and <code>description</code></li>
+</ul>
+</li>
+<li><em>form.yml</em><ul>
+<li>adjust <code>cpu</code>, <code>memory</code>, <code>wall_time</code> if needed (can also add/remove any options)</li>
+</ul>
+</li>
+<li><em>submit.yml.erb</em><ul>
+<li>change <code>script.native.container.name</code> to something unique for your app</li>
+<li>change <code>script.native.container.image</code> to the image that will be built for your app - this should look like your github repo name and include a label/version (you will need to create a git tag for the version you put here)</li>
+</ul>
+</li>
+<li><em>script/template.sh.erb</em><ul>
+<li>copy any data in your image before launching the app, e.g. using something like
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>rsync --ignore-existing -avz /path/in/docker/image/to/data/ ~/data/
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><em>docker/Dockerfile</em><ul>
+<li>add additional packages and install steps (generally not a good idea to remove packages unless you know what you are doing)</li>
+<li>add any required data</li>
+</ul>
+</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Note about naming your git repo</p>
+<p>When you copy an existing app repo you should take care when naming your new repository - make sure you do not use underscores - use hyphens instead as github packages do not support package names with underscores and the default github action we include uses the repository name for the package name</p>
+</div>
+<h2 id="creating-a-tagrelease-of-your-new-app">Creating a tag/release of your new app</h2>
+<p>In order to deploy your app in the training environment we are going to tag a version/release of it, using git tags.</p>
+<ol>
+<li>Update the version label in <code>script.native.container.image</code> in <em>submit.yml.erb</em> to reflect the new version you are about to create, commit that file. For example, here we are going to release version "v0.2.2": <code>image: "ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.2"</code></li>
+<li>Create a tag with that specific version, e.g. <code>git tag -a v0.2.2 -m "my new release"</code></li>
+<li>Push the tags, e.g. <code>git push --tags</code></li>
+<li>This should trigger a build of the docker image, check the "Actions" tab of your GitHub repo and wait for it to complete successfully</li>
+</ol>
+<h2 id="adding-your-app-to-the-training-environment">Adding your app to the training environment</h2>
+<p>To add you app to the training environment you need to modify the <a href="https://github.com/nesi/training-environment">training-environment repo</a>, specifically the file <em>vars/ondemand-config.yml.example</em>:</p>
+<ol>
+<li>Identify the <code>ood_apps</code> section in the file <em>vars/ondemand-config.yml.example</em></li>
+<li>This section consists of a number of blocks, one for each app, so add a new block for your new app:
+    <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">rstudio_rnaseq</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">k8s_container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.2</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/nesi/training-environment-rstudio-rnaseq-app.git</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;v0.2.2&#39;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">pre_pull</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span></code></pre></div></li>
+<li>Next time you build the environment the new app should be included</li>
+</ol>
+<p>More detail on the keys above follows:</p>
+<ul>
+<li><code>rstudio_rnaseq</code> should be set to a unique value in the <code>ood_apps</code> block</li>
+<li><code>k8s_container</code> must point to the docker image for your app, tagged with the specific version (the git tag you created above)</li>
+<li><code>repo</code> the github repo for your app</li>
+<li><code>version</code> should be the git tag you created above</li>
+<li><code>enabled: true</code> so that your app shows up in ondemand</li>
+<li><code>pre_pull: false</code> is a good default and can be changed to <code>true</code> when you are using that app in a training</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Releasing a new version of your app</p>
+<p>When you release a new version of your app you need to update both the <code>k8s_container</code> and <code>version</code> values with the new version of your app</p>
+</div>
+<h2 id="developing">Developing</h2>
+<p>When developing it can be useful...</p>
 
 
 
