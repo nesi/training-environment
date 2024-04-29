@@ -20,7 +20,7 @@
     
     
       
-        <title>Deploying on NeSI - NeSI Training Environment</title>
+        <title>Deploying a training environment - NeSI Training Environment</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deployment-a-training-environment" class="md-skip">
+        <a href="#deploying-a-training-environment" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deploying on NeSI
+              Deploying a training environment
             
           </span>
         </div>
@@ -282,7 +282,7 @@
           
   
   <span class="md-ellipsis">
-    Deploying on NeSI
+    Deploying a training environment
   </span>
   
 
@@ -293,7 +293,7 @@
         
   
   <span class="md-ellipsis">
-    Deploying on NeSI
+    Deploying a training environment
   </span>
   
 
@@ -425,152 +425,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Apps
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Apps
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../apps/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Overview
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../apps/example-conda-jupyterlab-ml101/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Example: conda based JupyterLab app for ML101
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../apps/example-venv-jupyterlab-ml102/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Example: venv based JupyterLab app for ML102
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../apps/example-rstudio-rna-seq/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Example: RStudio based app for RNA-Seq
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Deployment
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -754,11 +608,12 @@
                   
 
 
-<h1 id="deployment-a-training-environment">Deployment a training environment</h1>
+<h1 id="deploying-a-training-environment">Deploying a training environment</h1>
 <p>Here we document the process for deploying a training environment on the NeSI Flexi HPC platform.</p>
 <p>Details of how we have set up the project on Flexi HPC, the github repo, etc. are not covered here.</p>
+<p>You need to have write permission on the training-environment GitHub repo to follow these steps.</p>
 <h2 id="clone-the-git-repo">Clone the git repo</h2>
-<p>Clone the repo if you don't already have it, e.g. using SSH:</p>
+<p>Clone the repo if you don't already have it (if you do already have it just <code>cd</code> to the repo directory):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone git@github.com:nesi/training-environment.git
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd training-environment
 </span></code></pre></div>
@@ -786,7 +641,7 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
 <li>only pre-pull the app you are actually going to use, don't pre-pull them all as there might not be enough disk space on the worker nodes</li>
 </ul>
 </li>
-<li>set <code>control_plane_flavor</code><ul>
+<li>set <code>control_plane_flavor</code> (the is the controller node for the kubernetes cluster, no user sessions run on this node)<ul>
 <li>usually to <code>balanced1.4cpu8ram</code> for production</li>
 <li><code>balanced1.2cpu4ram</code> is good for testing</li>
 </ul>
@@ -805,14 +660,17 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
 <li><code>674fa81a-69c7-4bf7-b3a9-59989fb63618</code> <em>16cpu32ram</em></li>
 </ul>
 </li>
-<li>adjust <code>services_volume_size</code>, must be big enough for all the user home directories plus some extra room</li>
+<li>adjust <code>services_volume_size</code>, must be big enough for all the user home directories plus some extra room<ul>
+<li>for example, if you have 20 users and expect to need 4 GB per user, then <code>services_volume_size: 160</code> could be a safe choice (80 GB from 20x 4 GB and then doubling it to add some spare capacity and extra room for the OS</li>
+</ul>
+</li>
 <li>adjust <code>webnode_flavor_id</code><ul>
 <li><code>e07cfee1-43af-4bf6-baac-3bdf7c1b88f8</code> <em>4cpu8ram</em> (usually used for testing)</li>
 <li><code>2d02e6a4-3937-4ed3-951a-8e27867ff53e</code> <em>8cpu16ram</em> (usually used for production, should be good for around 40-50 users, haven't tested past that)</li>
 <li><code>674fa81a-69c7-4bf7-b3a9-59989fb63618</code> <em>16cpu32ram</em></li>
 </ul>
 </li>
-<li>adjust <code>webnode_volume_size</code>, usually leave at 30 GB</li>
+<li>should be fine to leave <code>webnode_volume_size</code> at 30 GB</li>
 </ul>
 <h3 id="commit-the-changes">Commit the changes</h3>
 <p>Commit and push the changes to your branch, e.g.</p>
@@ -821,7 +679,7 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git push -u origin my-test-env
 </span></code></pre></div>
 <h2 id="deploy-the-environment">Deploy the environment</h2>
-<p><strong>This will change</strong></p>
+<p><strong>This is likely to change</strong></p>
 <p>Deployments are currently done via manually triggered GitHub actions.</p>
 <div class="admonition important">
 <p class="admonition-title">Check there are enough resources</p>
@@ -906,7 +764,7 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.dd8806f2.min.js"></script>
