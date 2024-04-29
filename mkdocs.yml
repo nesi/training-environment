@@ -21,7 +21,6 @@ nav:
     - "JupyterLab app for Intermediate Shell for Bioinformatics": "tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics.md"
   - Notes for trainers: 'notes-for-trainers.md'
   - Known issues: 'known-issues.md'
-  - Troubleshooting: 'troubleshooting.md'
 
 theme:
   name: "material"

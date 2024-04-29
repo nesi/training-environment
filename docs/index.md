@@ -36,7 +36,7 @@ Key points about apps on our training environment:
     * LDAP client packages are installed inside the container (nslcd, etc)
 - All home directories are bound into the container (so *trainer* users can access *training* users' homes from within the apps if needed)
 
-More details can be found in the tutorials.
+More details about apps can be found in the tutorials.
 
 ## User accounts
 
@@ -47,3 +47,4 @@ Within the training environment we create two different types of user accounts, 
 - *trainer* accounts
     * have read-only access to *training* user home directories, to monitor progress and assist
     * can use the browser based terminal from the OnDemand web interface
+    * can view running pods on the kubernetes cluster

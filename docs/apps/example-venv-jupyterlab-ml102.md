@@ -1,3 +1,0 @@
-# Example: venv based JupyterLab app for ML102
-
-TODO...
