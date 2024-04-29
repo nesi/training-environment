@@ -1,12 +1,14 @@
-# Deployment a training environment
+# Deploying a training environment
 
 Here we document the process for deploying a training environment on the NeSI Flexi HPC platform.
 
 Details of how we have set up the project on Flexi HPC, the github repo, etc. are not covered here.
 
+You need to have write permission on the training-environment GitHub repo to follow these steps.
+
 ## Clone the git repo
 
-Clone the repo if you don't already have it, e.g. using SSH:
+Clone the repo if you don't already have it (if you do already have it just `cd` to the repo directory):
 
 ```
 git clone git@github.com:nesi/training-environment.git
@@ -41,7 +43,7 @@ We need to edit two files to configure the environment:
 - set `enable_pod_prepull` to "true"
     - sometimes we have experienced really slow image pulls, this will pre-pull the image and cache it so it is fast to start
     - only pre-pull the app you are actually going to use, don't pre-pull them all as there might not be enough disk space on the worker nodes
-- set `control_plane_flavor`
+- set `control_plane_flavor` (the is the controller node for the kubernetes cluster, no user sessions run on this node)
     - usually to `balanced1.4cpu8ram` for production
     - `balanced1.2cpu4ram` is good for testing
 - set `cluster_worker_count` and `worker_flavor` to have enough capacity for the number of users, e.g.
@@ -55,11 +57,12 @@ We need to edit two files to configure the environment:
     - `2d02e6a4-3937-4ed3-951a-8e27867ff53e` *8cpu16ram* (usually used for production, should be good for around 40-50 users, haven't tested past that)
     - `674fa81a-69c7-4bf7-b3a9-59989fb63618` *16cpu32ram*
 - adjust `services_volume_size`, must be big enough for all the user home directories plus some extra room
+    - for example, if you have 20 users and expect to need 4 GB per user, then `services_volume_size: 160` could be a safe choice (80 GB from 20x 4 GB and then doubling it to add some spare capacity and extra room for the OS
 - adjust `webnode_flavor_id`
     - `e07cfee1-43af-4bf6-baac-3bdf7c1b88f8` *4cpu8ram* (usually used for testing)
     - `2d02e6a4-3937-4ed3-951a-8e27867ff53e` *8cpu16ram* (usually used for production, should be good for around 40-50 users, haven't tested past that)
     - `674fa81a-69c7-4bf7-b3a9-59989fb63618` *16cpu32ram*
-- adjust `webnode_volume_size`, usually leave at 30 GB
+- should be fine to leave `webnode_volume_size` at 30 GB
 
 ### Commit the changes
 
@@ -73,7 +76,7 @@ git push -u origin my-test-env
 
 ## Deploy the environment
 
-**This will change**
+**This is likely to change**
 
 Deployments are currently done via manually triggered GitHub actions.
 

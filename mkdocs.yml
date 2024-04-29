@@ -17,17 +17,13 @@ nav:
   - Overview: 'index.md'
   - Tutorials:
     - "Adding a new app": "tutorials/adding-new-app.md"
-    - "Deploying on NeSI": "tutorials/deployment-on-nesi.md"
+    - "Deploying a training environment": "tutorials/deployment-on-nesi.md"
     - "JupyterLab app for Intermediate Shell for Bioinformatics": "tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics.md"
-  - Apps:
-    - Overview: 'apps/index.md'
-    - "Example: conda based JupyterLab app for ML101": 'apps/example-conda-jupyterlab-ml101.md'
-    - "Example: venv based JupyterLab app for ML102": 'apps/example-venv-jupyterlab-ml102.md'
-    - "Example: RStudio based app for RNA-Seq": 'apps/example-rstudio-rna-seq.md'
-  - Deployment: 'deployment.md'
   - Notes for trainers: 'notes-for-trainers.md'
   - Known issues: 'known-issues.md'
   - Troubleshooting: 'troubleshooting.md'
 
 theme:
   name: "material"
+  features:
+    - navigation.expand
