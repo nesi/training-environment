@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 6
+num_users_create: 14
 # number of trainer users
-num_trainers_create: 3
+num_trainers_create: 4
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -19,8 +19,8 @@ control_plane_flavor: balanced1.2cpu4ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
+cluster_worker_count: 2
+worker_flavour: balanced1.32cpu64ram
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
@@ -79,16 +79,16 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
     version: 'v0.1.0'
-    enabled: false
-    pre_pull: false
+    enabled: true
+    pre_pull: true
 
 # this is currently required for containers app to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
-enable_privileged_pods: false
+enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough disk space (especially if many apps are enabled)
-enable_pod_pre_pull: false
+enable_pod_pre_pull: true
 
 ###############################################################################
 # variables below this line should not usually need to be changed
