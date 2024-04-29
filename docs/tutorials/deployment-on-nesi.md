@@ -94,3 +94,25 @@ To destroy your environment after you have finished using it:
 !!! important 
 
     Double check that you have selected the correct branch
+
+## Deploying vs destroying
+
+Many changes can be redeployed on top of an existing deployment rather than destroying and deploying from scratch.
+
+For example, with the following changes you can probably just rerun the deployment workflow and the changes will be applied to the existing environment:
+
+- add a new app to `ood_apps`
+- change the `version` of an existing app
+- change the `k8s_container` of an existing app
+- enable the pod pre-puller
+- add additional users
+
+However, in some cases you will need to destroy the existing environment and deploy a new one from scratch:
+
+- change the flavor of the web or services node
+- change the disk space of the web or services node
+- change the number of k8s worker nodes
+- change the flavor of the k8s worker nodes
+- change the control plane flavour
+
+The above lists are not exhaustive, they just provide some examples.

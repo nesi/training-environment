@@ -17,6 +17,7 @@ nav:
   - Overview: 'index.md'
   - Tutorials:
     - "Adding a new app": "tutorials/adding-new-app.md"
+    - "Deploying on NeSI": "tutorials/deployment-on-nesi.md"
     - "JupyterLab app for Intermediate Shell for Bioinformatics": "tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics.md"
   - Apps:
     - Overview: 'apps/index.md'
