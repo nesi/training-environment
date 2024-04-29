@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../adding-new-app/">
+      
+      
+        <link rel="next" href="../jupyterlab-app-for-intermediate-shell-for-bioinformatics/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Deployment a training environment - NeSI Training Environment</title>
+        <title>Deploying on NeSI - NeSI Training Environment</title>
       
     
     
@@ -94,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deployment a training environment
+              Deploying on NeSI
             
           </span>
         </div>
@@ -204,17 +208,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -228,7 +234,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Tutorials
@@ -251,6 +257,145 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deploying on NeSI
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Deploying on NeSI
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clone-the-git-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clone the git repo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure the deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure the deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edit-varsondemand-configymlexample" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edit vars/ondemand-config.yml.example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-terraformterraformtfvars" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edit terraform/terraform.tfvars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-the-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commit the changes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#destroy-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Destroy the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-vs-destroying" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying vs destroying
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -585,6 +730,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#deploying-vs-destroying" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying vs destroying
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -687,6 +841,25 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
 <p class="admonition-title">Important</p>
 <p>Double check that you have selected the correct branch</p>
 </div>
+<h2 id="deploying-vs-destroying">Deploying vs destroying</h2>
+<p>Many changes can be redeployed on top of an existing deployment rather than destroying and deploying from scratch.</p>
+<p>For example, with the following changes you can probably just rerun the deployment workflow and the changes will be applied to the existing environment:</p>
+<ul>
+<li>add a new app to <code>ood_apps</code></li>
+<li>change the <code>version</code> of an existing app</li>
+<li>change the <code>k8s_container</code> of an existing app</li>
+<li>enable the pod pre-puller</li>
+<li>add additional users</li>
+</ul>
+<p>However, in some cases you will need to destroy the existing environment and deploy a new one from scratch:</p>
+<ul>
+<li>change the flavor of the web or services node</li>
+<li>change the disk space of the web or services node</li>
+<li>change the number of k8s worker nodes</li>
+<li>change the flavor of the k8s worker nodes</li>
+<li>change the control plane flavour</li>
+</ul>
+<p>The above lists are not exhaustive, they just provide some examples.</p>
 
 
 
