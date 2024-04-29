@@ -2,6 +2,9 @@ site_name: NeSI Training Environment
 
 markdown_extensions:
   - admonition
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -13,6 +16,7 @@ markdown_extensions:
 nav:
   - Overview: 'index.md'
   - Tutorials:
+    - "Adding a new app": "tutorials/adding-new-app.md"
     - "JupyterLab app for Intermediate Shell for Bioinformatics": "tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics.md"
   - Apps:
     - Overview: 'apps/index.md'
