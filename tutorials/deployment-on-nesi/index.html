@@ -381,6 +381,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Destroy the environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deleting-the-branch-when-no-longer-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deleting the branch when no longer needed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -562,6 +577,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Destroy the environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deleting-the-branch-when-no-longer-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deleting the branch when no longer needed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -598,13 +628,23 @@
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd training-environment
 </span></code></pre></div>
 <p>If you have already cloned the repo, make sure you commit or stash any local changes.
-It is also a good idea to start from the <em>main</em> branch to pick up the latest changes.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git stash
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git checkout main
+Also, verify that your remote is set to the NeSI repo, e.g.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git remote -v
+</span></code></pre></div>
+<p>should show a URL with <em>github.com:nesi/training-environment.git</em>.</p>
+<p>To check for changes in your local repo run:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git status
+</span></code></pre></div>
+<p>If you have uncommitted changes you could stash them using:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git stash
+</span></code></pre></div>
+<p>It is also a good idea to start from the <em>main</em> branch to pick up the latest changes.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git checkout main
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>git pull
 </span></code></pre></div>
 <h2 id="configure-the-deployment">Configure the deployment</h2>
 <p>Create a new branch. The branch name will used in the URL for the training environment, so pick something short and relevant to the workshop (no special characters, etc.). For example, <em>ml101</em>, <em>introtor</em>, etc.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git checkout -b my-test-env
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git checkout -b my-test-env
 </span></code></pre></div>
 <p>We need to edit two files to configure the environment:</p>
 <h3 id="edit-varsondemand-configymlexample">Edit <em>vars/ondemand-config.yml.example</em></h3>
@@ -654,9 +694,9 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
 </ul>
 <h3 id="commit-the-changes">Commit the changes</h3>
 <p>Commit and push the changes to your branch, e.g.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git add terraform/terraform.tfvars vars/ondemand-config.yml.example
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git commit -m &quot;configuring environment for XXX workshop&quot;
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git push -u origin my-test-env
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git add terraform/terraform.tfvars vars/ondemand-config.yml.example
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git commit -m &quot;configuring environment for XXX workshop&quot;
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>git push -u origin my-test-env
 </span></code></pre></div>
 <h2 id="deploy-the-environment">Deploy the environment</h2>
 <p><strong>This is likely to change</strong></p>
@@ -679,6 +719,13 @@ It is also a good idea to start from the <em>main</em> branch to pick up the lat
 <p class="admonition-title">Important</p>
 <p>Double check that you have selected the correct branch</p>
 </div>
+<h3 id="deleting-the-branch-when-no-longer-needed">Deleting the branch when no longer needed</h3>
+<p>When you have finished running a particular training and have destroyed the environment with the above steps, we usually create a git tag from the branch, so we have a record of what has been run, see <a href="https://github.com/nesi/training-environment/tags">examples here</a>.</p>
+<p>From the branch in the git repo you could run</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git tag -a 20240501-apptainer -m &quot;apptainer workshop on 2024-05-01&quot;
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git push --tags
+</span></code></pre></div>
+<p>and then delete the branch.</p>
 <h2 id="deploying-vs-destroying">Deploying vs destroying</h2>
 <p>Many changes can be redeployed on top of an existing deployment rather than destroying and deploying from scratch.</p>
 <p>For example, with the following changes you can probably just rerun the deployment workflow and the changes will be applied to the existing environment:</p>
