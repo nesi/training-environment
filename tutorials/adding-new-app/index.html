@@ -577,10 +577,12 @@ Assuming the app your are copying is based on the same web application (i.e. Jup
 <li>change <code>script.native.container.image</code> to the image that will be built for your app - this should look like your github repo name and include a label/version (you will need to create a git tag for the version you put here)</li>
 </ul>
 </li>
-<li><em>script/template.sh.erb</em><ul>
-<li>copy any data in your image before launching the app, e.g. using something like
+<li><em>template/script.sh.erb</em><ul>
+<li>copy any data from your image before launching the app, e.g. using something like
   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>rsync --ignore-existing -avz /path/in/docker/image/to/data/ ~/data/
-</span></code></pre></div></li>
+</span></code></pre></div>
+  will copy the data from your image into the user's home directory</li>
+<li>make sure this file is executable otherwise the app will fail to launch (<code>chmod +x template/script.sh.erb</code>)</li>
 </ul>
 </li>
 <li><em>docker/Dockerfile</em><ul>
