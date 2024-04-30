@@ -16,11 +16,31 @@ cd training-environment
 ```
 
 If you have already cloned the repo, make sure you commit or stash any local changes.
-It is also a good idea to start from the *main* branch to pick up the latest changes.
+Also, verify that your remote is set to the NeSI repo, e.g.
+
+```
+git remote -v
+```
+
+should show a URL with *github.com:nesi/training-environment.git*.
+
+To check for changes in your local repo run:
+
+```
+git status
+```
+
+If you have uncommitted changes you could stash them using:
 
 ```
 git stash
+```
+
+It is also a good idea to start from the *main* branch to pick up the latest changes.
+
+```
 git checkout main
+git pull
 ```
 
 ## Configure the deployment
@@ -97,6 +117,19 @@ To destroy your environment after you have finished using it:
 !!! important 
 
     Double check that you have selected the correct branch
+
+### Deleting the branch when no longer needed
+
+When you have finished running a particular training and have destroyed the environment with the above steps, we usually create a git tag from the branch, so we have a record of what has been run, see [examples here](https://github.com/nesi/training-environment/tags).
+
+From the branch in the git repo you could run
+
+```
+git tag -a 20240501-apptainer -m "apptainer workshop on 2024-05-01"
+git push --tags
+```
+
+and then delete the branch.
 
 ## Deploying vs destroying
 
