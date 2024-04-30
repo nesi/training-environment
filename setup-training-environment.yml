@@ -248,6 +248,14 @@
   roles:
     - container-apps/webnode
 
+- name: Provisioning application data to user homes
+  become: yes
+  hosts: services
+  vars_files:
+    - ondemand-config.yml
+  roles:
+    - app-data/scrnaseq
+
 # should be a way to do this without rebooting (at the end because rebooting deletes the kubeconfig in /tmp...)
 - name: Verify trainers group
   become: yes
