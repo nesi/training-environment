@@ -27,7 +27,7 @@ Each user (both *trainer* and *training* users) are limited to one running sessi
 - **important:** wait for approx one minute for the underlying pod to get properly deleted by the kubernetes cluster (otherwise you will get an error at the next step)
 - launch the new app
 
-If you try to launch the new app too soon after deleting, or while a session is already running, you will get a [Failed to submit session](troubleshooting.md#failed-to-submit-session) error.
+If you try to launch the new app too soon after deleting, or while a session is already running, you will get a [Failed to submit session](known-issues.md#failed-to-submit-session-error) error.
 
 ## Browser based terminal app
 

@@ -21,6 +21,9 @@ The layout of the app looks like:
 
 ```
 intermediate-shell-app
+├── .github
+│   └── workflows
+│       └── build_container.yml
 ├── docker
 │   └── Dockerfile
 ├── form.yml
