@@ -250,7 +250,7 @@
 
 - name: Provisioning application data to user homes
   become: yes
-  hosts: services
+  hosts: servicesnode
   vars_files:
     - ondemand-config.yml
   roles:
