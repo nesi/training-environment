@@ -1,30 +1,28 @@
 ---
-- name: Provision scRNA-Seq app data
-  ansible.builtin.block:
-    - name: Download Data archive
-      ansible.builtin.get_url:
-        url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/Data.tar.gz
-        dest: /var/lib/scrnaseq/Data.tar.gz
-        checksum: "sha256:054af247d2fc22c3a69f112bf5de0e7a5e84721c31c7c0b3d9b4053610d0b67f"
+- name: Download Data archive
+  ansible.builtin.get_url:
+    url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/Data.tar.gz
+    dest: /var/lib/scrnaseq/Data.tar.gz
+    checksum: "sha256:054af247d2fc22c3a69f112bf5de0e7a5e84721c31c7c0b3d9b4053610d0b67f"
 
-    - name: Download R_objects archive
-      ansible.builtin.get_url:
-        url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/R_objects.tar.gz
-        dest: /var/lib/scrnaseq/R_objects.tar.gz
-        checksum: "sha256:ce14cee6f5f1f4e32930b975e85be9560486b8697d8600e1195bb9079e1f2184"
+- name: Download R_objects archive
+  ansible.builtin.get_url:
+    url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/R_objects.tar.gz
+    dest: /var/lib/scrnaseq/R_objects.tar.gz
+    checksum: "sha256:ce14cee6f5f1f4e32930b975e85be9560486b8697d8600e1195bb9079e1f2184"
 
-    - name: Download ETV6_RUNX1_rep1 archive
-      ansible.builtin.get_url:
-        url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/ETV6_RUNX1_rep1.tar.gz
-        dest: /var/lib/scrnaseq/ETV6_RUNX1_rep1.tar.gz
-        checksum: "sha256:f691ec01294d5482065c602b19ff62a20a64e021bdbee711e58675fb5314cbef"
+- name: Download ETV6_RUNX1_rep1 archive
+  ansible.builtin.get_url:
+    url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/ETV6_RUNX1_rep1.tar.gz
+    dest: /var/lib/scrnaseq/ETV6_RUNX1_rep1.tar.gz
+    checksum: "sha256:f691ec01294d5482065c602b19ff62a20a64e021bdbee711e58675fb5314cbef"
 
-    - name: test unarchive Data
-      ansible.builtin.unarchive:
-        src: /var/lib/scrnaseq/Data.tar.gz
-        dest: /srv/homes/training1/testunarchive
-        creates: /srv/homes/training1/testunarchive/samples_to_downsample.csv
-        owner: training1
-        group: training1
-        mode: "u+rwX,g+rX,o+rX"
+- name: test unarchive Data
+  ansible.builtin.unarchive:
+    src: /var/lib/scrnaseq/Data.tar.gz
+    dest: /srv/homes/training1/testunarchive
+    creates: /srv/homes/training1/testunarchive/samples_to_downsample.csv
+    owner: training1
+    group: training1
+    mode: "u+rwX,g+rX,o+rX"
 
