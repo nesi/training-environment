@@ -1,4 +1,10 @@
 ---
+- name: Create directory for scRNA-Seq data archives
+  ansible.builtin.file:
+    path: /var/lib/scrnaseq
+    state: directory
+    mode: '0755'
+
 - name: Download Data archive
   ansible.builtin.get_url:
     url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/Data.tar.gz
