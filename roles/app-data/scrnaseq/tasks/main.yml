@@ -26,6 +26,7 @@
 - name: test unarchive Data
   ansible.builtin.unarchive:
     src: /var/lib/scrnaseq/Data.tar.gz
+    remote_src: yes
     dest: /srv/homes/training1/testunarchive
     creates: /srv/homes/training1/testunarchive/samples_to_downsample.csv
     owner: training1
