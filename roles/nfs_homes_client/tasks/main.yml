@@ -13,4 +13,5 @@
   lineinfile:
     path: /etc/fstab
     line: "servicesnode.flexi.nesi:{{ nfs_remote_homes }}        {{ nfs_local_homes }}    nfs4    bg,noatime,nodiratime      0       0"
+    regexp: "^servicesnode.flexi.nesi:{{ nfs_remote_homes }}.*"
   notify: fstab updated
