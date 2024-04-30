@@ -12,5 +12,5 @@
 - name: Add nfs fstab entry
   lineinfile:
     path: /etc/fstab
-    line: "servicesnode.flexi.nesi:{{ nfs_remote_homes }}        {{ nfs_local_homes }}    nfs4    bg      0       0"
+    line: "servicesnode.flexi.nesi:{{ nfs_remote_homes }}        {{ nfs_local_homes }}    nfs4    bg,noatime,nodiratime      0       0"
   notify: fstab updated

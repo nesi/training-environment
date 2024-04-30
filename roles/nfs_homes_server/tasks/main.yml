@@ -6,21 +6,30 @@
     state: present
 
 - name: Create directory to hold homes
-  file:
+  ansible.builtin.file:
     path: "{{ nfs_remote_homes }}"
     state: directory
 
 - name: Install exports file
-  template:
+  ansible.builtin.template:
     src: exports.j2
     dest: /etc/exports
     owner: root
     group: root
     mode: 0644
-  notify: reload nfs
+  notify: reload nfs exports
+
+- name: Install nfsd threads conf file
+  ansible.builtin.template:
+    src: nfsd-threads.conf.j2
+    dest: /etc/nfs.conf.d/nfsd-threads.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nfs server
 
 - name: Nfs server running
-  service:
+  ansible.builtin.service:
     name: nfs-kernel-server
     state: started
     enabled: true
