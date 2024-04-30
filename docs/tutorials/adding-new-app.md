@@ -38,11 +38,13 @@ Assuming the app your are copying is based on the same web application (i.e. Jup
 - *submit.yml.erb*
     - change `script.native.container.name` to something unique for your app
     - change `script.native.container.image` to the image that will be built for your app - this should look like your github repo name and include a label/version (you will need to create a git tag for the version you put here)
-- *script/template.sh.erb*
-    - copy any data in your image before launching the app, e.g. using something like
+- *template/script.sh.erb*
+    - copy any data from your image before launching the app, e.g. using something like
       ```
       rsync --ignore-existing -avz /path/in/docker/image/to/data/ ~/data/
       ```
+      will copy the data from your image into the user's home directory
+    - make sure this file is executable otherwise the app will fail to launch (`chmod +x template/script.sh.erb`)
 - *docker/Dockerfile*
     - add additional packages and install steps (generally not a good idea to remove packages unless you know what you are doing)
     - add any required data
