@@ -2,6 +2,10 @@
 
 ## Unversioned
 
+- Increase default number of nfs threads and make it configurable
+
+## 2024-04-26
+
 - Update Open OnDemand from 3.0.5 to 3.1.1
 - Enable [cancel interactive sessions](https://osc.github.io/ood-documentation/latest/customizations.html#cancel-interactive-sessions) by default
 - Add `nesi-get-pods` and `nesi-get-pods-wide` commands that trainer users can run via *"Cluster" -> "Web node shell access"* to list currently running sessions
