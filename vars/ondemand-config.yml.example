@@ -21,6 +21,9 @@ control_plane_flavor: balanced1.2cpu4ram
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
 cluster_worker_count: 1
 worker_flavour: balanced1.8cpu16ram
+# worker disksize is the size of the drive on the worker node, whichh is used
+# for pulling the docker images
+worker_disksize: 60
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually

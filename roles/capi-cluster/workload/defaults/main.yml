@@ -19,10 +19,12 @@ openstack_ssh_key: kahus-key
 
 cluster_control_plane_count: 1
 control_plane_flavor: balanced1.2cpu4ram
+control_plane_disksize: 30
 
 cluster_worker_count: 2
 cluster_max_worker_count: 3
 worker_flavour: balanced1.2cpu4ram
+worker_disksize: 50
 
 cluster_gpu_worker_count: 1
 gpu_worker_flavour: gpu1.44cpu240ram.a40.1g.48gb

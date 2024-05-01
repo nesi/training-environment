@@ -143,6 +143,8 @@ spec:
       ports:
       - network:
           name: {{ cluster_network_name }}
+      rootVolume:
+        diskSize: {{ control_plane_disksize }}
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha7
 kind: OpenStackMachineTemplate
@@ -163,3 +165,5 @@ spec:
       ports:
       - network:
           name: {{ cluster_network_name }}
+      rootVolume:
+        diskSize: {{ worker_disksize }}
