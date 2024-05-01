@@ -97,6 +97,21 @@ enable_privileged_pods: false
 # Note: make sure the worker nodes have enough disk space (especially if many apps are enabled)
 enable_pod_pre_pull: false
 
+# variables to provision data into home dirs (for apps where the data is large)
+provision_data_scrnaseq: false
+
+# tuning the web node apache config, setting to 8 gives the suggested setting here:
+# https://osc.github.io/ood-documentation/latest/how-tos/debug/debug-apache.html#performance-tuning
+# should be good for 40-50 users
+# in production you should choose a web node flavor that has at least as many CPUs
+# as the value you set here
+apache_server_limit: 8
+
+# the number of nfs threads to start, default to 64
+# if your app does heavy IO it *may* help to increase this and possibly also increase size
+# of services node flavour
+nfs_threads: 64
+
 ###############################################################################
 # variables below this line should not usually need to be changed
 ###############################################################################

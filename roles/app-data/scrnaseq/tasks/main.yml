@@ -1,35 +1,95 @@
 ---
-- name: Create directory for scRNA-Seq data archives
-  ansible.builtin.file:
-    path: /var/lib/scrnaseq
-    state: directory
-    mode: '0755'
+- name: Provision scRNA-Seq data to user homes
+  block:
+    - name: Create directory for scRNA-Seq data archives
+      ansible.builtin.file:
+        path: /var/lib/scrnaseq
+        state: directory
+        mode: '0755'
 
-- name: Download Data archive
-  ansible.builtin.get_url:
-    url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/Data.tar.gz
-    dest: /var/lib/scrnaseq/Data.tar.gz
-    checksum: "sha256:054af247d2fc22c3a69f112bf5de0e7a5e84721c31c7c0b3d9b4053610d0b67f"
+    - name: Download Data archive
+      ansible.builtin.get_url:
+        url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/Data.tar.gz
+        dest: /var/lib/scrnaseq/Data.tar.gz
+        checksum: "sha256:054af247d2fc22c3a69f112bf5de0e7a5e84721c31c7c0b3d9b4053610d0b67f"
 
-- name: Download R_objects archive
-  ansible.builtin.get_url:
-    url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/R_objects.tar.gz
-    dest: /var/lib/scrnaseq/R_objects.tar.gz
-    checksum: "sha256:ce14cee6f5f1f4e32930b975e85be9560486b8697d8600e1195bb9079e1f2184"
+    - name: Download R_objects archive
+      ansible.builtin.get_url:
+        url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/R_objects.tar.gz
+        dest: /var/lib/scrnaseq/R_objects.tar.gz
+        checksum: "sha256:ce14cee6f5f1f4e32930b975e85be9560486b8697d8600e1195bb9079e1f2184"
 
-- name: Download ETV6_RUNX1_rep1 archive
-  ansible.builtin.get_url:
-    url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/ETV6_RUNX1_rep1.tar.gz
-    dest: /var/lib/scrnaseq/ETV6_RUNX1_rep1.tar.gz
-    checksum: "sha256:f691ec01294d5482065c602b19ff62a20a64e021bdbee711e58675fb5314cbef"
+    - name: Download ETV6_RUNX1_rep1 archive
+      ansible.builtin.get_url:
+        url: https://github.com/GenomicsAotearoa/scRNA-seq-data-analysis/releases/download/2024-Apr/ETV6_RUNX1_rep1.tar.gz
+        dest: /var/lib/scrnaseq/ETV6_RUNX1_rep1.tar.gz
+        checksum: "sha256:f691ec01294d5482065c602b19ff62a20a64e021bdbee711e58675fb5314cbef"
 
-- name: test unarchive Data
-  ansible.builtin.unarchive:
-    src: /var/lib/scrnaseq/Data.tar.gz
-    remote_src: yes
-    dest: /srv/homes/training1/testunarchive
-    creates: /srv/homes/training1/testunarchive/samples_to_downsample.csv
-    owner: training1
-    group: training1
-    mode: "u+rwX,g+rX,o+rX"
+    - name: Unarchive Data for trainer{{ item }}
+      ansible.builtin.unarchive:
+        src: /var/lib/scrnaseq/Data.tar.gz
+        remote_src: yes
+        dest: /srv/homes/trainer{{ item }}
+        creates: /srv/homes/trainer{{ item }}/Data/samples_to_downsample.csv
+        owner: trainer{{ item }}
+        group: trainer{{ item }}
+        mode: "u+rwX,g+rX,o+rX"
+      with_sequence: start=1 end={{ num_trainers_create }}
 
+    - name: Unarchive Data for training{{ item }}
+      ansible.builtin.unarchive:
+        src: /var/lib/scrnaseq/Data.tar.gz
+        remote_src: yes
+        dest: /srv/homes/training{{ item }}
+        creates: /srv/homes/training{{ item }}/Data/samples_to_downsample.csv
+        owner: training{{ item }}
+        group: training{{ item }}
+        mode: "u+rwX,g+rX,o+rX"
+      with_sequence: start=1 end={{ num_users_create }}
+
+    - name: Unarchive R_objects for trainer{{ item }}
+      ansible.builtin.unarchive:
+        src: /var/lib/scrnaseq/R_objects.tar.gz
+        remote_src: yes
+        dest: /srv/homes/trainer{{ item }}
+        creates: /srv/homes/trainer{{ item }}/R_objects/10_milo_calcNhoodDistance.rds
+        owner: trainer{{ item }}
+        group: trainer{{ item }}
+        mode: "u+rwX,g+rX,o+rX"
+      with_sequence: start=1 end={{ num_trainers_create }}
+
+    - name: Unarchive R_objects for training{{ item }}
+      ansible.builtin.unarchive:
+        src: /var/lib/scrnaseq/R_objects.tar.gz
+        remote_src: yes
+        dest: /srv/homes/training{{ item }}
+        creates: /srv/homes/training{{ item }}/R_objects/10_milo_calcNhoodDistance.rds
+        owner: training{{ item }}
+        group: training{{ item }}
+        mode: "u+rwX,g+rX,o+rX"
+      with_sequence: start=1 end={{ num_users_create }}
+
+    - name: Unarchive ETV6_RUNX1_rep1 for trainer{{ item }}
+      ansible.builtin.unarchive:
+        src: /var/lib/scrnaseq/ETV6_RUNX1_rep1.tar.gz
+        remote_src: yes
+        dest: /srv/homes/trainer{{ item }}
+        creates: /srv/homes/trainer{{ item }}/ETV6_RUNX1_rep1/ETV6_RUNX1_rep1.mri.tgz
+        owner: trainer{{ item }}
+        group: trainer{{ item }}
+        mode: "u+rwX,g+rX,o+rX"
+      with_sequence: start=1 end={{ num_trainers_create }}
+
+    - name: Unarchive ETV6_RUNX1_rep1 for training{{ item }}
+      ansible.builtin.unarchive:
+        src: /var/lib/scrnaseq/ETV6_RUNX1_rep1.tar.gz
+        remote_src: yes
+        dest: /srv/homes/training{{ item }}
+        creates: /srv/homes/training{{ item }}/ETV6_RUNX1_rep1/ETV6_RUNX1_rep1.mri.tgz
+        owner: training{{ item }}
+        group: training{{ item }}
+        mode: "u+rwX,g+rX,o+rX"
+      with_sequence: start=1 end={{ num_users_create }}
+
+  when:
+    - "provision_data_scrnaseq|default(false)|bool == true"

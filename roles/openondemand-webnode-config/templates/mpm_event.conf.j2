@@ -2,7 +2,7 @@
   # ServerLimit is MaxRequestWorkers / ThreadsPerChild
   ServerLimit            {{ apache_server_limit }}
   StartServers           2
-  MaxRequestWorkers      {{ apache_max_request_workers }}
+  MaxRequestWorkers      {{ apache_server_limit|int * apache_threads_per_child|int }}
   MinSpareThreads        25
   MaxSpareThreads        75
   ThreadsPerChild        {{ apache_threads_per_child }}
