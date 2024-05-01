@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 3
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 3
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -20,10 +20,10 @@ control_plane_flavor: balanced1.2cpu4ram
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
 cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
+worker_flavour: balanced1.16cpu32ram
 # worker disksize is the size of the drive on the worker node, whichh is used
 # for pulling the docker images
-worker_disksize: 60
+worker_disksize: 80
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
