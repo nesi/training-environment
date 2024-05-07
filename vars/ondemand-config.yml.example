@@ -65,9 +65,9 @@ ood_apps:
     pre_pull: false
 
   rstudio_scrnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-scrnaseq-app.git
-    version: 'v0.3.0'
+    version: 'v0.4.0'
     enabled: true
     pre_pull: true
 
