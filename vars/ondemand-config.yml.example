@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 44
+num_users_create: 25
 # number of trainer users
-num_trainers_create: 6
+num_trainers_create: 5
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -65,11 +65,11 @@ ood_apps:
     pre_pull: false
 
   rstudio_scrnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.2.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-scrnaseq-app.git
-    version: 'v0.2.1'
+    version: 'v0.4.0'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   rstudio:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.3.0
@@ -101,7 +101,7 @@ enable_privileged_pods: false
 enable_pod_pre_pull: true
 
 # variables to provision data into home dirs (for apps where the data is large)
-provision_data_scrnaseq: false
+provision_data_scrnaseq: true
 
 # tuning the web node apache config, setting to 8 gives the suggested setting here:
 # https://osc.github.io/ood-documentation/latest/how-tos/debug/debug-apache.html#performance-tuning
@@ -113,7 +113,7 @@ apache_server_limit: 14
 # the number of nfs threads to start, default to 64
 # if your app does heavy IO it *may* help to increase this and possibly also increase size
 # of services node flavour
-nfs_threads: 64
+nfs_threads: 128
 
 ###############################################################################
 # variables below this line should not usually need to be changed
