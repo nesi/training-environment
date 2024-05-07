@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 3
+num_users_create: 28
 # number of trainer users
-num_trainers_create: 3
+num_trainers_create: 7
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -19,8 +19,8 @@ control_plane_flavor: balanced1.2cpu4ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 1
-worker_flavour: balanced1.16cpu32ram
+cluster_worker_count: 4
+worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, whichh is used
 # for pulling the docker images
 worker_disksize: 80
@@ -108,12 +108,12 @@ provision_data_scrnaseq: true
 # should be good for 40-50 users
 # in production you should choose a web node flavor that has at least as many CPUs
 # as the value you set here
-apache_server_limit: 8
+apache_server_limit: 14
 
 # the number of nfs threads to start, default to 64
 # if your app does heavy IO it *may* help to increase this and possibly also increase size
 # of services node flavour
-nfs_threads: 64
+nfs_threads: 128
 
 ###############################################################################
 # variables below this line should not usually need to be changed
