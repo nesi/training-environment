@@ -35,9 +35,10 @@ worker_disksize: 60
 #   nodes, so starting those apps will be much faster (`enable_pod_pre_pull`
 #   must also be true)
 #
-# NOTE: at this time the k8s nodes only have 30GB disk space, do not set all
-#       images to pre_pull otherwise the pre-puller will fail, just pick the
-#       one you are actually going to use
+# NOTE: the k8s nodes must have enough disk space to pull all the images that
+#       you set `pre_pull: true` on, do just set if for the ones you are
+#       actually going to use and make sure `worker_disksize` above is big
+#       enough
 #
 # NOTE2: it is recommended to leave the containers app disabled unless you are
 #        using it, since it only works properly in privileged mode (which is
@@ -51,9 +52,9 @@ ood_apps:
     pre_pull: false
 
   jupyter_ml102:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.2.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
-    version: 'v0.2.0'
+    version: 'v0.1.0'
     enabled: true
     pre_pull: false
 
@@ -97,7 +98,7 @@ ood_apps:
 enable_privileged_pods: false
 
 # pull the images defined in ood_apps onto all k8s worker nodes
-# Note: make sure the worker nodes have enough disk space (especially if many apps are enabled)
+# Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
 enable_pod_pre_pull: false
 
 # variables to provision data into home dirs (for apps where the data is large)
