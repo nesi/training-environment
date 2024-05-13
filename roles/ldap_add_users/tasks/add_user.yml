@@ -4,6 +4,7 @@
   stat:
     path: "/etc/ldap/password_{{ user_name }}"
   register: password_file
+
 - name: "Create password for user {{ user_name }}"
   copy:
     dest: "/etc/ldap/password_{{ user_name }}"
@@ -13,16 +14,19 @@
     content: "{{ lookup('community.general.random_string', length=16, special=false) }}"
   when: not password_file.stat.exists
   register: user_password_file
+
 - name: "Hash password for user {{ user_name }}"
   shell: "slappasswd -s $(cat /etc/ldap/password_{{ user_name }})"
   register: user_pw
   no_log: true
   changed_when: user_password_file is changed
+
 - name: "Retrieve password for user {{ user_name }}"
   fetch:
     src: "/etc/ldap/password_{{ user_name }}"
     dest: "users/password_{{ user_name }}.txt"
     flat: yes
+
 # add the user and group
 - name: "Add ldap user {{ user_name }}"
   community.general.ldap_entry:
@@ -43,6 +47,7 @@
     server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
+
 - name: "Add group for user {{ user_name }}"
   community.general.ldap_entry:
     dn: "cn={{ user_name }},ou=groups,{{ ldap_base_dn }}"
@@ -54,6 +59,7 @@
     server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
+
 # create home and add ssh keys
 - name: "Create home for user {{ user_name }}"
   copy:
@@ -63,6 +69,7 @@
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
     mode: 0750
+
 - name: "Fix permissions on home dir for user {{ user_name }}"
   file:
     path: "{{ home_remote }}"
@@ -71,18 +78,45 @@
     recurse: true
 
 # give trainer users read access to home directory
-- name: Give trainers access to the users home
+- name: Set acl to give trainers access to this user's home
   ansible.posix.acl:
     path: "{{ home_remote }}"
-    entity: "trainer{{ trainerid }}"
+    entity: trainers
+    etype: group
+    permissions: rwX
+    recursive: true
+    state: present
+
+- name: Set default acl to give trainers access to this user's home
+  ansible.posix.acl:
+    default: true
+    path: "{{ home_remote }}"
+    entity: trainers
+    etype: group
+    permissions: rwX
+    recursive: true
+    state: present
+
+- name: Set acl to ensure the user always has access to their home
+  ansible.posix.acl:
+    path: "{{ home_remote }}"
+    entity: "{{ user_name }}"
     etype: user
     permissions: rwX
     recursive: true
     state: present
-  with_sequence: start=1 end={{ num_trainers_create }}
-  loop_control:
-    loop_var: trainerid
 
+- name: Set default acl to ensure the user has access to their home
+  ansible.posix.acl:
+    default: true
+    path: "{{ home_remote }}"
+    entity: "{{ user_name }}"
+    etype: group
+    permissions: rwX
+    recursive: true
+    state: present
+
+# set up SSH keys
 - name: "Create .ssh dir for user {{ user_name }}"
   file:
     path: "{{ home_remote }}/.ssh"
@@ -90,17 +124,20 @@
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
     mode: "700"
+
 - name: "Generate SSH keypair for user {{ user_name }}"
   community.crypto.openssh_keypair:
     path: "{{ home_remote }}/.ssh/id_rsa"
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
+
 - name: "Fix permissions on ~/.ssh/id_rsa"
   file:
     path: "{{ home_remote }}/.ssh/id_rsa"
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
     mode: "600"
+
 - name: "Add key to authorized_keys for user {{ user_name }}"
   copy:
     remote_src: true
