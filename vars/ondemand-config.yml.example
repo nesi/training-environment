@@ -23,7 +23,7 @@ cluster_worker_count: 1
 worker_flavour: balanced1.8cpu16ram
 # worker disksize is the size of the drive on the worker node, whichh is used
 # for pulling the docker images
-worker_disksize: 60
+worker_disksize: 100
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
@@ -49,14 +49,14 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.2'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   jupyter_ml102:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.1.0'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   rstudio_rnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.2
@@ -77,7 +77,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.3.0'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.3
@@ -99,7 +99,7 @@ enable_privileged_pods: false
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
-enable_pod_pre_pull: false
+enable_pod_pre_pull: true
 
 # variables to provision data into home dirs (for apps where the data is large)
 provision_data_scrnaseq: false
@@ -120,7 +120,7 @@ nfs_threads: 64
 # variables below this line should not usually need to be changed
 ###############################################################################
 
-slack_notify: yes
+slack_notify: no
 slack_token: "CHANGEME_SLACK_TOKEN"
 keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
