@@ -7,7 +7,6 @@
   dnf:
     name:
       - nss-pam-ldapd
-      - nscd
     state: present
     
 - name: Configure nslcd uri
@@ -51,11 +50,5 @@
 - name: Enable service nslcd, and start
   ansible.builtin.service:
     name: nslcd
-    enabled: yes
-    state: started
-
-- name: Enable service nscd, and start
-  ansible.builtin.service:
-    name: nscd
     enabled: yes
     state: started
