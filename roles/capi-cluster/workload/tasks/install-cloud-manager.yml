@@ -25,16 +25,16 @@
     - name: Workload | Install cloud-controller-manager-roles.yaml
       shell: >-
         kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
-        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/master/manifests/controller-manager/cloud-controller-manager-roles.yaml
+        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/{{ cloud_manager_version }}/manifests/controller-manager/cloud-controller-manager-roles.yaml
 
     - name: Workload | Install cloud-controller-manager-role-bindings.yaml
       shell: >-
         kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
-        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/master/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
+        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/{{ cloud_manager_version }}/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
 
     - name: Workload | Install openstack-cloud-controller-manager-ds.yaml
       shell: >-
         kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
-        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/master/manifests/controller-manager/openstack-cloud-controller-manager-ds.yaml
+        -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/{{ cloud_manager_version }}/manifests/controller-manager/openstack-cloud-controller-manager-ds.yaml
   when:
     - cloud_config_secret.stdout != "1"

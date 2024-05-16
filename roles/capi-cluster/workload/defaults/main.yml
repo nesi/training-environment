@@ -61,6 +61,8 @@ ca_cert_file: "{{ ca_cert_dir }}/zero_ca.crt"
 autoscaler_ns: "kube-system"
 autoscaler_image: "registry.k8s.io/autoscaling/cluster-autoscaler:v1.29.0"
 
+cloud_manager_version: v1.30.0
+
 ## Variables for OpenID Connect Configuration https://kubernetes.io/docs/admin/authentication/
 ## To use OpenID you have to deploy additional an OpenID Provider (e.g Dex, Keycloak, ...)
 
