@@ -76,6 +76,15 @@
       - /usr/local/bin/kubectl get pods -A
       - /usr/local/bin/kubectl get pods -A -o wide
 
+- name: Setup sudoers rule for trainers to training users
+  community.general.sudoers:
+    name: trainers-as-training{{ item }}
+    state: present
+    group: trainers
+    runas: training{{ item }}
+    commands: ALL
+  with_sequence: start=1 end={{ num_users_create|default(1) }}
+
 - name: Copy nesi-get-pods script
   ansible.builtin.copy:
     src: nesi-get-pods.sh
