@@ -4,7 +4,7 @@ site_dir: public
 site_url: "https://nesi.github.io/training-environment/"
 
 #repository information
-repo_nam: nesi/training-environment
+repo_name: nesi/training-environment
 repo_url: https://github.com/nesi/training-environment
 
 markdown_extensions:
