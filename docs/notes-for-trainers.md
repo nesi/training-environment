@@ -2,13 +2,24 @@
 
 ## Viewing training user's files
 
-All *trainer* users should have read access on all *training* users home directories to help with debugging issues, checking progress, etc. The paths to the home directories will look like:
+All *trainer* users should have read and write access on all *training* users home directories to help with debugging issues, checking progress, etc. The paths to the home directories will look like:
 
 ```
 /home/shared/training1
 /home/shared/training2
 ...
 ```
+
+!!! note
+    
+    Access to training user's homes is done using ACLs. Sometimes the default ACLs might not be propagated when moving/rsync'ing/etc files from elsewhere into the user's homes, depending on the arguments passed to the command.
+
+## Running commands as training users
+
+All *trainer* users should be able to run commands as training users using `sudo` from the ondemand [browser based terminal app](#browser-based-terminal-app), e.g.
+
+- `sudo -i -u training1` to switch to the *training1* user
+- `sudo -u training1 cp /some/file /home/shared/training1` to copy a file from somewhere into the *training1* user's home
 
 ## Recommended browsers
 
