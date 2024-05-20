@@ -31,5 +31,7 @@ nav:
 
 theme:
   name: "material"
+  logo: nesi_logo.png
+  favicon: nesi_logo.png
   features:
     - navigation.expand
