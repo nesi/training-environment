@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
     
     
       
@@ -373,6 +373,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#running-commands-as-training-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running commands as training users
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#recommended-browsers" class="md-nav__link">
     <span class="md-ellipsis">
       Recommended browsers
@@ -481,6 +490,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#running-commands-as-training-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running commands as training users
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#recommended-browsers" class="md-nav__link">
     <span class="md-ellipsis">
       Recommended browsers
@@ -542,11 +560,21 @@
 
 <h1 id="notes-for-trainers">Notes for trainers</h1>
 <h2 id="viewing-training-users-files">Viewing training user's files</h2>
-<p>All <em>trainer</em> users should have read access on all <em>training</em> users home directories to help with debugging issues, checking progress, etc. The paths to the home directories will look like:</p>
+<p>All <em>trainer</em> users should have read and write access on all <em>training</em> users home directories to help with debugging issues, checking progress, etc. The paths to the home directories will look like:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/home/shared/training1
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>/home/shared/training2
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>...
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Access to training user's homes is done using ACLs. Sometimes the default ACLs might not be propagated when moving/rsync'ing/etc files from elsewhere into the user's homes, depending on the arguments passed to the command.</p>
+</div>
+<h2 id="running-commands-as-training-users">Running commands as training users</h2>
+<p>All <em>trainer</em> users should be able to run commands as training users using <code>sudo</code> from the ondemand <a href="#browser-based-terminal-app">browser based terminal app</a>, e.g.</p>
+<ul>
+<li><code>sudo -i -u training1</code> to switch to the <em>training1</em> user</li>
+<li><code>sudo -u training1 cp /some/file /home/shared/training1</code> to copy a file from somewhere into the <em>training1</em> user's home</li>
+</ul>
 <h2 id="recommended-browsers">Recommended browsers</h2>
 <p>Following upstream Open OnDemand <a href="https://osc.github.io/ood-documentation/latest/requirements.html#browser-requirements">documentation</a> we highly recommend the use of Chrome, Firefox or Edge.</p>
 <p>Other browsers and extensions (ad blockers, etc) could cause issues. For example, we have observed problems with the DuckDuckGo browser, which blocked the password from being passed transparently to JupyterLab, causing an "Invalid credentials" error.</p>
@@ -627,7 +655,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../assets/javascripts/bundle.081f42fc.min.js"></script>
       
     
   </body>
