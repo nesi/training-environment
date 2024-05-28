@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 1
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 1
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -66,9 +66,9 @@ ood_apps:
     pre_pull: false
 
   rstudio_scrnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.2.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-scrnaseq-app.git
-    version: 'v0.2.1'
+    version: 'v0.4.0'
     enabled: true
     pre_pull: false
 
