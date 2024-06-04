@@ -98,7 +98,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-intronextflow-app.git
     version: 'v0.2.0'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
 # this is currently required for containers app to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
@@ -106,7 +106,7 @@ enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
-enable_pod_pre_pull: false
+enable_pod_pre_pull: true
 
 # variables to provision data into home dirs (for apps where the data is large)
 provision_data_scrnaseq: false
