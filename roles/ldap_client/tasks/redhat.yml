@@ -1,13 +1,14 @@
 ---
-- name: Full system upgrade
-  dnf:
-    update_cache: yes
-    
-- name: Install LDAP client packages
-  dnf:
-    name:
-      - nss-pam-ldapd
-    state: present
+# Commented out as manually installed due to network issue on flexi
+#- name: Full system upgrade
+#  dnf:
+#    update_cache: yes
+#    
+#- name: Install LDAP client packages
+#  dnf:
+#    name:
+#      - nss-pam-ldapd
+#    state: present
     
 - name: Configure nslcd uri
   lineinfile:
