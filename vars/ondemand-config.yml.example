@@ -93,6 +93,14 @@ ood_apps:
     enabled: false
     pre_pull: false
 
+  nextflow:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-intronextflow-app:v0.2.0
+    repo: https://github.com/nesi/training-environment-jupyter-intronextflow-app.git
+    version: 'v0.2.0'
+    enabled: true
+    pre_pull: true
+
+
 # this is currently required for containers app to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
 enable_privileged_pods: false
