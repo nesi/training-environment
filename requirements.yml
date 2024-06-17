@@ -16,3 +16,6 @@ collections:
   - name: ansible.posix
     version: 1.5.4
     type: galaxy
+  - name: prometheus.prometheus
+    version: 0.16.3
+    type: galaxy

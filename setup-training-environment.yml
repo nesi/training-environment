@@ -232,6 +232,23 @@
     - { role: openondemand-k8s/web-node }
     - { role: openondemand-webnode-config }
 
+- name: Install prometheus
+  hosts: servicesnode
+  become: yes
+  roles:
+    - role: prometheus.prometheus.prometheus
+      prometheus_scrape_configs:
+        - job_name: "prometheus"
+          metrics_path: "/metrics"
+          static_configs:
+            - targets:
+                - "localhost:9090"
+        - job_name: "ondemand"
+          metrics_path: "/metrics"
+          static_configs:
+            - targets:
+              - "webnode:9301"
+
 - name: Setup k8s nodes for containers apps
   become: yes
   hosts: k8s_nodes
