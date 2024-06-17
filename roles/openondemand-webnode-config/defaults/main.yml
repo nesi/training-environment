@@ -1,4 +1,4 @@
 apache_server_limit: 8
 apache_threads_per_child: 32
 ondemand_exporter_version: 0.10.0
-ondemand_exporter_checksum: e56b0c14e2829141f94f44f35ca8577e7623305d83d7c082fb66bba945e0f321
+ondemand_exporter_checksum: "sha256:e56b0c14e2829141f94f44f35ca8577e7623305d83d7c082fb66bba945e0f321"
