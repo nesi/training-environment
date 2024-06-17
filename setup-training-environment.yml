@@ -232,7 +232,7 @@
     - { role: openondemand-k8s/web-node }
     - { role: openondemand-webnode-config }
 
-- name: Install prometheus
+- name: Install prometheus and grafana
   hosts: servicesnode
   become: yes
   roles:
@@ -248,6 +248,13 @@
           static_configs:
             - targets:
               - "webnode:9301"
+    - role: grafana.grafana.grafana
+      grafana_datasources:
+        - name: prometheus
+          type: prometheus
+          access: proxy
+          url: "https://localhost:9090"
+
 
 - name: Setup k8s nodes for containers apps
   become: yes
