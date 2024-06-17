@@ -1,0 +1,18 @@
+[Unit]
+Description=OnDemand Prometheus Exporter
+Wants=basic.target
+After=basic.target network.target
+
+[Service]
+User=ondemand_exporter
+Group=ondemand_exporter
+SyslogIdentifier=ondemand_exporter
+Environment="LISTEN_ADDRESS=:9301"
+Environment="APACHE_STATUS_URL=http://localhost:81/server-status"
+ExecStart=/usr/local/bin/ondemand_exporter
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
