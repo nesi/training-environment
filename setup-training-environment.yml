@@ -249,6 +249,8 @@
             - targets:
               - "webnode:9301"
     - role: grafana.grafana.grafana
+      grafana_security:
+        admin_password: "admin"
       grafana_datasources:
         - name: prometheus
           type: prometheus
