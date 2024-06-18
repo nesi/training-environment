@@ -133,6 +133,11 @@ slack_token: "CHANGEME_SLACK_TOKEN"
 keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
 
+# monitoring
+prometheus_version: "2.52.0"
+node_exporter_version: "1.8.1"
+grafana_version: "11.0.0"
+
 # DNS Settings
 route_53_zone: data.nesi.org.nz
 

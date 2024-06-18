@@ -235,12 +235,32 @@
 - name: Install prometheus node exporter
   hosts: servers
   become: true
+  vars_files:
+    - ondemand-config.yml
   roles:
-    - prometheus.prometheus.node_exporter
+    - role: prometheus.prometheus.node_exporter
+      node_exporter_enabled_collectors:
+        - systemd
+        - processes
+        - mountstats
+
+- name: Install prometheus node exporter on k8s_nodes
+  hosts: k8s_nodes
+  become: true
+  vars_files:
+    - ondemand-config.yml
+  roles:
+    - role: prometheus.prometheus.node_exporter
+      node_exporter_enabled_collectors:
+        - systemd
+        - processes
+        - mountstats
 
 - name: Install prometheus and grafana
   hosts: servicesnode
   become: true
+  vars_files:
+    - ondemand-config.yml
   roles:
     - role: prometheus.prometheus.prometheus
       prometheus_scrape_configs:
@@ -280,7 +300,9 @@
         - dashboard_id: '13465'
           revision_id: '1'
           datasource: 'prometheus'
-
+        - dashboard_id: '6257'
+          revision_id: '4'
+          datasource: 'prometheus'
 
 - name: Setup k8s nodes for containers apps
   become: yes
