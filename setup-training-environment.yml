@@ -248,7 +248,7 @@
           metrics_path: "/metrics"
           static_configs:
             - targets:
-                - "localhost:9090"
+              - "localhost:9090"
         - job_name: "ondemand"
           metrics_path: "/metrics"
           static_configs:
@@ -275,7 +275,7 @@
           revision_id: '1'
           datasource: 'prometheus'
         - dashboard_id: '1860'
-          revision_id: '4'
+          revision_id: '37'
           datasource: 'prometheus'
         - dashboard_id: '13465'
           revision_id: '1'
