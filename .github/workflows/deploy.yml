@@ -26,7 +26,7 @@ jobs:
           terraform_version: "1.6.3"
           terraform_wrapper: false
       - run: python --version
-      
+
       # pin ansible version to 2.15, there seems to be an issue related to debconf with 2.16, need to investigate
       - run: pipx install --force ansible-core==2.15.7
       - run: ansible-playbook --version
@@ -111,6 +111,7 @@ jobs:
         run:  |
           pip install botocore
           pip install boto3
+          pip install jmespath
         working-directory: terraform
 
 #      - name: Destroy the environment first
