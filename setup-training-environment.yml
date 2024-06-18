@@ -251,6 +251,8 @@
     - ondemand-config.yml
   roles:
     - role: prometheus.prometheus.prometheus
+      prometheus_config_flags_extra:
+        web.enable_remote_write_receiver: true
       prometheus_scrape_configs:
         - job_name: "prometheus"
           metrics_path: "/metrics"
