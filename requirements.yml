@@ -22,3 +22,6 @@ collections:
   - name: grafana.grafana
     version: 5.2.0
     type: galaxy
+  - name: community.grafana
+    version: 1.9.1
+    type: galaxy
