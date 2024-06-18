@@ -259,6 +259,7 @@
             - targets:
               - "servicesnode:9100"
               - "webnode:9100"
+
     - role: grafana.grafana.grafana
       grafana_security:
         admin_user: "admin"
@@ -268,7 +269,7 @@
         - name: prometheus
           type: prometheus
           access: proxy
-          url: "https://localhost:9090"
+          url: "http://localhost:9090"
       grafana_dashboards:
         - dashboard_id: '358'
           revision_id: '1'
