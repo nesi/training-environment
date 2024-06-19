@@ -3,6 +3,7 @@
   ansible.builtin.include_role:
     name: prometheus.prometheus.node_exporter
   vars:
+    node_exporter_version: "{{ node_exporter_version }}"
     node_exporter_enabled_collectors:
       - systemd
       - processes

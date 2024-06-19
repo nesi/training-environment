@@ -21,6 +21,10 @@
     chdir: /opt/kube-prometheus
     cmd: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply --server-side -f manifests/setup
 
+- name: Wait for setup to complete
+  ansible.builtin.shell:
+    cmd: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig wait --for condition=Established --all CustomResourceDefinition --namespace=monitoring
+
 - name: Install kube-prometheus
   ansible.builtin.shell:
     chdir: /opt/kube-prometheus

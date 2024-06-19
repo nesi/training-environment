@@ -3,6 +3,7 @@
   ansible.builtin.include_role:
     name: prometheus.prometheus.prometheus
   vars:
+    prometheus_version: "{{ prometheus_version }}"
     prometheus_scrape_configs:
       - job_name: "prometheus"
         metrics_path: "/metrics"
@@ -33,6 +34,7 @@
   ansible.builtin.include_role:
     name: grafana.grafana.grafana
   vars:
+    grafana_version: "{{ grafana_version }}"
     grafana_security:
       admin_user: "admin"
       admin_password: "{{ grafana_admin_password|default('grafanaadminpass') }}"
