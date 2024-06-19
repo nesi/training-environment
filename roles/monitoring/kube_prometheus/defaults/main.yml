@@ -1,2 +1,3 @@
 ---
+tmp_dir: "/tmp/{{ cluster_name }}"
 kube_prometheus_version: release-0.13
