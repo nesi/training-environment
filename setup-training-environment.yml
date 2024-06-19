@@ -232,17 +232,21 @@
     - role: openondemand-k8s/web-node
     - role: openondemand-webnode-config
 
+- name: Install prometheus ondemand_exporter
+  hosts: webnode
+  become: true
+  vars_files:
+    - ondemand-config.yml
+  roles:
+    - monitoring/ondemand_exporter
+
 - name: Install prometheus node exporter
   hosts: servers
   become: true
   vars_files:
     - ondemand-config.yml
   roles:
-    - role: prometheus.prometheus.node_exporter
-      node_exporter_enabled_collectors:
-        - systemd
-        - processes
-        - mountstats
+    - monitoring/node_exporter
 
 - name: Install prometheus and grafana
   hosts: servicesnode
@@ -250,52 +254,11 @@
   vars_files:
     - ondemand-config.yml
   roles:
-    - role: prometheus.prometheus.prometheus
-      prometheus_config_flags_extra:
-        web.enable_remote_write_receiver: true
-      prometheus_scrape_configs:
-        - job_name: "prometheus"
-          metrics_path: "/metrics"
-          static_configs:
-            - targets:
-              - "localhost:9090"
-        - job_name: "ondemand"
-          metrics_path: "/metrics"
-          static_configs:
-            - targets:
-              - "webnode:9301"
-        - job_name: "node"
-          static_configs:
-            - targets:
-              - "servicesnode:9100"
-              - "webnode:9100"
-
-    - role: grafana.grafana.grafana
-      grafana_security:
-        admin_user: "admin"
-        admin_password: "admin"
-      grafana_alerting: {}
-      grafana_datasources:
-        - name: prometheus
-          type: prometheus
-          access: proxy
-          url: "http://localhost:9090"
-      grafana_dashboards:
-        - dashboard_id: '358'
-          revision_id: '1'
-          datasource: 'prometheus'
-        - dashboard_id: '1860'
-          revision_id: '37'
-          datasource: 'prometheus'
-        - dashboard_id: '13465'
-          revision_id: '1'
-          datasource: 'prometheus'
-        - dashboard_id: '6257'
-          revision_id: '4'
-          datasource: 'prometheus'
+    - monitoring/prometheus_grafana
+    - monitoring/kube_prometheus
 
 - name: Setup k8s nodes for containers apps
-  become: yes
+  become: true
   hosts: k8s_nodes
   vars_files:
     - ondemand-config.yml
@@ -303,7 +266,7 @@
     - container-apps/k8s
 
 - name: Setup webnode for containers apps
-  become: yes
+  become: true
   hosts: webnode
   vars_files:
     - ondemand-config.yml

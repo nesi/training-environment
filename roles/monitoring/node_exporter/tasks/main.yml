@@ -1,0 +1,4 @@
+---
+- name: Run node exporter ansible role
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.node_exporter

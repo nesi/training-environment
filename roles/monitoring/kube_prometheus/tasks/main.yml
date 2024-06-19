@@ -1,0 +1,24 @@
+---
+- name: Clone kube-prometheus
+  ansible.builtin.git:
+    repo: "https://github.com/prometheus-operator/kube-prometheus.git"
+    dest: /opt/kube-prometheus
+    version: "{{ kube_prometheus_version }}"
+
+- name: Configure remote write
+  ansible.builtin.blockinfile:
+    path: /opt/kube-prometheus/manifests/prometheus-prometheus.yaml
+    block: >2
+      remoteWrite:
+        - url: 'http://{{ hostvars["servicesnode"]["ansible_default_ipv4"]["address"] }}:9090/api/v1/write'
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+
+- name: Setup kube-prometheus
+  ansible.builtin.shell:
+    chdir: /opt/kube-prometheus
+    cmd: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply --server-side -f manifests/setup
+
+- name: Install kube-prometheus
+  ansible.builtin.shell:
+    chdir: /opt/kube-prometheus
+    cmd: kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply -f manifests/

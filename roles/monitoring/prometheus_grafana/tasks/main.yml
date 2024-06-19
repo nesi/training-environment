@@ -1,0 +1,17 @@
+---
+- name: Run prometheus role
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.prometheus
+
+- name: Enable remote write receiver on prometheus
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/system/prometheus.service
+    regexp: '^--web.enable-remote-write-receiver*'
+    line: '  --web.enable-remote-write-receiver \\'
+    insertafter: '^ExecStart=/usr/local/bin/prometheus*'
+  notify:
+    - restart prometheus
+
+- name: Run grafana role
+  ansible.builtin.include_role:
+    name: grafana.grafana.grafana
