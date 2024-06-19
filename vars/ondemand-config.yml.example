@@ -90,7 +90,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
     version: 'v0.1.0'
-    enabled: false
+    enabled: true
     pre_pull: false
 
   nextflow:
@@ -101,9 +101,9 @@ ood_apps:
     pre_pull: true
 
 
-# this is currently required for containers app to run properly (fakeroot)
+# this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
-enable_privileged_pods: false
+enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
