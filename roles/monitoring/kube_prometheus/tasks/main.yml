@@ -4,6 +4,7 @@
     repo: "https://github.com/prometheus-operator/kube-prometheus.git"
     dest: /opt/kube-prometheus
     version: "{{ kube_prometheus_version }}"
+    force: true
 
 - name: Configure remote write
   ansible.builtin.blockinfile:
