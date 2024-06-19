@@ -2,16 +2,71 @@
 - name: Run prometheus role
   ansible.builtin.include_role:
     name: prometheus.prometheus.prometheus
+  vars:
+    prometheus_scrape_configs:
+      - job_name: "prometheus"
+        metrics_path: "/metrics"
+        static_configs:
+          - targets:
+              - "localhost:9090"
+      - job_name: "ondemand"
+        metrics_path: "/metrics"
+        static_configs:
+          - targets:
+              - "webnode:9301"
+      - job_name: "node"
+        static_configs:
+          - targets:
+              - "servicesnode:9100"
+              - "webnode:9100"
 
 - name: Enable remote write receiver on prometheus
   ansible.builtin.lineinfile:
     path: /etc/systemd/system/prometheus.service
-    regexp: '^--web.enable-remote-write-receiver*'
-    line: '  --web.enable-remote-write-receiver \\'
-    insertafter: '^ExecStart=/usr/local/bin/prometheus*'
+    regexp: '^  --config.file=/etc/prometheus/prometheus.yml.*'
+    line: '  --config.file=/etc/prometheus/prometheus.yml --web.enable-remote-write-receiver'
   notify:
+    - reload systemd
     - restart prometheus
 
 - name: Run grafana role
   ansible.builtin.include_role:
     name: grafana.grafana.grafana
+  vars:
+    grafana_security:
+      admin_user: "admin"
+      admin_password: "{{ grafana_admin_password|default('grafanaadminpass') }}"
+    grafana_alerting: {}
+    grafana_datasources:
+      - name: prometheus
+        type: prometheus
+        access: proxy
+        url: "http://localhost:9090"
+    grafana_dashboards:
+      - dashboard_id: '358'
+        revision_id: '1'
+        datasource: 'prometheus'
+      - dashboard_id: '1860'
+        revision_id: '37'
+        datasource: 'prometheus'
+      - dashboard_id: '13465'
+        revision_id: '1'
+        datasource: 'prometheus'
+      - dashboard_id: '6257'
+        revision_id: '4'
+        datasource: 'prometheus'
+      - dashboard_id: '19105'
+        revision_id: '3'
+        datasource: 'prometheus'
+      - dashboard_id: '15757'
+        revision_id: '37'
+        datasource: 'prometheus'
+      - dashboard_id: '15758'
+        revision_id: '34'
+        datasource: 'prometheus'
+      - dashboard_id: '15759'
+        revision_id: '29'
+        datasource: 'prometheus'
+      - dashboard_id: '15760'
+        revision_id: '28'
+        datasource: 'prometheus'
