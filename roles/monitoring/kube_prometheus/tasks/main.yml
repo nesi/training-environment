@@ -8,9 +8,11 @@
 - name: Configure remote write
   ansible.builtin.blockinfile:
     path: /opt/kube-prometheus/manifests/prometheus-prometheus.yaml
-    block: >2
+    block: |
+      {% filter indent(width=2, first=true) %}
       remoteWrite:
         - url: 'http://{{ hostvars["servicesnode"]["ansible_default_ipv4"]["address"] }}:9090/api/v1/write'
+      {% endfilter %}
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
 - name: Setup kube-prometheus
