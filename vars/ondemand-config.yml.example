@@ -100,6 +100,14 @@ ood_apps:
     enabled: true
     pre_pull: true
 
+  codeserver:
+    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.1.0
+    repo: https://github.com/nesi/training-environment-codeserver-app.git
+    version: 'v0.1.0'
+    enabled: true
+    pre_pull: false
+  
+
 
 # this is currently required for containers app to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
