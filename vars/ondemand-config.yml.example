@@ -101,9 +101,9 @@ ood_apps:
     pre_pull: true
 
   codeserver:
-    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.1.6
+    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.1.7
     repo: https://github.com/nesi/training-environment-codeserver-app.git
-    version: 'v0.1.6'
+    version: 'v0.1.7'
     enabled: true
     pre_pull: false
   
