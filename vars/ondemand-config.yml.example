@@ -80,9 +80,9 @@ ood_apps:
     pre_pull: false
 
   shell4b:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.3
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.4
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
-    version: 'v0.3.3'
+    version: 'v0.3.4'
     enabled: true
     pre_pull: false
 
@@ -101,9 +101,9 @@ ood_apps:
     pre_pull: true
 
   codeserver:
-    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.1.0
+    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.1.12
     repo: https://github.com/nesi/training-environment-codeserver-app.git
-    version: 'v0.1.0'
+    version: 'v0.1.12'
     enabled: true
     pre_pull: false
   
