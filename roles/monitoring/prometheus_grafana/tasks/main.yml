@@ -39,6 +39,12 @@
       admin_user: "admin"
       admin_password: "{{ grafana_admin_password|default('grafanaadminpass') }}"
     grafana_alerting: {}
+    grafana_auth:
+      anonymous:
+        enabled: true
+        org_name: Main Org.
+        org_role: Viewer
+        hide_version: true
     grafana_datasources:
       - name: prometheus
         type: prometheus
