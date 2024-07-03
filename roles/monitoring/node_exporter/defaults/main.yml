@@ -1,2 +1,3 @@
 ---
-version_node_exporter: "latest"
+# latest is not working: https://github.com/prometheus-community/ansible/issues/78
+version_node_exporter: "1.8.1"
