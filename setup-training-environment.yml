@@ -246,7 +246,7 @@
   vars_files:
     - ondemand-config.yml
   roles:
-    - monitoring/node_exporter
+    - prometheus.prometheus.node_exporter
 
 - name: Install prometheus and grafana
   hosts: servicesnode
@@ -254,7 +254,9 @@
   vars_files:
     - ondemand-config.yml
   roles:
-    - monitoring/prometheus_grafana
+    - prometheus.prometheus.prometheus
+    - monitoring/prometheus
+    - grafana.grafana.grafana
     - monitoring/kube_prometheus
 
 - name: Setup k8s nodes for containers apps

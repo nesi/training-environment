@@ -1,0 +1,9 @@
+---
+- name: Enable remote write receiver on prometheus
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/system/prometheus.service
+    regexp: '^  --config.file=/etc/prometheus/prometheus.yml.*'
+    line: '  --config.file=/etc/prometheus/prometheus.yml --web.enable-remote-write-receiver'
+  notify:
+    - reload systemd
+    - restart prometheus
