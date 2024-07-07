@@ -59,13 +59,7 @@
     owner: root
     group: root
     mode: '0644'
-  register: apache_mpm_event_config
-
-- name: Reload apache service
-  ansible.builtin.service:
-    name: apache2
-    state: restarted
-  when: apache_mpm_event_config.changed
+  notify: Restart httpd
 
 - name: Setup sudoers rule for listing running pods
   community.general.sudoers:
@@ -100,3 +94,11 @@
     owner: root
     group: root
     mode: '0755'
+
+- name: Enable proxy preserve host in ood_portal for grafana
+  blockinfile:
+    path: /etc/apache2/sites-available/ood-portal.conf
+    block: "    ProxyPreserveHost On"
+    insertafter: ".*; Path=\/node.*"
+    marker: "    # {mark} ANSIBLE MANAGED BLOCK"
+  notify: Restart httpd

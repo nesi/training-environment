@@ -133,76 +133,6 @@ slack_token: "CHANGEME_SLACK_TOKEN"
 keycloak_admin_password: "CHANGEME_KEYCLOAK_ADMIN_PASSWORD"
 ldap_admin_password: "CHANGEME_LDAP_ADMIN_PASSWORD"
 
-# monitoring
-node_exporter_version: "latest"
-node_exporter_enabled_collectors:
-  - systemd
-  - processes
-  - mountstats
-
-prometheus_version: "latest"
-prometheus_scrape_configs:
-  - job_name: "prometheus"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets:
-        - "localhost:9090"
-  - job_name: "ondemand"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets:
-        - "webnode:9301"
-  - job_name: "node"
-    static_configs:
-      - targets:
-        - "servicesnode:9100"
-        - "webnode:9100"
-
-grafana_version: "latest"
-grafana_security:
-  admin_user: "admin"
-  admin_password: "CHANGEME_GRAFANA_ADMIN_PASSWORD"
-grafana_alerting: {}
-grafana_auth:
-  anonymous:
-    enabled: true
-    org_name: Main Org.
-    org_role: Viewer
-    hide_version: true
-grafana_datasources:
-  - name: prometheus
-    type: prometheus
-    access: proxy
-    url: "http://localhost:9090"
-grafana_dashboards:
-  - dashboard_id: '358'
-    revision_id: '1'
-    datasource: 'prometheus'
-  - dashboard_id: '1860'
-    revision_id: '37'
-    datasource: 'prometheus'
-  - dashboard_id: '13465'
-    revision_id: '1'
-    datasource: 'prometheus'
-  - dashboard_id: '6257'
-    revision_id: '4'
-    datasource: 'prometheus'
-  - dashboard_id: '19105'
-    revision_id: '3'
-    datasource: 'prometheus'
-  - dashboard_id: '15757'
-    revision_id: '37'
-    datasource: 'prometheus'
-  - dashboard_id: '15758'
-    revision_id: '34'
-    datasource: 'prometheus'
-  - dashboard_id: '15759'
-    revision_id: '29'
-    datasource: 'prometheus'
-  - dashboard_id: '15760'
-    revision_id: '28'
-    datasource: 'prometheus'
-
 # DNS Settings
 route_53_zone: data.nesi.org.nz
 
@@ -316,6 +246,80 @@ kube_oidc_username_claim: "{{ oidc_remote_user_claim }}"
 kube_oidc_username_prefix: "-"
 kube_oidc_groups_claim: groups
 kube_oidc_groups_prefix: 'oidc:'
+
+# monitoring
+node_exporter_version: "latest"
+node_exporter_enabled_collectors:
+  - systemd
+  - processes
+  - mountstats
+
+prometheus_version: "latest"
+prometheus_scrape_configs:
+  - job_name: "prometheus"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets:
+        - "localhost:9090"
+  - job_name: "ondemand"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets:
+        - "webnode:9301"
+  - job_name: "node"
+    static_configs:
+      - targets:
+        - "servicesnode:9100"
+        - "webnode:9100"
+
+grafana_url: "https://{{ servername }}/node/servicesnode/3000/"
+grafana_domain: "{{ servername }}"
+grafana_server:
+  serve_from_sub_path: true
+grafana_version: "latest"
+grafana_security:
+  admin_user: "admin"
+  admin_password: "CHANGEME_GRAFANA_ADMIN_PASSWORD"
+grafana_alerting: {}
+grafana_auth:
+  anonymous:
+    enabled: true
+    org_name: Main Org.
+    org_role: Viewer
+    hide_version: true
+grafana_datasources:
+  - name: prometheus
+    type: prometheus
+    access: proxy
+    url: "http://localhost:9090"
+grafana_dashboards:
+  - dashboard_id: '358'
+    revision_id: '1'
+    datasource: 'prometheus'
+  - dashboard_id: '1860'
+    revision_id: '37'
+    datasource: 'prometheus'
+  - dashboard_id: '13465'
+    revision_id: '1'
+    datasource: 'prometheus'
+  - dashboard_id: '6257'
+    revision_id: '4'
+    datasource: 'prometheus'
+  - dashboard_id: '19105'
+    revision_id: '3'
+    datasource: 'prometheus'
+  - dashboard_id: '15757'
+    revision_id: '37'
+    datasource: 'prometheus'
+  - dashboard_id: '15758'
+    revision_id: '34'
+    datasource: 'prometheus'
+  - dashboard_id: '15759'
+    revision_id: '29'
+    datasource: 'prometheus'
+  - dashboard_id: '15760'
+    revision_id: '28'
+    datasource: 'prometheus'
 
 # Stuff to not change
 
