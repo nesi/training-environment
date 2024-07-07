@@ -96,9 +96,23 @@
     mode: '0755'
 
 - name: Enable proxy preserve host in ood_portal for grafana
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/apache2/sites-available/ood-portal.conf
     block: "    ProxyPreserveHost On"
     insertafter: ".*; Path=\/node.*"
     marker: "    # {mark} ANSIBLE MANAGED BLOCK"
   notify: Restart httpd
+
+- name: Create grafana app directory
+  ansible.builtin.file:
+    path: /var/www/ood/apps/sys/grafana
+    state: directory
+    mode: '0755'
+
+- name: Install grafana ondemand app
+  ansible.builtin.template:
+    src: grafana-manifest.yml.j2
+    dest: /var/www/ood/apps/sys/grafana/manifest.yml
+    owner: root
+    group: root
+    mode: '0644'
