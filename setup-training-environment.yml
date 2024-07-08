@@ -232,13 +232,14 @@
     - role: openondemand-k8s/web-node
     - role: openondemand-webnode-config
 
-- name: Install prometheus ondemand_exporter
+- name: Install ondemand_exporter and grafana app
   hosts: webnode
   become: true
   vars_files:
     - ondemand-config.yml
   roles:
     - monitoring/ondemand_exporter
+    - monitoring/grafana_webnode
 
 - name: Install prometheus node exporter
   hosts: servers
