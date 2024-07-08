@@ -10,6 +10,11 @@ repo_url: https://github.com/nesi/training-environment
 markdown_extensions:
   - admonition
   - def_list
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.highlight:
@@ -19,6 +24,24 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.snippets
+  - pymdownx.pathconverter
 
 nav:
   - Overview: 'index.md'
@@ -62,6 +85,6 @@ theme:
       icon: material/brightness-4
       name: Switch to system preference
     primary: custom
-    
+
   features:
     - navigation.expand
