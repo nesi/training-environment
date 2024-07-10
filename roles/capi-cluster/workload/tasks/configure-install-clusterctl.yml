@@ -61,7 +61,7 @@
 
 - name: Workload | Wait for {{ cluster_name }} control plane to return true
   shell: >-
-    kubectl get kubeadmcontrolplane | grep {{ cluster_name }} | grep -c true
+    kubectl get kubeadmcontrolplane | grep " {{ cluster_name }} " | grep -c true
   register: result
   until: result.stdout == "1"
   retries: 10
