@@ -10,6 +10,11 @@ repo_url: https://github.com/nesi/training-environment
 markdown_extensions:
   - admonition
   - def_list
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.highlight:
@@ -19,6 +24,24 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.snippets
+  - pymdownx.pathconverter
 
 nav:
   - Overview: 'index.md'
@@ -31,7 +54,40 @@ nav:
 
 theme:
   name: "material"
-  logo: nesi_logo.png
-  favicon: nesi_logo.png
+  logo: images/nesi_logo.png
+  favicon: images/nesi_logo.png
+
+  palette: 
+
+  # Palette toggle for automatic mode
+  - media: "(prefers-color-scheme)"
+    toggle:
+      icon: material/brightness-auto
+      name: Switch to light mode
+    primary: custom
+#    scheme: default
+
+  # Palette toggle for light mode
+  - media: "(prefers-color-scheme: light)"
+    primary: custom
+#    scheme: default
+    
+
+
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+
+  # Palette toggle for dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: Switch to system preference
+    primary: custom
+
   features:
     - navigation.expand
+    
+extra_css:
+  - stylesheets/extra.css
