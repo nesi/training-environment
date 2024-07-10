@@ -160,7 +160,7 @@ oidc_settings:
   OIDCStripCookies: mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1
 
 # ood package version
-ondemand_package: 'ondemand-3.1.4'
+#ondemand_package: 'ondemand'
 
 # ood portal config
 servername: "{{ hostvars['webnode']['hostname'] }}.{{ route_53_zone }}"
