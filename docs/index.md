@@ -48,3 +48,7 @@ Within the training environment we create two different types of user accounts, 
     * have read-only access to *training* user home directories, to monitor progress and assist
     * can use the browser based terminal from the OnDemand web interface
     * can view running pods on the kubernetes cluster
+
+## Overall workflow
+
+![image](./images/building-deploying-app-workflow.png)
