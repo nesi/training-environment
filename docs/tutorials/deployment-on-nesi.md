@@ -45,7 +45,7 @@ git pull
 
 ## Configure the deployment
 
-Create a new branch. The branch name will used in the URL for the training environment, so pick something short and relevant to the workshop (no special characters, etc.). For example, *ml101*, *introtor*, etc.
+Create a new branch. The branch name will used in the URL for the training environment, so pick something short and relevant to the workshop (no special characters, `_ , . ` etc.). For example, *ml101*, *introtor*, etc.
 
 ```
 git checkout -b my-test-env
