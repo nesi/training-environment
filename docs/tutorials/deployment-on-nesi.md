@@ -107,6 +107,14 @@ Deployments are currently done via manually triggered GitHub actions.
 1. Navigate to the deploy environment workflow [here](https://github.com/nesi/training-environment/actions/workflows/deploy.yml)
 2. Under *Run workflow* select **your branch** (make sure you get the correct branch) and click "Run workflow"
 
+### Verify the deployment
+
+There are instances where the GH workflow will run successfully yet the total number of worker nodes requested via `cluster_worker_count:` *vars/ondemand-config.yml.example* is absent from the deployment. 
+
+* We recommend verifying the state of deplyment via OpenStack dashboard  (https://dashboard.cloud.nesi.org.nz/project/) > `NeSI-Training-Test` project > `Instances`. For an example, an app deployed with 3 x `cluster_worker_count` will have 3 x `{branchname-md-0-XXXXX}
+
+![image](../images/openstack-dashboard-nodes.png)
+
 ## Destroy the environment
 
 To destroy your environment after you have finished using it:
