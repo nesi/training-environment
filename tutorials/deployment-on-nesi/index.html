@@ -446,6 +446,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Deploy the environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -642,6 +657,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Deploy the environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -786,6 +816,12 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
 <li>Navigate to the deploy environment workflow <a href="https://github.com/nesi/training-environment/actions/workflows/deploy.yml">here</a></li>
 <li>Under <em>Run workflow</em> select <strong>your branch</strong> (make sure you get the correct branch) and click "Run workflow"</li>
 </ol>
+<h3 id="verify-the-deployment">Verify the deployment</h3>
+<p>There are instances where the GH workflow will run successfully yet the total number of worker nodes requested via <code>cluster_worker_count:</code> <em>vars/ondemand-config.yml.example</em> is absent from the deployment. </p>
+<ul>
+<li>We recommend verifying the state of deplyment via OpenStack dashboard  (<a href="https://dashboard.cloud.nesi.org.nz/project/">https://dashboard.cloud.nesi.org.nz/project/</a>) &gt; <code>NeSI-Training-Test</code> project &gt; <code>Instances</code>. For an example, an app deployed with 3 x <code>cluster_worker_count</code> will have 3 x `{branchname-md-0-XXXXX}</li>
+</ul>
+<p><img alt="image" src="../../images/openstack-dashboard-nodes.png" /></p>
 <h2 id="destroy-the-environment">Destroy the environment</h2>
 <p>To destroy your environment after you have finished using it:</p>
 <ol>
