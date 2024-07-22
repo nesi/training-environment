@@ -56,6 +56,12 @@ We need to edit two files to configure the environment:
 ### Edit *vars/ondemand-config.yml.example*
 
 - adjust `num_users_create` and `num_trainers_create`
+- set `control_plane_flavor` (the is the controller node for the kubernetes cluster, no user sessions run on this node)
+    - usually to `balanced1.4cpu8ram` for production
+    - `balanced1.2cpu4ram` is good for testing
+- set `cluster_worker_count` and `worker_flavor` to have enough capacity for the number of users, e.g.
+    - `cluster_worker_count: 2` and `worker_flavor: balanced1.32cpu64ram` for up to 30 *2cpu4ram* sessions
+    - `cluster_worker_count: 3` and `worker_flavor: balanced1.32cpu64ram` for up to 45 *2cpu4ram* sessions
 - adjust `ood_apps` as required
     - check `version` and `k8s_container`
     - enable required apps (usually just leave them all enabled, except for containers)
@@ -63,12 +69,6 @@ We need to edit two files to configure the environment:
 - set `enable_pod_prepull` to "true"
     - sometimes we have experienced really slow image pulls, this will pre-pull the image and cache it so it is fast to start
     - only pre-pull the app you are actually going to use, don't pre-pull them all as there might not be enough disk space on the worker nodes
-- set `control_plane_flavor` (the is the controller node for the kubernetes cluster, no user sessions run on this node)
-    - usually to `balanced1.4cpu8ram` for production
-    - `balanced1.2cpu4ram` is good for testing
-- set `cluster_worker_count` and `worker_flavor` to have enough capacity for the number of users, e.g.
-    - `cluster_worker_count: 2` and `worker_flavor: balanced1.32cpu64ram` for up to 30 *2cpu4ram* sessions
-    - `cluster_worker_count: 3` and `worker_flavor: balanced1.32cpu64ram` for up to 45 *2cpu4ram* sessions
 
 ### Edit *terraform/terraform.tfvars*
 
