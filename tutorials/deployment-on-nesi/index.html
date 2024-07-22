@@ -757,6 +757,16 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
 <h3 id="edit-varsondemand-configymlexample">Edit <em>vars/ondemand-config.yml.example</em></h3>
 <ul>
 <li>adjust <code>num_users_create</code> and <code>num_trainers_create</code></li>
+<li>set <code>control_plane_flavor</code> (the is the controller node for the kubernetes cluster, no user sessions run on this node)<ul>
+<li>usually to <code>balanced1.4cpu8ram</code> for production</li>
+<li><code>balanced1.2cpu4ram</code> is good for testing</li>
+</ul>
+</li>
+<li>set <code>cluster_worker_count</code> and <code>worker_flavor</code> to have enough capacity for the number of users, e.g.<ul>
+<li><code>cluster_worker_count: 2</code> and <code>worker_flavor: balanced1.32cpu64ram</code> for up to 30 <em>2cpu4ram</em> sessions</li>
+<li><code>cluster_worker_count: 3</code> and <code>worker_flavor: balanced1.32cpu64ram</code> for up to 45 <em>2cpu4ram</em> sessions</li>
+</ul>
+</li>
 <li>adjust <code>ood_apps</code> as required<ul>
 <li>check <code>version</code> and <code>k8s_container</code></li>
 <li>enable required apps (usually just leave them all enabled, except for containers)</li>
@@ -766,16 +776,6 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
 <li>set <code>enable_pod_prepull</code> to "true"<ul>
 <li>sometimes we have experienced really slow image pulls, this will pre-pull the image and cache it so it is fast to start</li>
 <li>only pre-pull the app you are actually going to use, don't pre-pull them all as there might not be enough disk space on the worker nodes</li>
-</ul>
-</li>
-<li>set <code>control_plane_flavor</code> (the is the controller node for the kubernetes cluster, no user sessions run on this node)<ul>
-<li>usually to <code>balanced1.4cpu8ram</code> for production</li>
-<li><code>balanced1.2cpu4ram</code> is good for testing</li>
-</ul>
-</li>
-<li>set <code>cluster_worker_count</code> and <code>worker_flavor</code> to have enough capacity for the number of users, e.g.<ul>
-<li><code>cluster_worker_count: 2</code> and <code>worker_flavor: balanced1.32cpu64ram</code> for up to 30 <em>2cpu4ram</em> sessions</li>
-<li><code>cluster_worker_count: 3</code> and <code>worker_flavor: balanced1.32cpu64ram</code> for up to 45 <em>2cpu4ram</em> sessions</li>
 </ul>
 </li>
 </ul>
