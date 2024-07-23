@@ -839,8 +839,9 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git push --tags
 </span></code></pre></div>
 <p>and then delete the branch.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git branch -d &lt;BRANCH NAME&gt;
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git push origin --delete &lt;BRANCH NAME&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git checkout main
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git branch -d &lt;BRANCH NAME&gt;
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>git push origin --delete &lt;BRANCH NAME&gt;
 </span></code></pre></div></p>
 <h2 id="deploying-vs-destroying">Deploying vs destroying</h2>
 <p>Many changes can be redeployed on top of an existing deployment rather than destroying and deploying from scratch.</p>
