@@ -139,6 +139,7 @@ git push --tags
 
 and then delete the branch.
 ```
+git checkout main
 git branch -d <BRANCH NAME>
 git push origin --delete <BRANCH NAME>
 ```
