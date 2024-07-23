@@ -138,6 +138,10 @@ git push --tags
 ```
 
 and then delete the branch.
+```
+git branch -d <BRANCH NAME>
+git push origin --delete <BRANCH NAME>
+```
 
 ## Deploying vs destroying
 
