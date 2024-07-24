@@ -15,3 +15,4 @@ tmp/pubkeys/*.pub
 config/k8s-admin.conf
 scratch-pad.md
 __pycache__/
+update-ondemand-config-and-terraform.sh
