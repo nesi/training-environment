@@ -8,4 +8,4 @@ services_flavor_id = "e07cfee1-43af-4bf6-baac-3bdf7c1b88f8"
 services_volume_size = 30
 
 webnode_flavor_id = "e07cfee1-43af-4bf6-baac-3bdf7c1b88f8"
-webnode_volume_size  = 30
+webnode_volume_size = 30
