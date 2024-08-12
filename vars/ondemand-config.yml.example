@@ -66,9 +66,9 @@ ood_apps:
     pre_pull: false
 
   rstudio_scrnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.2.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.6.0
     repo: https://github.com/nesi/training-environment-rstudio-scrnaseq-app.git
-    version: 'v0.2.1'
+    version: 'v0.6.0'
     enabled: true
     pre_pull: false
 
@@ -87,9 +87,9 @@ ood_apps:
     pre_pull: false
 
   containers:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.2
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
-    version: 'v0.1.0'
+    version: 'v0.1.2'
     enabled: true
     pre_pull: false
 
@@ -101,9 +101,9 @@ ood_apps:
     pre_pull: false
 
   codeserver:
-    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.1.12
+    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.2.0
     repo: https://github.com/nesi/training-environment-codeserver-app.git
-    version: 'v0.1.12'
+    version: 'v0.2.0'
     enabled: true
     pre_pull: false
 
@@ -113,6 +113,14 @@ ood_apps:
     version: 'v0.3.0'
     enabled: true
     pre_pull: false
+
+  introshell:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.4.0
+    repo: https://github.com/nesi/training-environment-jupyter-introduction-shell-app.git
+    version: 'v0.4.0'
+    enabled: true
+    pre_pull: false
+
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
