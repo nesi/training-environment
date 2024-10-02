@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   mwlr:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-mwlr-app:v0.1.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-mwlr-app:v0.2.0
     repo: https://github.com/nesi/training-environment-jupyter-mwlr-app.git
-    version: 'v0.1.0'
+    version: 'v0.2.0'
     enabled: true
     pre_pull: false
 
