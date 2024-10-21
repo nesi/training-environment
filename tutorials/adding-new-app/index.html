@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../images/nesi_logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -28,7 +28,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -386,6 +386,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ci-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI pipeline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#creating-a-tagrelease-of-your-new-app" class="md-nav__link">
     <span class="md-ellipsis">
       Creating a tag/release of your new app
@@ -555,6 +564,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ci-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI pipeline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#creating-a-tagrelease-of-your-new-app" class="md-nav__link">
     <span class="md-ellipsis">
       Creating a tag/release of your new app
@@ -633,9 +651,14 @@ Some of the existing apps are:</p>
 <li><a href="https://github.com/nesi/training-environment-rstudio-scrnaseq-app">RStudio scRNA-Seq app</a></li>
 <li><a href="https://github.com/nesi/training-environment-rstudio-app">RStudio intro and intermediate R app</a></li>
 </ul>
+<div class="admonition info">
+<p class="admonition-title">Note about naming your git repo</p>
+<p>When you copy an existing app repo you should take care when naming your new repository - make sure you do not use underscores - use hyphens instead as github packages do not support package names with underscores and the default github action we include uses the repository name for the package name</p>
+</div>
 <h2 id="what-needs-to-be-changed">What needs to be changed</h2>
 <p>Here we summarise what is most likely to need to be changed when copying an existing app.
 Assuming the app your are copying is based on the same web application (i.e. JupyterLab vs RStudio, etc.) then not much should need to change.</p>
+<p>Some changes are likely to be required in the Open Ondemand application definition:</p>
 <ul>
 <li><em>view.html.erb</em><ul>
 <li>change the line that contains the string <em>Connect to <app specific string></em>, replacing <em><app specific string></em> with something specific to your app</li>
@@ -662,16 +685,17 @@ Assuming the app your are copying is based on the same web application (i.e. Jup
 <li>make sure this file is executable otherwise the app will fail to launch (<code>chmod +x template/script.sh.erb</code>)</li>
 </ul>
 </li>
+</ul>
+<p>The <em>Dockerfile</em> that defines the application environment (software and any data that is required) may also need to be changed:</p>
+<ul>
 <li><em>docker/Dockerfile</em><ul>
 <li>add additional packages and install steps (generally not a good idea to remove packages unless you know what you are doing)</li>
 <li>add any required data</li>
 </ul>
 </li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">Note about naming your git repo</p>
-<p>When you copy an existing app repo you should take care when naming your new repository - make sure you do not use underscores - use hyphens instead as github packages do not support package names with underscores and the default github action we include uses the repository name for the package name</p>
-</div>
+<h2 id="ci-pipeline">CI pipeline</h2>
+<p>The starting point apps listed above contain a default GitHub Actions workflow that automatically builds the docker image when you push to the repo. It will build git branches and tags and tag the docker images with the git branch or tag name. This should not need to be changed.</p>
 <h2 id="creating-a-tagrelease-of-your-new-app">Creating a tag/release of your new app</h2>
 <p>In order to deploy your app in the training environment we are going to tag a version/release of it, using git tags.</p>
 <ol>
@@ -708,7 +732,22 @@ Assuming the app your are copying is based on the same web application (i.e. Jup
 <p>When you release a new version of your app you need to update both the <code>k8s_container</code> and <code>version</code> values with the new version of your app</p>
 </div>
 <h2 id="developing">Developing</h2>
-<p>When developing it can be useful...</p>
+<p>When developing it can be useful to point the image in <em>submit.yml</em> to a branch name instead of a
+tag, as that way you can test updates to your <em>Dockerfile</em> without having to rerun the environment deployment.</p>
+<p>For example, let's say you are developing the app in the <em>dev</em> branch of your git repo called <em>training-environment-new-app</em>, we could set <code>script.native.container.image</code> in <em>submit.yml</em> to use the <em>dev</em> tag and also set <code>script.native.container.image_pull_policy</code> to always pull the latest version of the image.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghcr.io/nesi/training-environment-new-app:dev&quot;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">image_pull_policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always</span>
+</span></code></pre></div>
+<p>Now, whenever you push a change to the <em>Dockerfile</em> in the <em>dev</em> branch of the git repo the following will happen:</p>
+<ol>
+<li>The default CI workflow will build a new Docker image and tag it with <em>dev</em></li>
+<li>After the image has been built, if you relaunch your app in ondemand, it will pull the new version of the <em>dev</em> image and launch the app using that</li>
+</ol>
+<p>With this approach, ondemand will pick up your changes to the docker image immediately without needing to change the <code>k8s_container</code> or <code>version</code> values in <em>vars/ondemand-config.yml</em> or redeploy the environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Moving to production</p>
+<p>When you have finished developing your app, it is recommended to switch to using versioned tags, such as <em>v0.1.0</em>, rather than branch names for better reproducibility, and to remove the <code>image_pull_policy: Always</code> line, so application launches are not reliant on connectivity to the docker registry.</p>
+</div>
 
 
 
@@ -755,10 +794,10 @@ Assuming the app your are copying is based on the same web application (i.e. Jup
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>
