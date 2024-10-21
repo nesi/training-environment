@@ -121,4 +121,4 @@ With this approach, ondemand will pick up your changes to the docker image immed
 
 !!! note "Moving to production"
 
-    When you have finished developing your app, it is recommended to switch to using versioned tags, such as *v0.1.0*, rather than branch names for better reproducibility, and to remove the `image_pull_policy: Always` line, so application launches are not reliant on connectivity to the docker registry.
+    When you have finished developing your app, it is recommended to switch to using versioned tags, such as *v0.1.0*, rather than branch names, for better reproducibility, and to remove the `image_pull_policy: Always` line, so that application launches are not reliant on connectivity to the docker registry.
