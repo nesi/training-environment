@@ -114,7 +114,7 @@ For example, let's say you are developing the app in the *dev* branch of your gi
 
 Now, whenever you push a change to the *Dockerfile* in the *dev* branch of the git repo the following will happen:
 
-1. The default CI workflow will build a new Docker image and tag it with *dev*
+1. The default CI workflow will build a new Docker image and tag it with *dev* (check that the build completes successfully by going to the *Actions* tab in the GitHub web interface)
 2. After the image has been built, if you relaunch your app in ondemand, it will pull the new version of the *dev* image and launch the app using that
 
 With this approach, ondemand will pick up your changes to the docker image immediately without needing to change the `k8s_container` or `version` values in *vars/ondemand-config.yml* or redeploy the environment.
