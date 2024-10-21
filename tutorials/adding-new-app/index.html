@@ -740,7 +740,7 @@ tag, as that way you can test updates to your <em>Dockerfile</em> without having
 </span></code></pre></div>
 <p>Now, whenever you push a change to the <em>Dockerfile</em> in the <em>dev</em> branch of the git repo the following will happen:</p>
 <ol>
-<li>The default CI workflow will build a new Docker image and tag it with <em>dev</em></li>
+<li>The default CI workflow will build a new Docker image and tag it with <em>dev</em> (check that the build completes successfully by going to the <em>Actions</em> tab in the GitHub web interface)</li>
 <li>After the image has been built, if you relaunch your app in ondemand, it will pull the new version of the <em>dev</em> image and launch the app using that</li>
 </ol>
 <p>With this approach, ondemand will pick up your changes to the docker image immediately without needing to change the <code>k8s_container</code> or <code>version</code> values in <em>vars/ondemand-config.yml</em> or redeploy the environment.</p>
