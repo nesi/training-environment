@@ -24,10 +24,16 @@ Some of the existing apps are:
 - [RStudio scRNA-Seq app](https://github.com/nesi/training-environment-rstudio-scrnaseq-app)
 - [RStudio intro and intermediate R app](https://github.com/nesi/training-environment-rstudio-app)
 
+!!! info "Note about naming your git repo"
+
+    When you copy an existing app repo you should take care when naming your new repository - make sure you do not use underscores - use hyphens instead as github packages do not support package names with underscores and the default github action we include uses the repository name for the package name
+
 ## What needs to be changed
 
 Here we summarise what is most likely to need to be changed when copying an existing app.
 Assuming the app your are copying is based on the same web application (i.e. JupyterLab vs RStudio, etc.) then not much should need to change.
+
+Some changes are likely to be required in the Open Ondemand application definition:
 
 - *view.html.erb*
     - change the line that contains the string *Connect to <app specific string>*, replacing *<app specific string>* with something specific to your app
@@ -45,13 +51,16 @@ Assuming the app your are copying is based on the same web application (i.e. Jup
       ```
       will copy the data from your image into the user's home directory
     - make sure this file is executable otherwise the app will fail to launch (`chmod +x template/script.sh.erb`)
+
+The *Dockerfile* that defines the application environment (software and any data that is required) may also need to be changed:
+
 - *docker/Dockerfile*
     - add additional packages and install steps (generally not a good idea to remove packages unless you know what you are doing)
     - add any required data
 
-!!! info "Note about naming your git repo"
+## CI pipeline
 
-    When you copy an existing app repo you should take care when naming your new repository - make sure you do not use underscores - use hyphens instead as github packages do not support package names with underscores and the default github action we include uses the repository name for the package name
+The starting point apps listed above contain a default GitHub Actions workflow that automatically builds the docker image when you push to the repo. It will build git branches and tags and tag the docker images with the git branch or tag name. This should not need to be changed.
 
 ## Creating a tag/release of your new app
 
@@ -93,4 +102,23 @@ More detail on the keys above follows:
 
 ## Developing
 
-When developing it can be useful...
+When developing it can be useful to point the image in *submit.yml* to a branch name instead of a
+tag, as that way you can test updates to your *Dockerfile* without having to rerun the environment deployment.
+
+For example, let's say you are developing the app in the *dev* branch of your git repo called *training-environment-new-app*, we could set `script.native.container.image` in *submit.yml* to use the *dev* tag and also set `script.native.container.image_pull_policy` to always pull the latest version of the image.
+
+```yaml
+    image: "ghcr.io/nesi/training-environment-new-app:dev"
+    image_pull_policy: Always
+```
+
+Now, whenever you push a change to the *Dockerfile* in the *dev* branch of the git repo the following will happen:
+
+1. The default CI workflow will build a new Docker image and tag it with *dev*
+2. After the image has been built, if you relaunch your app in ondemand, it will pull the new version of the *dev* image and launch the app using that
+
+With this approach, ondemand will pick up your changes to the docker image immediately without needing to change the `k8s_container` or `version` values in *vars/ondemand-config.yml* or redeploy the environment.
+
+!!! note "Moving to production"
+
+    When you have finished developing your app, it is recommended to switch to using versioned tags, such as *v0.1.0*, rather than branch names for better reproducibility, and to remove the `image_pull_policy: Always` line, so application launches are not reliant on connectivity to the docker registry.
