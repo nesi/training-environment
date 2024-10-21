@@ -746,7 +746,7 @@ tag, as that way you can test updates to your <em>Dockerfile</em> without having
 <p>With this approach, ondemand will pick up your changes to the docker image immediately without needing to change the <code>k8s_container</code> or <code>version</code> values in <em>vars/ondemand-config.yml</em> or redeploy the environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Moving to production</p>
-<p>When you have finished developing your app, it is recommended to switch to using versioned tags, such as <em>v0.1.0</em>, rather than branch names for better reproducibility, and to remove the <code>image_pull_policy: Always</code> line, so application launches are not reliant on connectivity to the docker registry.</p>
+<p>When you have finished developing your app, it is recommended to switch to using versioned tags, such as <em>v0.1.0</em>, rather than branch names, for better reproducibility, and to remove the <code>image_pull_policy: Always</code> line, so that application launches are not reliant on connectivity to the docker registry.</p>
 </div>
 
 
