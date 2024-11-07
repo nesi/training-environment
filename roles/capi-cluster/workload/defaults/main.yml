@@ -22,7 +22,7 @@ control_plane_flavor: balanced1.2cpu4ram
 control_plane_disksize: 30
 
 cluster_worker_count: 3
-cluster_max_worker_count: {{ cluster_worker_count }}
+cluster_max_worker_count: "{{ cluster_worker_count }}"
 worker_flavour: balanced1.2cpu4ram
 worker_disksize: 50
 
