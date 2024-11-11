@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 35
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 5
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -19,8 +19,8 @@ control_plane_flavor: balanced1.2cpu4ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
+cluster_worker_count: 3
+worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
 worker_disksize: 60
@@ -49,7 +49,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.2'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   jupyter_ml102:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
@@ -112,7 +112,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-python-app.git
     version: 'v0.1.3'
     enabled: true
-    pre_pull: true
+    pre_pull: false
 
   introshell:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.5.0
