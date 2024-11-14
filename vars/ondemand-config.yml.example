@@ -4,7 +4,7 @@
 # number of training users
 num_users_create: 2
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 1
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -124,6 +124,13 @@ ood_apps:
   indigidatar:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-indigidata-app:v0.5.0
     repo: https://github.com/nesi/training-environment-rstudio-indigidata-app.git
+    version: 'v0.5.0'
+    enabled: true
+    pre_pull: false
+
+  matai:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-matai-app:v0.5.0
+    repo: https://github.com/nesi/training-environment-jupyter-matai-app.git
     version: 'v0.5.0'
     enabled: true
     pre_pull: false
