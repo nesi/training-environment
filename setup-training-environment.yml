@@ -232,33 +232,33 @@
     - role: openondemand-k8s/web-node
     - role: openondemand-webnode-config
 
-- name: Install ondemand_exporter and grafana app
-  hosts: webnode
-  become: true
-  vars_files:
-    - ondemand-config.yml
-  roles:
-    - monitoring/ondemand_exporter
-    - monitoring/grafana_webnode
-
-- name: Install prometheus node exporter
-  hosts: servers
-  become: true
-  vars_files:
-    - ondemand-config.yml
-  roles:
-    - prometheus.prometheus.node_exporter
-
-- name: Install prometheus and grafana
-  hosts: servicesnode
-  become: true
-  vars_files:
-    - ondemand-config.yml
-  roles:
-    - prometheus.prometheus.prometheus
-    - monitoring/prometheus
-    - grafana.grafana.grafana
-    - monitoring/kube_prometheus
+#- name: Install ondemand_exporter and grafana app
+#  hosts: webnode
+#  become: true
+#  vars_files:
+#    - ondemand-config.yml
+#  roles:
+#    - monitoring/ondemand_exporter
+#    - monitoring/grafana_webnode
+#
+#- name: Install prometheus node exporter
+#  hosts: servers
+#  become: true
+#  vars_files:
+#    - ondemand-config.yml
+#  roles:
+#    - prometheus.prometheus.node_exporter
+#
+#- name: Install prometheus and grafana
+#  hosts: servicesnode
+#  become: true
+#  vars_files:
+#    - ondemand-config.yml
+#  roles:
+#    - prometheus.prometheus.prometheus
+#    - monitoring/prometheus
+#    - grafana.grafana.grafana
+#    - monitoring/kube_prometheus
 
 - name: Setup k8s nodes for containers apps
   become: true
