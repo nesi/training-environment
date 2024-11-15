@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 1
 # number of trainer users
-num_trainers_create: 1
+num_trainers_create: 2
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -20,7 +20,7 @@ control_plane_flavor: balanced1.2cpu4ram
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
 cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
+worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
 worker_disksize: 60
@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   matai:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-matai-app:v0.7.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-matai-app:v0.8.0
     repo: https://github.com/nesi/training-environment-jupyter-matai-app.git
-    version: 'v0.7.0'
+    version: 'v0.8.0'
     enabled: true
     pre_pull: false
 
