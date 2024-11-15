@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   matai:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-matai-app:v0.6.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-matai-app:v0.7.0
     repo: https://github.com/nesi/training-environment-jupyter-matai-app.git
-    version: 'v0.6.0'
+    version: 'v0.7.0'
     enabled: true
     pre_pull: false
 
