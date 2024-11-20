@@ -20,6 +20,7 @@ control_plane_flavor: balanced1.4cpu8ram
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
 cluster_worker_count: 5
+cluster_max_worker_count: {{ cluster_worker_count }}
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
