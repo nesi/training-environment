@@ -5,7 +5,7 @@
 #   - 16cpu32ram: 674fa81a-69c7-4bf7-b3a9-59989fb63618
 
 services_flavor_id = "2d02e6a4-3937-4ed3-951a-8e27867ff53e"
-services_volume_size = 600
+services_volume_size = 450
 
 webnode_flavor_id = "2d02e6a4-3937-4ed3-951a-8e27867ff53e"
 webnode_volume_size = 30

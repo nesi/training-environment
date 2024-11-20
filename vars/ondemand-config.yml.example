@@ -23,7 +23,7 @@ cluster_worker_count: 5
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
-worker_disksize: 60
+worker_disksize: 50
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
