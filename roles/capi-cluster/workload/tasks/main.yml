@@ -19,13 +19,15 @@
       register: cluster_intialized
       ignore_errors: true
 
-    - name: Workload | Create and initialize clusterctl
-      include_tasks: configure-install-clusterctl.yml
+    - name: Workload | Setup cluster base
+      include_tasks: setup-cluster-base.yml
       when: cluster_intialized.stdout == ''
+
+    - name: Workload | Setup CNI
+      include_tasks: setup-cni.yml
 
     - name: Workload | Create and initialize cloud manager
       include_tasks: install-cloud-manager.yml
-      when: cluster_intialized.stdout == ''
 
     - name: Workload GPU | Setting GPU Enabled boolean to {{ enable_gpu_nodes }}
       set_fact:
