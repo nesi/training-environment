@@ -247,7 +247,7 @@ enable_gpu_nodes: false
 use_job_pod_reaper: false
 
 kubernetes_version: v1.28.5
-capi_image_name: rocky-93-kube-v1.28.5
+capi_image_name: rocky-9-containerd-v1.28.14
 
 capi_provider_version: v0.8.0
 
