@@ -64,7 +64,7 @@
     kubectl get kubeadmcontrolplane | grep " {{ cluster_name }} " | grep -c true
   register: result
   until: result.stdout == "1"
-  retries: 10
+  retries: 40
   delay: 30
 
 - name: Workload | Pause for {{ cluster_settle_timeout_base * cluster_control_plane_count }} minutes while cluster settles
