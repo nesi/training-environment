@@ -59,9 +59,9 @@ ood_apps:
     pre_pull: false
 
   rstudio_rnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.8.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.2.3
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
-    version: 'v0.8.0'
+    version: 'v0.2.3'
     enabled: true
     pre_pull: false
 
