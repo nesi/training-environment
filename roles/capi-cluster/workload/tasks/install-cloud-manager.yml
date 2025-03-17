@@ -5,6 +5,12 @@
   register: cloud_config_secret
   ignore_errors: true
 
+- name: Check for openstack-cloud pods
+  shell: >-
+    kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig get pods -A | grep -c openstack-cloud
+  register: openstack_cloud_pods
+  ignore_errors: true
+
 - name: Workload | Install and configure Openstack cloud controller
   block:
     - name: Workload | Create create_cloud_conf.sh
@@ -37,4 +43,4 @@
         kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply \
         -f https://raw.githubusercontent.com/kubernetes/cloud-provider-openstack/{{ cloud_manager_version }}/manifests/controller-manager/openstack-cloud-controller-manager-ds.yaml
   when:
-    - cloud_config_secret.stdout != "1"
+    - cloud_config_secret.stdout != "1" and openstack_cloud_pods.stdout != "1"
