@@ -1,0 +1,12 @@
+---
+- name: Check for {{ cluster_name }} calico-kube nodes
+  shell: >-
+    kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig get pods -A | grep -c calico-kube
+  register: calico_kube_pods
+  ignore_errors: true
+
+- name: Install CNI for {{ cluster_name }}
+  shell: >-
+    kubectl --kubeconfig {{ tmp_dir }}/{{ cluster_name }}.kubeconfig apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+  when:
+    - calico_kube_pods.stdout != "1"
