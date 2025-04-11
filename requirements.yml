@@ -20,7 +20,7 @@ collections:
     version: 0.16.3
     type: galaxy
   - name: grafana.grafana
-    version: 5.2.0
+    version: 5.7.0
     type: galaxy
   - name: community.grafana
     version: 1.9.1
