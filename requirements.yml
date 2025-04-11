@@ -8,16 +8,20 @@ collections:
     version: 8.1.0
     type: galaxy
   - name: amazon.aws
-    version: 9.4.0
+    version: 7.0.0
     type: galaxy
   - name: community.crypto
+    version: 2.16.1
     type: galaxy
   - name: ansible.posix
+    version: 1.5.4
     type: galaxy
   - name: prometheus.prometheus
+    version: 0.16.3
     type: galaxy
   - name: grafana.grafana
-    version: 5.7.0
+    version: 5.2.0
     type: galaxy
   - name: community.grafana
+    version: 1.9.1
     type: galaxy
