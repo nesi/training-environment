@@ -84,8 +84,8 @@ jobs:
         env:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
 
-      - name: Install ansible dependencies
-        run: ansible-galaxy install --force -r requirements.yml
+#      - name: Install ansible dependencies
+#        run: ansible-galaxy install --force -r requirements.yml
       - name: Install ansible dependencies with retries
         run: |
           max_attempts=5
