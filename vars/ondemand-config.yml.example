@@ -128,7 +128,7 @@ ood_apps:
     enabled: true
     pre_pull: false
 
-  shell_codeserv:
+  shellcodeserv:
     k8s_container: ghcr.io/nesi/training-environment-codeserver-intro2inter-shell:v0.1.3-dev
     repo: https://github.com/nesi/training-environment-codeserver-intro2inter-shell.git
     version: 'v0.1.3-dev'
