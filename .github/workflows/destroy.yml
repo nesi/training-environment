@@ -84,8 +84,32 @@ jobs:
         env:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
 
-      - name: Install ansible dependencies
-        run: ansible-galaxy install --force -r requirements.yml
+    #- name: Install ansible dependencies
+      # run: ansible-galaxy install --force -r requirements.yml
+      - name: Install ansible dependencies with retries
+        run: |
+          max_attempts=5
+          attempt=1
+          success=false
+               
+          while [ $attempt -le $max_attempts ] && [ "$success" != "true" ]; do
+            echo "Attempt $attempt of $max_attempts to install Ansible dependencies"
+            if ansible-galaxy install --force -r requirements.yml; then
+              success=true
+              echo "Successfully installed Ansible dependencies!"
+            else
+              echo "Failed to install dependencies (attempt $attempt), retrying in 30 seconds..."
+              sleep 30
+              attempt=$((attempt+1))
+            fi
+          done
+               
+          if [ "$success" != "true" ]; then
+            echo "Failed to install dependencies after $max_attempts attempts"
+            exit 1
+          fi 
+
+
       - name: Terraform initialise
         run: terraform init -input=false
         env:
