@@ -23,9 +23,16 @@
       include_tasks: configure-install-clusterctl.yml
       when: cluster_intialized.stdout == ''
 
+    - name: Get {{ cluster_name }} cluster kubeconfig yaml 
+      shell: >-
+        kubectl get secret -n {{ cluster_namespace }} {{ cluster_name }}-kubeconfig 
+        -o jsonpath='{.data.value}'|base64 -d > {{ tmp_dir }}/{{ cluster_name }}.kubeconfig
+
+    - name: Install CNI
+      include_tasks: install-cni.yml
+
     - name: Workload | Create and initialize cloud manager
       include_tasks: install-cloud-manager.yml
-      when: cluster_intialized.stdout == ''
 
     - name: Workload GPU | Setting GPU Enabled boolean to {{ enable_gpu_nodes }}
       set_fact:
@@ -51,5 +58,4 @@
       - cluster_worker_count < cluster_max_worker_count
   when:
     - clouds_yaml_file.stat.exists
-
 
