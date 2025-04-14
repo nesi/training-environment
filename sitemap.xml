@@ -2,26 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://nesi.github.io/training-environment/</loc>
-         <lastmod>2025-03-18</lastmod>
+         <lastmod>2025-04-14</lastmod>
     </url>
     <url>
          <loc>https://nesi.github.io/training-environment/known-issues/</loc>
-         <lastmod>2025-03-18</lastmod>
+         <lastmod>2025-04-14</lastmod>
     </url>
     <url>
          <loc>https://nesi.github.io/training-environment/notes-for-trainers/</loc>
-         <lastmod>2025-03-18</lastmod>
+         <lastmod>2025-04-14</lastmod>
     </url>
     <url>
          <loc>https://nesi.github.io/training-environment/tutorials/adding-new-app/</loc>
-         <lastmod>2025-03-18</lastmod>
+         <lastmod>2025-04-14</lastmod>
     </url>
     <url>
          <loc>https://nesi.github.io/training-environment/tutorials/deployment-on-nesi/</loc>
-         <lastmod>2025-03-18</lastmod>
+         <lastmod>2025-04-14</lastmod>
     </url>
     <url>
          <loc>https://nesi.github.io/training-environment/tutorials/jupyterlab-app-for-intermediate-shell-for-bioinformatics/</loc>
-         <lastmod>2025-03-18</lastmod>
+         <lastmod>2025-04-14</lastmod>
     </url>
 </urlset>
