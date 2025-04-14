@@ -89,8 +89,28 @@ jobs:
         env:
           ONDEMAND_CONFIG_FILE: '${{ runner.temp }}/ondemand-config.yml'
 
-      - name: Install ansible dependencies
-        run: ansible-galaxy install --force -r requirements.yml
+#      - name: Install ansible dependencies
+#        run: ansible-galaxy install --force -r requirements.yml
+
+      - name: Install ansible dependencies with retries
+        run: |
+          max_attempts=5
+          attempt=1
+          while [ $attempt -le $max_attempts ]; do
+            echo "Attempt $attempt of $max_attempts"
+            if ansible-galaxy install --force -r requirements.yml; then
+              echo "Ansible dependencies installed successfully!"
+              break
+            else
+              echo "Failed to install dependencies, retrying in 30 seconds..."
+              sleep 30
+              attempt=$((attempt+1))
+            fi
+          done
+          if [ $attempt -gt $max_attempts ]; then
+            echo "Failed to install dependencies after $max_attempts attempts"
+            exit 1
+          fi
 
       # - name: Install ansible collection dependencies
       #   run: ansible-galaxy collection install community.general
