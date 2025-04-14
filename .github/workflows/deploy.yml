@@ -141,8 +141,24 @@ jobs:
 #          CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
 #          KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
 
+#     - name: Create the environment
+#       run: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
+#       env:
+#         TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
+#         ANSIBLE_HOST_KEY_CHECKING: "False"
+#         CLOUDS_YAML_BASE64: "${{ secrets.CLOUDS_YAML_BASE64 }}"
+#         KUBE_CONFIG_BASE64: "${{ secrets.KUBE_CONFIG_BASE64 }}"
+#         WILD_CERT_BASE64: "${{ secrets.WILD_CERT_BASE64 }}"
+#         WILD_CERT_KEY_BASE64: "${{ secrets.WILD_CERT_KEY_BASE64 }}"
+
+      # Following re-try logic is to avoid failures due to NO MORE HOSTS LEFT
       - name: Create the environment
-        run: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 40    # Adjust based on your typical deployment time
+          max_attempts: 3
+          retry_wait_seconds: 60
+          command: ./deployment.sh create ${GITHUB_BASE_REF:-$GITHUB_REF_NAME}
         env:
           TF_VAR_key_file: "${{ runner.temp }}/my_ci_private_key"
           ANSIBLE_HOST_KEY_CHECKING: "False"
