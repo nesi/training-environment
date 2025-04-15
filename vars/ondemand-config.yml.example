@@ -45,9 +45,9 @@ worker_disksize: 60
 #        recommended to be turned off unless using the containers app)
 ood_apps:
   jupyter_ml101:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.6
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.7
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
-    version: 'v0.2.6'
+    version: 'v0.2.7'
     enabled: true
     pre_pull: false
 
