@@ -45,9 +45,9 @@ worker_disksize: 60
 #        recommended to be turned off unless using the containers app)
 ood_apps:
   jupyter_ml101:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.5
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.6
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
-    version: 'v0.2.5'
+    version: 'v0.2.6'
     enabled: true
     pre_pull: false
 
@@ -80,9 +80,9 @@ ood_apps:
     pre_pull: false
 
   shell4b:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.4
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
-    version: 'v0.3.4'
+    version: 'v0.3.5'
     enabled: true
     pre_pull: false
 
@@ -115,9 +115,9 @@ ood_apps:
     pre_pull: true
 
   introshell:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.5.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.6.0
     repo: https://github.com/nesi/training-environment-jupyter-introduction-shell-app.git
-    version: 'v0.5.0'
+    version: 'v0.6.0'
     enabled: true
     pre_pull: false
 
