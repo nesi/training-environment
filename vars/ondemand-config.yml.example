@@ -2,7 +2,7 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 1
 # number of trainer users
 num_trainers_create: 2
 
