@@ -128,6 +128,12 @@ ood_apps:
     enabled: true
     pre_pull: false
 
+  mpi:
+    k8s_container: ghcr.io/MattBixley/training-environment-mpi-shell-app:v0.0.1
+    repo: https://github.com/MattBixley/training-environment-mpi-shell-app.git
+    version: 'v0.0.1'
+    enabled: true
+    pre_pull: true
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
@@ -135,7 +141,7 @@ enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
-enable_pod_pre_pull: false
+enable_pod_pre_pull: true
 
 # variables to provision data into home dirs (for apps where the data is large)
 provision_data_scrnaseq: false
