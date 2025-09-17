@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   mpi:
-    k8s_container: ghcr.io/MattBixley/training-environment-mpi-shell-app:v0.0.1
+    k8s_container: ghcr.io/MattBixley/training-environment-mpi-shell-app:v0.0.2
     repo: https://github.com/MattBixley/training-environment-mpi-shell-app.git
-    version: 'v0.0.1'
+    version: 'v0.0.2'
     enabled: true
     pre_pull: true
 
