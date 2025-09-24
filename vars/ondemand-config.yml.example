@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   mpi:
-    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.1.2
+    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.2.1
     repo: https://github.com/nesi/training-environment-mpi-shell-app.git
-    version: 'v0.1.2'
+    version: 'v0.2.1'
     enabled: true
     pre_pull: true
 
