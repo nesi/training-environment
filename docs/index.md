@@ -1,6 +1,6 @@
 # Overview
 
-NeSI ephemeral training environments, running on Flexi HPC, deployed using Terraform and Ansible and using [Open OnDemand](https://osc.github.io/ood-documentation/latest/index.html) as the user interface.
+REANNZ ephemeral training environments, running on Flexi HPC, deployed using Terraform and Ansible and using [Open OnDemand](https://osc.github.io/ood-documentation/latest/index.html) as the user interface.
 
 ## Architecture
 

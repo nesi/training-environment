@@ -7,6 +7,8 @@
     z-index: 1;         /* Tells the renderer "this is important", otherwise Admonition and Code Blocks will render into it */
     text-align: center;
     background-color: black;
+    color: #25545E;
+    
 }
 
 
@@ -27,7 +29,7 @@
 :root {
 
   /* Default color shades */
-  --md-default-fg-color:               #11363E;
+  --md-default-fg-color:               #25545E;
   --md-default-fg-color--light:        #1a0206;
   --md-default-fg-color--lighter:      rgb(11,33,57,0.5);
   --md-default-fg-color--lightest:     rgb(11,33,57,0.1);
@@ -39,7 +41,7 @@
 */
 
   /* Primary color shades */
-  --md-primary-fg-color:               #11363E;
+  --md-primary-fg-color:               #25545E;
   --md-primary-fg-color--light:        #00B9E4;
   --md-primary-fg-color--dark:         rgb(11,33,57);
   /*
@@ -348,7 +350,7 @@
   }
   .md-typeset .square-xmark > .admonition-title::before,
   .md-typeset .square-xmark > summary::before {
-    background-color: rgb(207, 31, 18);
+    background-color: #25545E;
     -webkit-mask-image: var(--md-admonition-icon--square-xmark);
             mask-image: var(--md-admonition-icon--square-xmark);
   }
@@ -894,7 +896,7 @@
 }
 .md-typeset .surprise > .admonition-title::before,
 .md-typeset .surprise > summary::before {
-  background-color: rgb(209, 22, 9);
+  background-color: #25545E;
   -webkit-mask-image: var(--md-admonition-icon--surprise);
           mask-image: var(--md-admonition-icon--surprise);
 }
@@ -951,7 +953,7 @@
 }
 .md-typeset .truck-medical > .admonition-title::before,
 .md-typeset .truck-medical > summary::before {
-  background-color: rgb(209, 22, 9);
+  background-color: #25545E;
   -webkit-mask-image: var(--md-admonition-icon--truck-medical);
           mask-image: var(--md-admonition-icon--truck-medical);
 }
@@ -1028,7 +1030,7 @@
 }
 .md-typeset .html5 > .admonition-title::before,
 .md-typeset .html5 > summary::before {
-  background-color: rgb(209, 22, 9);
+  background-color: #25545E;
   -webkit-mask-image: var(--md-admonition-icon--html5);
           mask-image: var(--md-admonition-icon--html5);
 }
