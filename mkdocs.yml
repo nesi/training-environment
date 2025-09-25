@@ -1,5 +1,5 @@
-site_name: REANNZ Training Environment
-site_author: REANNZ
+site_name: REA*NNZ* Training Environment
+site_author: REA*NNZ*
 site_dir: public
 site_url: "https://nesi.github.io/training-environment/"
 
@@ -71,9 +71,6 @@ theme:
   - media: "(prefers-color-scheme: light)"
     primary: custom
 #    scheme: default
-    
-
-
     toggle:
       icon: material/brightness-7
       name: Switch to dark mode
