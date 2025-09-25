@@ -1,5 +1,5 @@
-site_name: NeSI Training Environment
-site_author: NeSI
+site_name: REANNZ Training Environment
+site_author: REANNZ
 site_dir: public
 site_url: "https://nesi.github.io/training-environment/"
 
@@ -54,8 +54,8 @@ nav:
 
 theme:
   name: "material"
-  logo: images/nesi_logo.png
-  favicon: images/nesi_logo.png
+  logo: images/REANNZ_logo.png
+  favicon: images/REANNZ_logo.png
 
   palette: 
 
