@@ -52,11 +52,11 @@ ood_apps:
     pre_pull: false
 
   jupyter_ml102:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.2.2
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
-    version: 'v0.1.0'
+    version: 'v0.2.2'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   rstudio_rnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.3.0
