@@ -4,7 +4,7 @@
 # number of training users
 num_users_create: 30
 # number of trainer users
-num_trainers_create: 5
+num_trainers_create: 3
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -62,14 +62,14 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.3.0
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'v0.3.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio_scrnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.6.0
     repo: https://github.com/nesi/training-environment-rstudio-scrnaseq-app.git
     version: 'v0.6.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio:
@@ -90,14 +90,14 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.2
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
     version: 'v0.1.2'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   nextflow:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intronextflow-app:v0.3.0
     repo: https://github.com/nesi/training-environment-jupyter-intronextflow-app.git
     version: 'v0.3.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   codeserver:
