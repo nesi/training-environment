@@ -1,6 +1,6 @@
-dashboard_logo: "/public/nesi.svg"
+dashboard_logo: "/public/REANNZ.svg"
 dashboard_logo_height: 200
-dashboard_title: "NeSI Training"
+dashboard_title: "REANNZ Training"
 
 help_menu:
   - group: "Documentation"
