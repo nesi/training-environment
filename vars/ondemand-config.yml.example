@@ -112,7 +112,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-python-app.git
     version: 'v0.4.0'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   introshell:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.6.0
@@ -141,7 +141,7 @@ enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
-enable_pod_pre_pull: false
+enable_pod_pre_pull: true
 
 # variables to provision data into home dirs (for apps where the data is large)
 provision_data_scrnaseq: false
