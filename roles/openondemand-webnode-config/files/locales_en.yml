@@ -2,7 +2,7 @@ en:
   dashboard:
     welcome_html: |
       %{logo_img_tag}
-      <p class="lead">NeSI Training Environment</p>
+      <p class="lead">REANNZ Training Environment</p>
 
     shell_app_title: "%{cluster_title} Shell Access (trainers only)"
 

@@ -1,6 +1,6 @@
 # flexi training environment
 
-This repo sets up a training environment using Open OnDemand within the NeSI RDC platform using Terraform and Ansible.
+This repo sets up a training environment using Open OnDemand within the REANNZ RDC platform using Terraform and Ansible.
 
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and
 [Ansible](https://www.ansible.com/) need to be installed on your system to run this.
