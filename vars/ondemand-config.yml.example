@@ -48,14 +48,14 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.7
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.7'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   jupyter_ml102:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.1.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio_rnaseq:
@@ -111,7 +111,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-python-app:v0.4.1
     repo: https://github.com/nesi/training-environment-jupyter-python-app.git
     version: 'v0.4.1'
-    enabled: true
+    enabled: false
     pre_pull: true
 
   introshell:
