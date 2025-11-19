@@ -133,7 +133,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
     version: 'v0.0.1'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   mpi:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
