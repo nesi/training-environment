@@ -48,7 +48,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.7
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.7'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   jupyter_ml102:
@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   indigidata:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.2
     repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
-    version: 'v0.0.1'
+    version: 'v0.0.2'
     enabled: true
     pre_pull: true
 
