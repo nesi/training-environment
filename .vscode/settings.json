@@ -1,3 +1,4 @@
 {
-    "templateFinder.extension.activated": true
+    "templateFinder.extension.activated": true,
+    "ansible.python.interpreterPath": "/bin/python3"
 }

@@ -129,9 +129,9 @@ ood_apps:
     pre_pull: false
 
   indigidata:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.1.4
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.1.7
     repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
-    version: 'v0.1.4'
+    version: 'v0.1.8'
     enabled: true
     pre_pull: true
 
