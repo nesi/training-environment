@@ -118,8 +118,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.6.0
     repo: https://github.com/nesi/training-environment-jupyter-introduction-shell-app.git
     version: 'v0.6.0'
-    enabled: false
-    pre_pull: false
+    enabled: true
+    pre_pull: true
 
   indigidatar:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-indigidata-app:v0.5.0
