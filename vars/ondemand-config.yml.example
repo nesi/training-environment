@@ -259,8 +259,8 @@ k8s_ood_enable: true
 enable_gpu_nodes: false
 use_job_pod_reaper: false
 
-kubernetes_version: v1.30.5
-capi_image_name: rocky-9-containerd-v1.30.5
+kubernetes_version: v1.31.8
+capi_image_name: rocky-9-containerd-ipa-v1.31.8
 
 capi_provider_version: v0.8.0
 
