@@ -2,6 +2,6 @@
 k8s_ood_enable: false
 
 cluster_name: capi-cluster
-capi_ssh_user: cloud-user
+capi_ssh_user: rocky
 
 tmp_dir: "/tmp/{{ cluster_name }}"

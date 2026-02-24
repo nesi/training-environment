@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 30
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 5
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -19,8 +19,8 @@ control_plane_flavor: balanced1.2cpu4ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 1
-worker_flavour: balanced1.8cpu16ram
+cluster_worker_count: 3
+worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
 worker_disksize: 60
@@ -48,35 +48,35 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.7
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
     version: 'v0.2.7'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   jupyter_ml102:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml102-app:v0.1.0
     repo: https://github.com/nesi/training-environment-jupyter-ml102-app.git
     version: 'v0.1.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio_rnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.3.0
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'v0.3.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio_scrnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.6.0
     repo: https://github.com/nesi/training-environment-rstudio-scrnaseq-app.git
     version: 'v0.6.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.3.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.3.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   shell4b:
@@ -84,34 +84,34 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
     version: 'v0.3.5'
     enabled: true
-    pre_pull: false
+    pre_pull: true
 
   containers:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.2
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
     version: 'v0.1.2'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   nextflow:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intronextflow-app:v0.3.0
     repo: https://github.com/nesi/training-environment-jupyter-intronextflow-app.git
     version: 'v0.3.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   codeserver:
     k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.2.0
     repo: https://github.com/nesi/training-environment-codeserver-app.git
     version: 'v0.2.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   intro_python:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-python-app:v0.4.1
     repo: https://github.com/nesi/training-environment-jupyter-python-app.git
     version: 'v0.4.1'
-    enabled: true
+    enabled: false
     pre_pull: true
 
   introshell:
@@ -125,14 +125,21 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-indigidata-app:v0.5.0
     repo: https://github.com/nesi/training-environment-rstudio-indigidata-app.git
     version: 'v0.5.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
-  mpi:
-    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.2.1
-    repo: https://github.com/nesi/training-environment-mpi-shell-app.git
-    version: 'v0.2.1'
+  indigidata:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.1.4
+    repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
+    version: 'v0.1.4'
     enabled: true
+    pre_pull: true
+
+  mpi:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
+    repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
+    version: 'v0.2.1'
+    enabled: false
     pre_pull: false
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
@@ -252,8 +259,8 @@ k8s_ood_enable: true
 enable_gpu_nodes: false
 use_job_pod_reaper: false
 
-kubernetes_version: v1.30.5
-capi_image_name: rocky-9-containerd-v1.30.5
+kubernetes_version: v1.31.8
+capi_image_name: rocky-9-containerd-ipa-v1.31.8
 
 capi_provider_version: v0.8.0
 
@@ -364,3 +371,10 @@ ca_file_path: /usr/local/share/ca-certificates
 
 rdc_private_key_path: "{{ ca_file_path }}/rdc-CA.key"
 rdc_certificate_path: "{{ ca_file_path }}/rdc-CA.crt"
+
+deb_repo_key: "https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand"
+deb_repo_key_id: "4B72FE2B92D31755"
+
+# Updated NodeSource URL for 2026 stability
+node_repo_key: "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key"
+node_repo_key_id: "2F59B5F99B1BE0B4"
