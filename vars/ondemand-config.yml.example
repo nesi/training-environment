@@ -128,9 +128,16 @@ ood_apps:
     enabled: false
     pre_pull: false
 
+  indigidata:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.1.4
+    repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
+    version: 'v0.1.4'
+    enabled: false
+    pre_pull: false
+
   mpi:
-    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.2.1
-    repo: https://github.com/nesi/training-environment-mpi-shell-app.git
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
+    repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
     version: 'v0.2.1'
     enabled: false
     pre_pull: false
@@ -253,7 +260,7 @@ enable_gpu_nodes: false
 use_job_pod_reaper: false
 
 kubernetes_version: v1.31.8
-capi_image_name: rocky-9-containerd-v1.31.8
+capi_image_name: rocky-9-containerd-ipa-v1.31.8
 
 capi_provider_version: v0.8.0
 
@@ -364,3 +371,10 @@ ca_file_path: /usr/local/share/ca-certificates
 
 rdc_private_key_path: "{{ ca_file_path }}/rdc-CA.key"
 rdc_certificate_path: "{{ ca_file_path }}/rdc-CA.crt"
+
+deb_repo_key: "https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand"
+deb_repo_key_id: "4B72FE2B92D31755"
+
+# Updated NodeSource URL for 2026 stability
+node_repo_key: "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key"
+node_repo_key_id: "2F59B5F99B1BE0B4"

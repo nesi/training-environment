@@ -1,29 +1,37 @@
 ---
 - name: Patch ood_core to allow pods to run as privileged
   block:
-    - name: Check k8s template file exists where expected
-      ansible.builtin.stat:
-        path: "{{ pod_template_path }}"
-      register: pod_template_file
+    - name: Find all pod.yml.erb files
+      ansible.builtin.command: >
+        find / \( -path /home -o -path /nesi -o -path /opt/nesi \) -prune -o -type f -name "pod.yml.erb" -print
+      register: pod_erb_files
+      changed_when: false
 
-    - name: Fail if pod template not where expected
-      ansible.builtin.fail:
-        msg: Cannot find k8s pod template file where expected, pod_template_path may need updating
-      when: not pod_template_file.stat.exists
+    # - name: Check k8s template file exists where expected
+    #   ansible.builtin.stat:
+    #     path: "{{ pod_template_path }}"
+    #   register: pod_template_file
+
+    # - name: Fail if pod template not where expected
+    #   ansible.builtin.fail:
+    #     msg: Cannot find k8s pod template file where expected, pod_template_path may need updating
+    #   when: not pod_template_file.stat.exists
 
     - name: Patch the pod template file to run the container as privileged
       ansible.builtin.replace:
-        path: "{{ pod_template_path }}"
+        path: "{{ item }}"
         regexp: "privileged: false"
         replace: "privileged: true"
         before: "  initContainers:"
+      loop: "{{ pod_erb_files.stdout_lines }}"
 
     - name: Patch the pod template file to allow privilege escalation
       ansible.builtin.replace:
-        path: "{{ pod_template_path }}"
+        path: "{{ item }}"
         regexp: "allowPrivilegeEscalation: false"
         replace: "allowPrivilegeEscalation: true"
         before: "  initContainers:"
+      loop: "{{ pod_erb_files.stdout_lines }}"
 
   when:
     - "enable_privileged_pods|default(false)|bool == true"

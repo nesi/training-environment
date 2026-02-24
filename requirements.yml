@@ -1,7 +1,7 @@
 ---
 roles:
   - name: osc.open_ondemand
-    version: "v3.1.5"
+    version: "v4.0.1"
 
 collections:
   - name: community.general
