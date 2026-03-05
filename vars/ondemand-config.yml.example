@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 30
+num_users_create: 2
 # number of trainer users
-num_trainers_create: 5
+num_trainers_create: 2
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -19,7 +19,7 @@ control_plane_flavor: balanced1.4cpu8ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 3
+cluster_worker_count: 2
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
@@ -73,18 +73,18 @@ ood_apps:
     pre_pull: false
 
   rstudio:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
-    version: 'v0.3.0'
-    enabled: false
-    pre_pull: false
+    version: 'v0.4.0'
+    enabled: true
+    pre_pull: true
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
     version: 'v0.3.5'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
   containers:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.2
@@ -112,13 +112,13 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-jupyter-python-app.git
     version: 'v0.4.1'
     enabled: false
-    pre_pull: true
+    pre_pull: false
 
   introshell:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.6.0
     repo: https://github.com/nesi/training-environment-jupyter-introduction-shell-app.git
     version: 'v0.6.0'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   indigidatar:
@@ -132,8 +132,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.1.4
     repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
     version: 'v0.1.4'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
   mpi:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
