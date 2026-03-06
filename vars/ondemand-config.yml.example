@@ -145,6 +145,7 @@ ood_apps:
   vscode_intro2nextflow:
     k8s_container: ghcr.io/nesi/training-environment-vscode-intro2nextflow-app:dev
     repo: https://github.com/nesi/training-environment-vscode-intro2nextflow-app.git
+    version: 'dev'
     enabled: true
     pre_pull: true
 
