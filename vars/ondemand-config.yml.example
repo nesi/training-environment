@@ -59,9 +59,9 @@ ood_apps:
     pre_pull: false
 
   rstudio_rnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:jen
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
-    version: 'v0.3.0'
+    version: 'jen'
     enabled: false
     pre_pull: false
 
@@ -73,16 +73,16 @@ ood_apps:
     pre_pull: false
 
   rstudio:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-app:dev-jen
     repo: https://github.com/nesi/training-environment-rstudio-app.git
-    version: 'v0.4.0'
+    version: 'dev-jen'
     enabled: true
     pre_pull: true
 
   shell4b:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:dev-jen
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
-    version: 'v0.3.5'
+    version: 'dev-jen'
     enabled: true
     pre_pull: true
 
@@ -101,9 +101,9 @@ ood_apps:
     pre_pull: false
 
   codeserver:
-    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:v0.2.0
+    k8s_container: ghcr.io/nesi/training-environment-codeserver-app:dev-jen
     repo: https://github.com/nesi/training-environment-codeserver-app.git
-    version: 'v0.2.0'
+    version: 'dev-jen'
     enabled: true
     pre_pull: true
 
