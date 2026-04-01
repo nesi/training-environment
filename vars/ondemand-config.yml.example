@@ -63,7 +63,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'jen'
     enabled: true
-    pre_pull: true
+    pre_pull: false
 
   rstudio_scrnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.6.0
@@ -77,14 +77,14 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'dev-jen'
     enabled: true
-    pre_pull: true
+    pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:dev-jen
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
     version: 'dev-jen'
     enabled: true
-    pre_pull: true
+    pre_pull: false
 
   containers:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.2
@@ -105,7 +105,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-codeserver-app.git
     version: 'dev-jen'
     enabled: true
-    pre_pull: true
+    pre_pull: false
 
   intro_python:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-python-app:v0.4.1
@@ -147,7 +147,7 @@ ood_apps:
     repo: https://github.com/nesi/training-environment-vscode-intro2nextflow-app.git
     version: 'dev'
     enabled: true
-    pre_pull: true
+    pre_pull: false
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
@@ -155,7 +155,7 @@ enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
-enable_pod_pre_pull: true
+enable_pod_pre_pull: false
 
 # variables to provision data into home dirs (for apps where the data is large)
 provision_data_scrnaseq: false
