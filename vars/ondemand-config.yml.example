@@ -62,7 +62,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:jen
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'jen'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   rstudio_scrnaseq:
@@ -76,14 +76,14 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:dev-jen
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'dev-jen'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:dev-jen
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
     version: 'dev-jen'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   containers:
@@ -104,7 +104,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-codeserver-app:dev-jen
     repo: https://github.com/nesi/training-environment-codeserver-app.git
     version: 'dev-jen'
-    enabled: true
+    enabled: false
     pre_pull: false
 
   intro_python:
@@ -146,7 +146,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-vscode-intro2nextflow-app:dev
     repo: https://github.com/nesi/training-environment-vscode-intro2nextflow-app.git
     version: 'dev'
-    enabled: true
+    enabled: false
     pre_pull: false
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
