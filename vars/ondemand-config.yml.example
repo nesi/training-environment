@@ -62,7 +62,7 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:jen
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
     version: 'jen'
-    enabled: false
+    enabled: true
     pre_pull: false
 
   rstudio_scrnaseq:
