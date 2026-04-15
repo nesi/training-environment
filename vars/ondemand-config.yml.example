@@ -115,9 +115,9 @@ ood_apps:
     pre_pull: false
 
   introshell:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.6.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:patch-1 
     repo: https://github.com/nesi/training-environment-jupyter-introduction-shell-app.git
-    version: 'v0.6.0'
+    version: 'patch-1'
     enabled: true
     pre_pull: true
 
