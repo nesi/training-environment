@@ -9,6 +9,12 @@ This setup also requires [Kubernetes Cluster API](https://cluster-api.sigs.k8s.i
 
 You also need to install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) on your system.
 
+## For trainers
+
+Setup instructions found here: https://nesi.github.io/training-environment/
+
+* Deployment instructions specifically found here: https://nesi.github.io/training-environment/tutorials/deployment-on-nesi/
+
 ## Configuration
 
 Configure Terraform using environment variables:
