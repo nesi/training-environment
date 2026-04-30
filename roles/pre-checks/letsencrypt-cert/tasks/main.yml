@@ -4,6 +4,10 @@
     name:
       - acme-tiny
     state: present
+  register: apt_result
+  retries: 5
+  delay: 10
+  until: apt_result is succeeded
   become: true
 
 - name: Pre-Check LetsEncrypt Certs | Create required directories in /etc/letsencrypt
