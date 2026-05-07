@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 30
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 3
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -45,9 +45,9 @@ worker_disksize: 60
 #        recommended to be turned off unless using the containers app)
 ood_apps:
   jupyter_ml101:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.3.1
     repo: https://github.com/nesi/training-environment-jupyter-ml101-app.git
-    version: 'v0.3.0'
+    version: 'v0.3.1'
     enabled: true
     pre_pull: true
 
