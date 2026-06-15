@@ -110,7 +110,7 @@ ood_apps:
   intro_python:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-python-app:v0.4.1
     repo: https://github.com/nesi/training-environment-jupyter-python-app.git
-    version: 'v0.4.2'
+    version: 'v0.4.1'
     enabled: false
     pre_pull: false
 
