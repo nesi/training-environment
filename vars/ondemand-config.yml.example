@@ -72,7 +72,7 @@ ood_apps:
     enabled: false
     pre_pull: false
 
-  rstudio:
+  ga_rstudio:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.4.0'
