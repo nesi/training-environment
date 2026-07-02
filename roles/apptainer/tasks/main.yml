@@ -4,10 +4,18 @@
     repo: "ppa:apptainer/ppa"
     state: present
     update_cache: true
+  register: apptainer_repo_result
+  until: apptainer_repo_result is succeeded
+  retries: 5
+  delay: 15
 - name: Install apptainer
   apt:
     name: apptainer
     state: present
+  register: apptainer_install_result
+  until: apptainer_install_result is succeeded
+  retries: 5
+  delay: 15
 - name: Create directory for storing apptainer images
   file:
     path: /opt/ood/linuxhost_adapter
@@ -19,3 +27,7 @@
   command: apptainer pull /opt/ood/linuxhost_adapter/ubuntu_22.04.sif docker://ubuntu:22.04
   args:
     creates: /opt/ood/linuxhost_adapter/ubuntu_22.04.sif
+  register: apptainer_pull_result
+  until: apptainer_pull_result is succeeded
+  retries: 5
+  delay: 15
