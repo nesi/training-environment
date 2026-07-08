@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 1
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 1
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.4cpu8ram
+control_plane_flavor: balanced1.2cpu4ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -19,7 +19,7 @@ control_plane_flavor: balanced1.4cpu8ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 2
+cluster_worker_count: 1
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
@@ -76,8 +76,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.4.0'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
@@ -136,11 +136,11 @@ ood_apps:
     pre_pull: false
 
   mpi:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
-    repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
+    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.2.1
+    repo: https://github.com/nesi/training-environment-mpi-shell-app.git
     version: 'v0.2.1'
-    enabled: false
-    pre_pull: false
+    enabled: true
+    pre_pull: true
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
