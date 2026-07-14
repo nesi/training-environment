@@ -9,7 +9,7 @@ num_trainers_create: 2
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.4cpu8ram
+control_plane_flavor: balanced1.2cpu4ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -83,8 +83,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
     repo: https://github.com/nesi/training-environment-jupyter-intermediate-shell-app.git
     version: 'v0.3.5'
-    enabled: false
-    pre_pull: false
+    enabled: true
+    pre_pull: true
 
   containers:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.1.2
