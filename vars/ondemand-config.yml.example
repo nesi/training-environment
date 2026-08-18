@@ -9,7 +9,7 @@ num_trainers_create: 1
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -136,9 +136,9 @@ ood_apps:
     pre_pull: false
 
   mpi:
-    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.2.1
+    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.3.0
     repo: https://github.com/nesi/training-environment-mpi-shell-app.git
-    version: 'v0.2.1'
+    version: 'v0.3.0'
     enabled: true
     pre_pull: true
 
