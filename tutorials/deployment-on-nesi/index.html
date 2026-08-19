@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../images/REANNZ_logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -910,7 +910,7 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
 <h3 id="commit-the-changes">Commit the changes</h3>
 <p>Commit and push the changes to your branch, e.g.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git add terraform/terraform.tfvars vars/ondemand-config.yml.example
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git commit -m &quot;configuring environment for XXX workshop&quot;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git commit -m "configuring environment for XXX workshop"
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>git push -u origin my-test-env
 </span></code></pre></div>
 <h2 id="deploy-the-environment">Deploy the environment</h2>
@@ -943,7 +943,7 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
 <h3 id="deleting-the-branch-when-no-longer-needed">Deleting the branch when no longer needed</h3>
 <p>When you have finished running a particular training and have destroyed the environment with the above steps, we usually create a git tag from the branch, so we have a record of what has been run, see <a href="https://github.com/nesi/training-environment/tags">examples here</a>.</p>
 <p>From the branch in the git repo you could run</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git tag -a 20240501-apptainer -m &quot;apptainer workshop on 2024-05-01&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git tag -a 20240501-apptainer -m "apptainer workshop on 2024-05-01"
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git push --tags
 </span></code></pre></div>
 <p>and then delete the branch.
@@ -1022,7 +1022,7 @@ Also, verify that your remote is set to the NeSI repo, e.g.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
