@@ -76,8 +76,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.4.0'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
@@ -136,11 +136,11 @@ ood_apps:
     pre_pull: false
 
   mpi:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-indigidata-app:v0.0.1
-    repo: https://github.com/nesi/training-environment-jupyter-indigidata-app.git
-    version: 'v0.2.1'
-    enabled: false
-    pre_pull: false
+    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.5.0
+    repo: https://github.com/nesi/training-environment-mpi-shell-app.git
+    version: 'v0.5.0'
+    enabled: true
+    pre_pull: true
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
