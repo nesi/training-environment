@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 1
+num_users_create: 11
 # number of trainer users
-num_trainers_create: 1
+num_trainers_create: 2
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -12,18 +12,27 @@ num_trainers_create: 1
 control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
-# Currently all apps are limited to 2cpu4ram (although this may change).
 # You cannot allocate the full ram on a worker node, for example we could fit
 # 15x 2cpu4ram sessions on a balanced1.32cpu64ram node. It is recommended to
 # use a small number of large worker nodes to avoid repeated wasting of the
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 1
+#
+# This deployment sizes for 4cpu/8GB sessions, not the 2cpu/4ram assumed above:
+#   allocatable per balanced1.32cpu64ram worker  ~30 cpu / 60 GB
+#   4cpu8ram sessions per worker                 min(30/4, 60/8) = 7
+#   sessions needed                              11 trainees + 2 trainers = 13
+#   workers to fit 13                            ceil(13/7) = 2
+#   workers set here                             3  (N+1 redundancy)
+# 3 workers give 21 slots for 13 sessions. If one worker is lost or drained the
+# remaining 2 still provide 14 slots, so every user keeps a session.
+cluster_worker_count: 2
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
-# for pulling the docker images
-worker_disksize: 60
+# for pulling the docker images. The mpi image is 4.5 GB and is pre-pulled;
+# 80 GB leaves plenty of headroom for it plus the system images.
+worker_disksize: 160
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
@@ -136,9 +145,9 @@ ood_apps:
     pre_pull: false
 
   mpi:
-    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.6.0
     repo: https://github.com/nesi/training-environment-mpi-shell-app.git
-    version: 'v0.3.0'
+    version: 'v0.6.0'
     enabled: true
     pre_pull: true
 
