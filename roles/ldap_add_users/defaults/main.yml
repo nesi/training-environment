@@ -4,3 +4,16 @@ nfs_local_homes: /home/shared
 ldap_base_dn: "dc=flexi,dc=nesi"
 num_users_create: 2
 num_trainers_create: 1
+
+# gid of the trainers group, also used to own the shared data directory
+trainers_gid: 10001
+
+# Shared data directory for datasets too large to copy per user (kraken2 and
+# BLAST databases, reference genomes). It is created in the export root, so it
+# shows up inside every app session at `{{ shared_data_local }}`. Trainers can
+# write to it, everybody else gets read-only.
+shared_data_name: databases
+shared_data_remote: "{{ nfs_remote_homes }}/{{ shared_data_name }}"
+shared_data_local: "{{ nfs_local_homes }}/{{ shared_data_name }}"
+# symlink the shared data dir into every home, so `~/{{ shared_data_name }}` works
+shared_data_symlink: true

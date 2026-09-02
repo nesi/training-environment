@@ -29,11 +29,55 @@
       - posixGroup
     attributes:
       cn: trainers
-      gidNumber: "10001"
+      gidNumber: "{{ trainers_gid }}"
     server_uri: ldap://servicesnode.flexi.nesi/
     bind_dn: "cn=admin,{{ ldap_base_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
-      
+
+# Shared data directory, for datasets too large to copy into every home (the
+# kraken2 and BLAST databases, reference genomes). It sits in the export root
+# rather than in a trainer's home, because app sessions mount the whole export
+# at "{{ nfs_local_homes }}" - so this one directory is visible to every user
+# at "{{ shared_data_local }}" with no copy per user.
+#
+# setgid + group trainers means trainers can stage data here (their new files
+# land in the trainers group), while the default ACL keeps everything readable
+# by the training users. The numeric gid is used rather than the group name so
+# this does not depend on the LDAP group having propagated to nsswitch yet.
+- name: "Create shared data directory {{ shared_data_remote }}"
+  ansible.builtin.file:
+    path: "{{ shared_data_remote }}"
+    state: directory
+    owner: root
+    group: "{{ trainers_gid }}"
+    mode: "2775"
+
+- name: Set acl to give trainers write access to the shared data directory
+  ansible.posix.acl:
+    path: "{{ shared_data_remote }}"
+    entity: "{{ trainers_gid }}"
+    etype: group
+    permissions: rwX
+    state: present
+
+- name: Set default acl so data staged by trainers stays writable by trainers
+  ansible.posix.acl:
+    default: true
+    path: "{{ shared_data_remote }}"
+    entity: "{{ trainers_gid }}"
+    etype: group
+    permissions: rwX
+    state: present
+
+- name: Set default acl so data staged by trainers is readable by everyone
+  ansible.posix.acl:
+    default: true
+    path: "{{ shared_data_remote }}"
+    entity: ""
+    etype: other
+    permissions: rX
+    state: present
+
 # iterate here, creating trainers
 - name: Add trainers
   include_tasks: add_trainer.yml
