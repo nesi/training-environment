@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 2
+num_users_create: 1
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 1
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.4cpu8ram
+control_plane_flavor: balanced1.2cpu4ram
 
 # You must have enough worker resources to accommodate the number of users.
 # Currently all apps are limited to 2cpu4ram (although this may change).
@@ -19,11 +19,11 @@ control_plane_flavor: balanced1.4cpu8ram
 # overhead, e.g.
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
-cluster_worker_count: 2
+cluster_worker_count: 1
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images
-worker_disksize: 60
+worker_disksize: 100
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
@@ -76,8 +76,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.4.0'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
@@ -114,6 +114,13 @@ ood_apps:
     enabled: false
     pre_pull: false
 
+  gpu:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-gpu-app:v0.1.0
+    repo: https://github.com/nesi/training-environment-jupyter-gpu-app.git
+    version: 'v0.1.0'
+    enabled: true
+    pre_pull: true
+
   introshell:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-introduction-shell-app:v0.6.0
     repo: https://github.com/nesi/training-environment-jupyter-introduction-shell-app.git
@@ -144,7 +151,7 @@ ood_apps:
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
-enable_privileged_pods: true
+enable_privileged_pods: false
 
 # pull the images defined in ood_apps onto all k8s worker nodes
 # Note: make sure the worker nodes have enough `worker_disksize` (especially if many apps are enabled)
@@ -158,7 +165,7 @@ provision_data_scrnaseq: false
 # should be good for 40-50 users
 # in production you should choose a web node flavor that has at least as many CPUs
 # as the value you set here
-apache_server_limit: 8
+apache_server_limit: 4
 
 # the number of nfs threads to start, default to 64
 # if your app does heavy IO it *may* help to increase this and possibly also increase size
