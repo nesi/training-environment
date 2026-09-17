@@ -164,6 +164,13 @@ enable_pod_pre_pull: true
 # variables to provision data into home dirs (for apps where the data is large)
 provision_data_scrnaseq: false
 
+# put the containers workshop examples in every user's home directory, with the
+# chapter 2 containers already built, so they are there in "Terminal Access" as
+# well as in the apps
+# the revision must be a commit in https://github.com/nesi/reannz-containers-workshop
+provision_data_containers_workshop: true
+containers_workshop_version: 63fdfad4f964eeedab3d3e94640ad345034e592a
+
 # tuning the web node apache config, setting to 8 gives the suggested setting here:
 # https://osc.github.io/ood-documentation/latest/how-tos/debug/debug-apache.html#performance-tuning
 # should be good for 40-50 users

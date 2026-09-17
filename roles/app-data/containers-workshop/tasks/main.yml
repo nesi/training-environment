@@ -1,0 +1,87 @@
+---
+# Puts the containers workshop examples in every user's home directory, with the
+# chapter 2 containers already built.
+#
+# The apps also copy these files in when they start, but a user who only ever
+# opens "Terminal Access" never starts an app, so without this they would not
+# have them. Home directories are shared over NFS, so doing it once here covers
+# the terminal and every app.
+#
+# This runs on the web node because that is where apptainer is installed, and it
+# writes to the NFS mounted homes (exported no_root_squash, so the files can be
+# chowned to each user).
+- name: Provision the containers workshop examples to user homes
+  block:
+    - name: Clone the containers workshop repo
+      ansible.builtin.git:
+        repo: https://github.com/nesi/reannz-containers-workshop.git
+        dest: "{{ containers_workshop_stage }}/repo"
+        version: "{{ containers_workshop_version }}"
+        force: true
+
+    - name: Stage the examples, without the MPI chapter
+      ansible.builtin.command:
+        cmd: >-
+          rsync -a --delete --exclude {{ containers_workshop_exclude }}
+          {{ containers_workshop_stage }}/repo/examples/
+          {{ containers_workshop_stage }}/examples/
+      register: workshop_stage
+      changed_when: false
+
+    - name: Build the chapter 2 containers
+      # follows https://nesi.github.io/reannz-containers-workshop/setup-containers/#2-the-basics-of-running-containers-on-apptainer
+      ansible.builtin.command:
+        cmd: "apptainer build {{ item }}.sif {{ item }}.def"
+        chdir: "{{ containers_workshop_stage }}/examples/02_basics_of_containers"
+        creates: "{{ containers_workshop_stage }}/examples/02_basics_of_containers/{{ item }}.sif"
+      loop:
+        - hello-world
+        - lolcow
+
+    - name: Copy the README for the examples
+      ansible.builtin.copy:
+        src: README.md
+        dest: "{{ containers_workshop_stage }}/README.md"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Create the workshop directory in the trainer homes
+      ansible.builtin.file:
+        path: "{{ nfs_local_homes }}/trainer{{ item }}/containers-workshop"
+        state: directory
+        owner: "trainer{{ item }}"
+        group: "trainer{{ item }}"
+        mode: '0755'
+      with_sequence: start=1 end={{ num_trainers_create }}
+
+    - name: Create the workshop directory in the training user homes
+      ansible.builtin.file:
+        path: "{{ nfs_local_homes }}/training{{ item }}/containers-workshop"
+        state: directory
+        owner: "training{{ item }}"
+        group: "training{{ item }}"
+        mode: '0755'
+      with_sequence: start=1 end={{ num_users_create }}
+
+    # --ignore-existing so that anything a user has already changed is left alone
+    - name: Copy the examples into the trainer homes
+      ansible.builtin.command:
+        cmd: >-
+          rsync -a --ignore-existing --chown=trainer{{ item }}:trainer{{ item }}
+          {{ containers_workshop_stage }}/
+          {{ nfs_local_homes }}/trainer{{ item }}/containers-workshop/
+        creates: "{{ nfs_local_homes }}/trainer{{ item }}/containers-workshop/examples/02_basics_of_containers/lolcow.sif"
+      with_sequence: start=1 end={{ num_trainers_create }}
+
+    - name: Copy the examples into the training user homes
+      ansible.builtin.command:
+        cmd: >-
+          rsync -a --ignore-existing --chown=training{{ item }}:training{{ item }}
+          {{ containers_workshop_stage }}/
+          {{ nfs_local_homes }}/training{{ item }}/containers-workshop/
+        creates: "{{ nfs_local_homes }}/training{{ item }}/containers-workshop/examples/02_basics_of_containers/lolcow.sif"
+      with_sequence: start=1 end={{ num_users_create }}
+
+  when:
+    - "provision_data_containers_workshop|default(false)|bool == true"

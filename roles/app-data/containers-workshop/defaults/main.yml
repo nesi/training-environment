@@ -1,0 +1,15 @@
+---
+# provision the containers workshop examples into the user home directories, so
+# they are there however the user works - the terminal on the web node, the
+# jupyter app, or the vscode app
+provision_data_containers_workshop: false
+
+# the revision of https://github.com/nesi/reannz-containers-workshop the examples
+# come from, keep this in step with docker/workshop-version.txt in the app repos
+containers_workshop_version: 63fdfad4f964eeedab3d3e94640ad345034e592a
+
+# where the examples are staged on the web node before being copied to the homes
+containers_workshop_stage: /var/lib/containers-workshop
+
+# chapter 9 is written for a slurm cluster, so it is not copied to the homes
+containers_workshop_exclude: 09_running_containers_with_MPI

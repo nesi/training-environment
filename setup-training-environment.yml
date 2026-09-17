@@ -286,6 +286,9 @@
     # same as on the k8s nodes, so `apptainer build --fakeroot` also works for
     # users in "Shell Access" on the webnode
     - container-apps/k8s
+    # puts the workshop examples in the user home directories, so they are there
+    # in the terminal as well as in the apps
+    - app-data/containers-workshop
 
 - name: Provisioning application data to user homes
   become: yes
