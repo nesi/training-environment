@@ -5,12 +5,12 @@
 The suggested approach is to copy the existing app that most closely resembles your new app and modify that, we will document this approach here.
 Some of the existing apps are:
 
-- Containers workshop apps - three dashboard tiles, each its own repo building its own image
-    - [JupyterLab](https://github.com/nesi/training-environment-jupyter-containers-app)
-    - [Terminal](https://github.com/nesi/training-environment-terminal-containers-app) - connects straight to a full page terminal
+- Containers workshop apps - each its own repo building its own image
+    - [JupyterHub](https://github.com/nesi/training-environment-jupyter-containers-app) - a copy of the python app with apptainer added
     - [VS Code](https://github.com/nesi/training-environment-codeserver-containers-app) - code-server
     - installs `apptainer-suid`, bind mounts */etc/subuid* and */etc/subgid* so `apptainer build --fakeroot` works
     - requires `enable_privileged_pods: true`
+    - for a plain shell with apptainer, use *"Clusters" -> "Webnode Shell Access"* rather than an app
 - [Intermediate shell workshop app](https://github.com/nesi/training-environment-jupyter-intermediate-shell-app)
     - based on JupyterLab
     - there is a [tutorial](jupyterlab-app-for-intermediate-shell-for-bioinformatics.md) for this app

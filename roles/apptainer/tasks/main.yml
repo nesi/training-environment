@@ -6,7 +6,12 @@
     update_cache: true
 - name: Install apptainer
   apt:
-    name: apptainer
+    name:
+      # apptainer-suid so that `apptainer build --fakeroot` works for users in
+      # "Shell Access" on this node, the same as it does inside the apps
+      - apptainer
+      - apptainer-suid
+      - uidmap
     state: present
 - name: Create directory for storing apptainer images
   file:

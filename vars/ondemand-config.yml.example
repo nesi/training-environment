@@ -86,21 +86,14 @@ ood_apps:
     enabled: false
     pre_pull: false
 
-  # the containers workshop tiles: JupyterLab, a terminal and VS Code
-  # each builds its own image, so each is pre-pulled separately - together they
-  # are around 8 GB on every worker node, check `worker_disksize` above
+  # the containers workshop tiles
+  # a terminal is not one of them - training users can now log in to the webnode,
+  # so "Shell Access" under the Clusters menu gives them a shell with apptainer
   # they need `enable_privileged_pods: true` below for `apptainer build --fakeroot`
-  containers_jupyterlab:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.1
+  containers_jupyterhub:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.3.0
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
-    version: 'v0.2.1'
-    enabled: true
-    pre_pull: true
-
-  containers_terminal:
-    k8s_container: ghcr.io/nesi/training-environment-terminal-containers-app:v0.1.2
-    repo: https://github.com/nesi/training-environment-terminal-containers-app.git
-    version: 'v0.1.2'
+    version: 'v0.3.0'
     enabled: true
     pre_pull: true
 

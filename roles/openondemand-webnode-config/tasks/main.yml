@@ -1,11 +1,11 @@
 ---
-- name: Copy sshd config that denies training users
-  ansible.builtin.copy:
-    src: sshd_deny_training_users.conf
-    dest: /etc/ssh/sshd_config.d/deny_training_users.conf
-    owner: root
-    group: root
-    mode: '0644'
+# training users need to log in to the webnode so that "Shell Access" works for
+# them, so the file that used to deny them is removed here (it is removed rather
+# than just not copied, so that hosts which already have it are updated too)
+- name: Remove sshd config that denied training users
+  ansible.builtin.file:
+    path: /etc/ssh/sshd_config.d/deny_training_users.conf
+    state: absent
   register: sshd_config
 
 - name: Reload sshd if config changed

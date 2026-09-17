@@ -275,6 +275,10 @@
     - ondemand-config.yml
   roles:
     - container-apps/webnode
+    # writes /etc/subuid and /etc/subgid for the training and trainer users, the
+    # same as on the k8s nodes, so `apptainer build --fakeroot` also works for
+    # users in "Shell Access" on the webnode
+    - container-apps/k8s
 
 - name: Provisioning application data to user homes
   become: yes
