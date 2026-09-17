@@ -17,11 +17,14 @@
 # without this, the first time a user opens "Terminal Access" ssh asks them to
 # confirm the host key ("Are you sure you want to continue connecting?"). Putting
 # the keys in the system wide known_hosts answers that for everyone, up front.
+# not fatal: the worst case is that users are asked to confirm the host key
+# again, which is not worth failing a deployment over
 - name: Scan the host keys of the shell host
   ansible.builtin.command:
     cmd: "ssh-keyscan -t rsa,ecdsa,ed25519 {{ shell_host }} {{ inventory_hostname }} {{ ansible_default_ipv4.address }}"
   register: shell_host_keys
   changed_when: false
+  failed_when: false
 
 - name: Add the shell host keys to the system known_hosts
   ansible.builtin.copy:
@@ -30,6 +33,7 @@
     owner: root
     group: root
     mode: '0644'
+  when: shell_host_keys.stdout | default('') | trim | length > 0
 
 - name: Create the Terminal Access app directory
   ansible.builtin.file:
