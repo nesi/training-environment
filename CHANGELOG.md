@@ -2,7 +2,7 @@
 
 ## Unversioned
 
-- Allow training users to log in to the webnode, so *"Clusters" -> "Webnode Shell Access"* gives them a terminal, and install `apptainer-suid` plus subuid/subgid entries there so apptainer works in it
+- Add a *Terminal Access* tile to the dashboard, which opens a shell on the web node where apptainer is installed. Training users can now log in to the web node, and its host keys are added to the system `known_hosts` so nobody is asked to confirm them. `apptainer-suid` and subuid/subgid entries are installed there too, so `apptainer build --fakeroot` works in that shell
 - Add the [JupyterHub](https://github.com/nesi/training-environment-jupyter-containers-app) and [VS Code](https://github.com/nesi/training-environment-codeserver-containers-app) containers workshop apps, which have apptainer installed (requires `enable_privileged_pods: true`)
 - Increase default number of nfs threads and make it configurable
 
