@@ -7,8 +7,8 @@ Some of the existing apps are:
 
 - Apptainer workshop apps - three dashboard tiles that all run the one image, built in the first repo
     - [JupyterLab](https://github.com/nesi/training-environment-jupyter-containers-app)
-    - [Terminal](https://github.com/nesi/training-environment-apptainer-terminal-app) - connects straight to a full page terminal
-    - [VS Code](https://github.com/nesi/training-environment-apptainer-codeserver-app) - code-server
+    - [Terminal](https://github.com/nesi/training-environment-containers-terminal-app) - connects straight to a full page terminal
+    - [VS Code](https://github.com/nesi/training-environment-containers-codeserver-app) - code-server
     - installs `apptainer-suid`, bind mounts */etc/subuid* and */etc/subgid* so `apptainer build --fakeroot` works
     - requires `enable_privileged_pods: true`
 - [Intermediate shell workshop app](https://github.com/nesi/training-environment-jupyter-intermediate-shell-app)

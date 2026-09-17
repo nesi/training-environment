@@ -2,7 +2,7 @@
 
 ## Unversioned
 
-- Add three Apptainer workshop tiles - [JupyterLab](https://github.com/nesi/training-environment-jupyter-containers-app), [Terminal](https://github.com/nesi/training-environment-apptainer-terminal-app) and [VS Code](https://github.com/nesi/training-environment-apptainer-codeserver-app) - which all run the one image and ship the workshop examples with the chapter 2 containers prebuilt (requires `enable_privileged_pods: true`)
+- Add three Apptainer workshop tiles - [JupyterLab](https://github.com/nesi/training-environment-jupyter-containers-app), [Terminal](https://github.com/nesi/training-environment-containers-terminal-app) and [VS Code](https://github.com/nesi/training-environment-containers-codeserver-app) - which all run the one image and ship the workshop examples with the chapter 2 containers prebuilt (requires `enable_privileged_pods: true`)
 - Increase default number of nfs threads and make it configurable
 
 ## 2024-04-26

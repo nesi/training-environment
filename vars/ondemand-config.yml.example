@@ -99,14 +99,14 @@ ood_apps:
 
   apptainer_terminal:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.1
-    repo: https://github.com/nesi/training-environment-apptainer-terminal-app.git
+    repo: https://github.com/nesi/training-environment-containers-terminal-app.git
     version: 'v0.1.0'
     enabled: true
     pre_pull: false
 
   apptainer_codeserver:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.1
-    repo: https://github.com/nesi/training-environment-apptainer-codeserver-app.git
+    repo: https://github.com/nesi/training-environment-containers-codeserver-app.git
     version: 'v0.1.0'
     enabled: true
     pre_pull: false
