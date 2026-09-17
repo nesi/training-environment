@@ -5,7 +5,7 @@
 The suggested approach is to copy the existing app that most closely resembles your new app and modify that, we will document this approach here.
 Some of the existing apps are:
 
-- Apptainer workshop apps - three dashboard tiles that all run the one image, built in the first repo
+- Containers workshop apps - three dashboard tiles, each its own repo building its own image
     - [JupyterLab](https://github.com/nesi/training-environment-jupyter-containers-app)
     - [Terminal](https://github.com/nesi/training-environment-containers-terminal-app) - connects straight to a full page terminal
     - [VS Code](https://github.com/nesi/training-environment-containers-codeserver-app) - code-server
