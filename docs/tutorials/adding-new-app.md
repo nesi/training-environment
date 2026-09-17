@@ -5,13 +5,10 @@
 The suggested approach is to copy the existing app that most closely resembles your new app and modify that, we will document this approach here.
 Some of the existing apps are:
 
-- [Apptainer app](https://github.com/nesi/training-environment-jupyter-apptainer-app)
-    - based on JupyterLab, used from a JupyterLab terminal or a notebook
+- [Apptainer workshop app](https://github.com/nesi/training-environment-jupyter-containers-app)
+    - based on JupyterLab, with a *Connect to Terminal* button as well as a *Connect to JupyterLab* one
     - installs `apptainer-suid`, bind mounts */etc/subuid* and */etc/subgid* so `apptainer build --fakeroot` works
     - requires `enable_privileged_pods: true`
-- [Containers workshop app](https://github.com/nesi/training-environment-jupyter-containers-app)
-    - based on JupyterLab
-    - the older Apptainer app, kept for previously delivered workshops
 - [Intermediate shell workshop app](https://github.com/nesi/training-environment-jupyter-intermediate-shell-app)
     - based on JupyterLab
     - there is a [tutorial](jupyterlab-app-for-intermediate-shell-for-bioinformatics.md) for this app

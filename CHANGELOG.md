@@ -2,7 +2,7 @@
 
 ## Unversioned
 
-- Add the [apptainer app](https://github.com/nesi/training-environment-jupyter-apptainer-app), a JupyterLab app with Apptainer installed for use from a terminal or a notebook (requires `enable_privileged_pods: true`)
+- Update the [containers app](https://github.com/nesi/training-environment-jupyter-containers-app) to v0.2.0, which adds a *Connect to Terminal* button alongside the JupyterLab one, example definition files and sensible Apptainer cache/tmp directories (requires `enable_privileged_pods: true`)
 - Increase default number of nfs threads and make it configurable
 
 ## 2024-04-26

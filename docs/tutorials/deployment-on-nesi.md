@@ -64,8 +64,8 @@ We need to edit two files to configure the environment:
     - `cluster_worker_count: 3` and `worker_flavor: balanced1.32cpu64ram` for up to 45 *2cpu4ram* sessions
 - adjust `ood_apps` as required
     - check `version` and `k8s_container`
-    - enable required apps (usually just leave them all enabled, except for containers and apptainer)
-    - the containers and apptainer apps also need `enable_privileged_pods: true`, so only enable them when you are running that workshop
+    - enable required apps (usually just leave them all enabled, except for containers)
+    - the containers app also needs `enable_privileged_pods: true`, so only enable it when you are running that workshop
     - set which images to pre-pull (just choose the one you will be using, we have limited space currently on the worker nodes and pre-pulling will fail if you exhaust it)
 - set `enable_pod_prepull` to "true"
     - sometimes we have experienced really slow image pulls, this will pre-pull the image and cache it so it is fast to start
