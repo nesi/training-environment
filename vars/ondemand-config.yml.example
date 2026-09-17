@@ -86,14 +86,30 @@ ood_apps:
     enabled: false
     pre_pull: false
 
-  # apptainer, used from a terminal or from JupyterLab
-  # needs `enable_privileged_pods: true` below for `apptainer build --fakeroot`
-  containers:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.0
+  # the apptainer workshop tiles: JupyterLab, a terminal and VS Code
+  # all three run the same image, built in the containers-app repo, so only the
+  # first one needs `pre_pull: true`
+  # they need `enable_privileged_pods: true` below for `apptainer build --fakeroot`
+  apptainer_jupyterlab:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.1
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
-    version: 'v0.2.0'
+    version: 'v0.2.1'
     enabled: true
     pre_pull: true
+
+  apptainer_terminal:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.1
+    repo: https://github.com/nesi/training-environment-apptainer-terminal-app.git
+    version: 'v0.1.0'
+    enabled: true
+    pre_pull: false
+
+  apptainer_codeserver:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.2.1
+    repo: https://github.com/nesi/training-environment-apptainer-codeserver-app.git
+    version: 'v0.1.0'
+    enabled: true
+    pre_pull: false
 
   nextflow:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intronextflow-app:v0.3.0

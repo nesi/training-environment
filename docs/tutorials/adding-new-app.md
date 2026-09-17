@@ -5,8 +5,10 @@
 The suggested approach is to copy the existing app that most closely resembles your new app and modify that, we will document this approach here.
 Some of the existing apps are:
 
-- [Apptainer workshop app](https://github.com/nesi/training-environment-jupyter-containers-app)
-    - based on JupyterLab, with a *Connect to Terminal* button as well as a *Connect to JupyterLab* one
+- Apptainer workshop apps - three dashboard tiles that all run the one image, built in the first repo
+    - [JupyterLab](https://github.com/nesi/training-environment-jupyter-containers-app)
+    - [Terminal](https://github.com/nesi/training-environment-apptainer-terminal-app) - connects straight to a full page terminal
+    - [VS Code](https://github.com/nesi/training-environment-apptainer-codeserver-app) - code-server
     - installs `apptainer-suid`, bind mounts */etc/subuid* and */etc/subgid* so `apptainer build --fakeroot` works
     - requires `enable_privileged_pods: true`
 - [Intermediate shell workshop app](https://github.com/nesi/training-environment-jupyter-intermediate-shell-app)
