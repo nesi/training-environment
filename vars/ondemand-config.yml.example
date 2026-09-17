@@ -91,9 +91,9 @@ ood_apps:
   # so "Shell Access" under the Clusters menu gives them a shell with apptainer
   # they need `enable_privileged_pods: true` below for `apptainer build --fakeroot`
   containers_jupyterhub:
-    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-containers-app:v0.3.1
     repo: https://github.com/nesi/training-environment-jupyter-containers-app.git
-    version: 'v0.3.0'
+    version: 'v0.3.1'
     enabled: true
     pre_pull: true
 
