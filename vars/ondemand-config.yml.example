@@ -98,16 +98,16 @@ ood_apps:
     pre_pull: true
 
   containers_terminal:
-    k8s_container: ghcr.io/nesi/training-environment-containers-terminal-app:v0.1.1
-    repo: https://github.com/nesi/training-environment-containers-terminal-app.git
-    version: 'v0.1.1'
+    k8s_container: ghcr.io/nesi/training-environment-terminal-containers-app:v0.1.2
+    repo: https://github.com/nesi/training-environment-terminal-containers-app.git
+    version: 'v0.1.2'
     enabled: true
     pre_pull: true
 
   containers_codeserver:
-    k8s_container: ghcr.io/nesi/training-environment-containers-codeserver-app:v0.1.1
-    repo: https://github.com/nesi/training-environment-containers-codeserver-app.git
-    version: 'v0.1.1'
+    k8s_container: ghcr.io/nesi/training-environment-codeserver-containers-app:v0.1.2
+    repo: https://github.com/nesi/training-environment-codeserver-containers-app.git
+    version: 'v0.1.2'
     enabled: true
     pre_pull: true
 
