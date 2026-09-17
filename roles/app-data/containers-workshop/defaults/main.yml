@@ -11,5 +11,10 @@ containers_workshop_version: 63fdfad4f964eeedab3d3e94640ad345034e592a
 # where the examples are staged on the web node before being copied to the homes
 containers_workshop_stage: /var/lib/containers-workshop
 
+# where the NFS home directories are mounted on this host. This is a default of
+# the nfs_homes_client role, and role defaults do not carry across roles, so it
+# has to be repeated here - keep the two in step
+nfs_local_homes: /home/shared
+
 # chapter 9 is written for a slurm cluster, so it is not copied to the homes
 containers_workshop_exclude: 09_running_containers_with_MPI
