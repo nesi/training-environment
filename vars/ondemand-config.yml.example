@@ -40,9 +40,10 @@ worker_disksize: 60
 #       actually going to use and make sure `worker_disksize` above is big
 #       enough
 #
-# NOTE2: it is recommended to leave the containers app disabled unless you are
-#        using it, since it only works properly in privileged mode (which is
-#        recommended to be turned off unless using the containers app)
+# NOTE2: it is recommended to leave the containers and apptainer apps disabled
+#        unless you are using them, since they only work properly in privileged
+#        mode (which is recommended to be turned off unless using one of those
+#        apps)
 ood_apps:
   jupyter_ml101:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-ml101-app:v0.2.7
@@ -76,8 +77,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-app:v0.4.0
     repo: https://github.com/nesi/training-environment-rstudio-app.git
     version: 'v0.4.0'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
   shell4b:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intermediate-shell-app:v0.3.5
@@ -92,6 +93,15 @@ ood_apps:
     version: 'v0.1.2'
     enabled: false
     pre_pull: false
+
+  # JupyterLab with apptainer, used from a terminal or a notebook
+  # needs `enable_privileged_pods: true` below for `apptainer build --fakeroot`
+  apptainer:
+    k8s_container: ghcr.io/nesi/training-environment-jupyter-apptainer-app:v0.1.0
+    repo: https://github.com/nesi/training-environment-jupyter-apptainer-app.git
+    version: 'v0.1.0'
+    enabled: true
+    pre_pull: true
 
   nextflow:
     k8s_container: ghcr.io/nesi/training-environment-jupyter-intronextflow-app:v0.3.0
@@ -142,8 +152,10 @@ ood_apps:
     enabled: false
     pre_pull: false
 
-# this is currently required for containers and nextflow apps to run properly (fakeroot)
-# Note: you should probably set to false unless you are running a containers workshop
+# this is currently required for the apptainer, containers and nextflow apps to
+# run properly (fakeroot)
+# Note: you should probably set to false unless you are running a containers or
+#       apptainer workshop
 enable_privileged_pods: true
 
 # pull the images defined in ood_apps onto all k8s worker nodes
