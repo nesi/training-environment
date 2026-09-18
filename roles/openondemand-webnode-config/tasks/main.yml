@@ -8,11 +8,38 @@
     state: absent
   register: sshd_config
 
+# an idle "Terminal Access" session was being disconnected, these keepalives
+# keep both the ssh session and the websocket through the proxy busy
+- name: Copy sshd config that keeps idle sessions alive
+  ansible.builtin.copy:
+    src: sshd_keepalive.conf
+    dest: /etc/ssh/sshd_config.d/keepalive.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: sshd_keepalive
+
 - name: Reload sshd if config changed
   ansible.builtin.service:
     name: ssh
     state: reloaded
-  when: sshd_config.changed
+  when: sshd_config.changed or sshd_keepalive.changed
+
+- name: Copy apache proxy timeout config
+  ansible.builtin.template:
+    src: ood_proxy_timeout.conf.j2
+    dest: /etc/apache2/conf-available/ood-proxy-timeout.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart httpd
+
+- name: Enable the apache proxy timeout config
+  ansible.builtin.file:
+    src: /etc/apache2/conf-available/ood-proxy-timeout.conf
+    dest: /etc/apache2/conf-enabled/ood-proxy-timeout.conf
+    state: link
+  notify: Restart httpd
 
 # without this, the first time a user opens "Terminal Access" ssh asks them to
 # confirm the host key ("Are you sure you want to continue connecting?"). Putting

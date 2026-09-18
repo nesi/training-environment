@@ -38,14 +38,6 @@
         - hello-world
         - lolcow
 
-    - name: Copy the README for the examples
-      ansible.builtin.copy:
-        src: README.md
-        dest: "{{ containers_workshop_stage }}/README.md"
-        owner: root
-        group: root
-        mode: '0644'
-
     - name: Create the workshop directory in the trainer homes
       ansible.builtin.file:
         path: "{{ nfs_local_homes }}/trainer{{ item }}/containers-workshop"
@@ -69,18 +61,18 @@
       ansible.builtin.command:
         cmd: >-
           rsync -a --ignore-existing --chown=trainer{{ item }}:trainer{{ item }}
-          {{ containers_workshop_stage }}/
+          {{ containers_workshop_stage }}/examples/
           {{ nfs_local_homes }}/trainer{{ item }}/containers-workshop/
-        creates: "{{ nfs_local_homes }}/trainer{{ item }}/containers-workshop/examples/02_basics_of_containers/lolcow.sif"
+        creates: "{{ nfs_local_homes }}/trainer{{ item }}/containers-workshop/02_basics_of_containers/lolcow.sif"
       with_sequence: start=1 end={{ num_trainers_create }}
 
     - name: Copy the examples into the training user homes
       ansible.builtin.command:
         cmd: >-
           rsync -a --ignore-existing --chown=training{{ item }}:training{{ item }}
-          {{ containers_workshop_stage }}/
+          {{ containers_workshop_stage }}/examples/
           {{ nfs_local_homes }}/training{{ item }}/containers-workshop/
-        creates: "{{ nfs_local_homes }}/training{{ item }}/containers-workshop/examples/02_basics_of_containers/lolcow.sif"
+        creates: "{{ nfs_local_homes }}/training{{ item }}/containers-workshop/02_basics_of_containers/lolcow.sif"
       with_sequence: start=1 end={{ num_users_create }}
 
   when:

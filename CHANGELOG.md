@@ -2,6 +2,9 @@
 
 ## Unversioned
 
+- Keep idle *Terminal Access* sessions open: ssh keepalives on the web node, and a longer apache `ProxyTimeout` (`shell_proxy_timeout`) than the 300 second default that was closing them
+- Put the workshop chapters straight into `~/containers-workshop`, rather than under a further `examples` directory
+
 - Provision the [containers workshop](https://github.com/nesi/reannz-containers-workshop) examples into every user's home directory, with the chapter 2 containers already built, so they are there in *Terminal Access* as well as in the apps (`provision_data_containers_workshop`)
 
 - Add a *Terminal Access* tile to the dashboard, which opens a shell on the web node where apptainer is installed. Training users can now log in to the web node, and its host keys are added to the system `known_hosts` so nobody is asked to confirm them. `apptainer-suid` and subuid/subgid entries are installed there too, so `apptainer build --fakeroot` works in that shell
