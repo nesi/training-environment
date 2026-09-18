@@ -1,3 +1,16 @@
 ---
 apache_server_limit: 8
 apache_threads_per_child: 32
+
+# the host that "Terminal Access" opens a shell on, which must match the
+# `login.host` of the cluster in `clusters` in vars/ondemand-config.yml
+shell_host: webnode.flexi.nesi
+
+# where open ondemand keeps its apps, the Terminal Access link app is written
+# under here
+ood_app_dir: /var/www/ood/apps
+
+# how long apache will hold an idle proxied connection open, in seconds. The
+# default is 300, which was dropping idle terminal sessions. 28800 is 8 hours,
+# the same as the session length the apps ask for
+shell_proxy_timeout: 28800

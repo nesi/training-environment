@@ -4,7 +4,7 @@ en:
       %{logo_img_tag}
       <p class="lead">REANNZ Training Environment</p>
 
-    shell_app_title: "%{cluster_title} Shell Access (trainers only)"
+    shell_app_title: "%{cluster_title} Shell Access"
 
     pinned_apps_title: 'Training Course Apps'
     pinned_apps_caption_html: ''

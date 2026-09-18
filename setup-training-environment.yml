@@ -213,6 +213,13 @@
       when: item.value.enabled == true
       vars:
         pinned_apps: []
+
+    # the Terminal Access link app is not one of the `ood_apps`, it is created on
+    # the web node by the openondemand-webnode-config role, so it is pinned here.
+    # it goes on the front of the list so the tiles read terminal, then the apps
+    - name: Pin the Terminal Access app first
+      set_fact:
+        pinned_apps: "{{ [ 'sys/terminal' ] + pinned_apps | default([]) }}"
   roles:
     - osc.open_ondemand
 
@@ -225,6 +232,11 @@
     - name: Install dependencies for interactive apps
       apt:
         name:
+          # a "Terminal Access" session ends when the browser disconnects, so
+          # tmux is here for anyone who wants a shell that survives that. The
+          # linux_host cluster adapter (`tmux_bin` in the clusters config) needs
+          # it too
+          - tmux
           - ncat
           - websockify
         state: present
