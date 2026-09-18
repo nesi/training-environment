@@ -232,6 +232,11 @@
     - name: Install dependencies for interactive apps
       apt:
         name:
+          # a "Terminal Access" session ends when the browser disconnects, so
+          # tmux is here for anyone who wants a shell that survives that. The
+          # linux_host cluster adapter (`tmux_bin` in the clusters config) needs
+          # it too
+          - tmux
           - ncat
           - websockify
         state: present
