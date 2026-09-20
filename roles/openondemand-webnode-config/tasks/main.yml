@@ -1,101 +1,18 @@
 ---
-# training users need to log in to the webnode so that "Shell Access" works for
-# them, so the file that used to deny them is removed here (it is removed rather
-# than just not copied, so that hosts which already have it are updated too)
-- name: Remove sshd config that denied training users
-  ansible.builtin.file:
-    path: /etc/ssh/sshd_config.d/deny_training_users.conf
-    state: absent
-  register: sshd_config
-
-# an idle "Terminal Access" session was being disconnected, these keepalives
-# keep both the ssh session and the websocket through the proxy busy
-- name: Copy sshd config that keeps idle sessions alive
+- name: Copy sshd config that denies training users
   ansible.builtin.copy:
-    src: sshd_keepalive.conf
-    dest: /etc/ssh/sshd_config.d/keepalive.conf
+    src: sshd_deny_training_users.conf
+    dest: /etc/ssh/sshd_config.d/deny_training_users.conf
     owner: root
     group: root
     mode: '0644'
-  register: sshd_keepalive
+  register: sshd_config
 
 - name: Reload sshd if config changed
   ansible.builtin.service:
     name: ssh
     state: reloaded
-  when: sshd_config.changed or sshd_keepalive.changed
-
-- name: Copy apache proxy timeout config
-  ansible.builtin.template:
-    src: ood_proxy_timeout.conf.j2
-    dest: /etc/apache2/conf-available/ood-proxy-timeout.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify: Restart httpd
-
-- name: Enable the apache proxy timeout config
-  ansible.builtin.file:
-    src: /etc/apache2/conf-available/ood-proxy-timeout.conf
-    dest: /etc/apache2/conf-enabled/ood-proxy-timeout.conf
-    state: link
-  notify: Restart httpd
-
-# without this, the first time a user opens "Terminal Access" ssh asks them to
-# confirm the host key ("Are you sure you want to continue connecting?"). Putting
-# the keys in the system wide known_hosts answers that for everyone, up front.
-# not fatal: the worst case is that users are asked to confirm the host key
-# again, which is not worth failing a deployment over
-- name: Scan the host keys of the shell host
-  ansible.builtin.command:
-    cmd: "ssh-keyscan -t rsa,ecdsa,ed25519 {{ shell_host }} {{ inventory_hostname }} {{ ansible_default_ipv4.address }}"
-  register: shell_host_keys
-  changed_when: false
-  failed_when: false
-
-- name: Add the shell host keys to the system known_hosts
-  ansible.builtin.copy:
-    content: "{{ shell_host_keys.stdout }}\n"
-    dest: /etc/ssh/ssh_known_hosts
-    owner: root
-    group: root
-    mode: '0644'
-  when: shell_host_keys.stdout | default('') | trim | length > 0
-
-- name: Create the Terminal Access app directory
-  ansible.builtin.file:
-    path: "{{ ood_app_dir }}/sys/terminal"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-
-# a link app: it has no code, it just puts a tile on the dashboard that opens
-# the ondemand shell on the web node.
-#
-# Note for the GPU workshop: this is a shell on the WEB NODE, which has no GPU
-# emulator on it - nvidia-smi, nvtop and sbatch live inside the session pod.
-# The description says so, because a learner who runs nvidia-smi here and gets
-# "command not found" would reasonably conclude the environment was broken.
-# The GPU-capable terminal is the one inside JupyterLab (File > New > Terminal).
-- name: Create the Terminal Access app manifest
-  ansible.builtin.copy:
-    content: |
-      ---
-      name: Terminal Access
-      category: Interactive Apps
-      subcategory: Tools
-      icon: fa://terminal
-      description: |
-        A shell on the web node, for moving files around and general command
-        line work. It has no GPU: for nvidia-smi, nvtop and sbatch, use the
-        terminal inside your JupyterLab session (File > New > Terminal).
-      url: /pun/sys/shell/ssh/{{ shell_host }}
-      new_window: true
-    dest: "{{ ood_app_dir }}/sys/terminal/manifest.yml"
-    owner: root
-    group: root
-    mode: '0644'
+  when: sshd_config.changed
 
 - name: Create locales directory
   ansible.builtin.file:

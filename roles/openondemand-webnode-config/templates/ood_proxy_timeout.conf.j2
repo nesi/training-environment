@@ -1,7 +1,0 @@
-# Apache drops a proxied connection that has been idle for `Timeout` seconds
-# (300 by default on Ubuntu), which closed idle "Terminal Access" sessions and
-# could also close an interactive app that was left alone for a while.
-#
-# The ssh keepalives in /etc/ssh/sshd_config.d/keepalive.conf should stop the
-# shell going idle in the first place, this is the backstop.
-ProxyTimeout {{ shell_proxy_timeout }}
