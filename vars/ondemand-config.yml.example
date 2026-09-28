@@ -2,9 +2,9 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 11
+num_users_create: 1
 # number of trainer users
-num_trainers_create: 2
+num_trainers_create: 1
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
@@ -68,11 +68,11 @@ ood_apps:
     pre_pull: false
 
   rstudio_rnaseq:
-    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.3.0
+    k8s_container: ghcr.io/nesi/training-environment-rstudio-rnaseq-app:v0.5.0
     repo: https://github.com/nesi/training-environment-rstudio-rnaseq-app.git
-    version: 'v0.3.0'
-    enabled: false
-    pre_pull: false
+    version: 'v0.5.0'
+    enabled: true
+    pre_pull: true
 
   rstudio_scrnaseq:
     k8s_container: ghcr.io/nesi/training-environment-rstudio-scrnaseq-app:v0.6.0
@@ -148,8 +148,8 @@ ood_apps:
     k8s_container: ghcr.io/nesi/training-environment-mpi-shell-app:v0.6.0
     repo: https://github.com/nesi/training-environment-mpi-shell-app.git
     version: 'v0.6.0'
-    enabled: true
-    pre_pull: true
+    enabled: false
+    pre_pull: false
 
 # this is currently required for containers and nextflow apps to run properly (fakeroot)
 # Note: you should probably set to false unless you are running a containers workshop
