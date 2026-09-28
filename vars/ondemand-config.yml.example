@@ -9,7 +9,7 @@ num_trainers_create: 1
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.4cpu8ram
+control_plane_flavor: balanced1.2cpu4ram
 
 # You must have enough worker resources to accommodate the number of users.
 # You cannot allocate the full ram on a worker node, for example we could fit
@@ -27,7 +27,7 @@ control_plane_flavor: balanced1.4cpu8ram
 #   workers set here                             3  (N+1 redundancy)
 # 3 workers give 21 slots for 13 sessions. If one worker is lost or drained the
 # remaining 2 still provide 14 slots, so every user keeps a session.
-cluster_worker_count: 2
+cluster_worker_count: 1
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
 # for pulling the docker images. The mpi image is 4.5 GB and is pre-pulled;
