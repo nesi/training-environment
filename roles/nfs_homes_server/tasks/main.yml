@@ -9,6 +9,11 @@
   ansible.builtin.file:
     path: "{{ nfs_remote_homes }}"
     state: directory
+    owner: root
+    group: root
+    # world traversable so every user can reach their own home and the shared
+    # data directory underneath it; the individual homes are still 0750
+    mode: "0755"
 
 - name: Install exports file
   ansible.builtin.template:

@@ -146,3 +146,17 @@
     owner: "{{ user_number }}"
     group: "{{ user_number }}"
     mode: 0600
+
+# Symlink the shared data directory into the home, so exercises can refer to
+# ~/{{ shared_data_name }} instead of an absolute path. The link target is the
+# NFS mount path, which is the same inside app sessions and on the web node.
+- name: "Link shared data into home for user {{ user_name }}"
+  ansible.builtin.file:
+    src: "{{ shared_data_local }}"
+    dest: "{{ home_remote }}/{{ shared_data_name }}"
+    state: link
+    owner: "{{ user_number }}"
+    group: "{{ user_number }}"
+    follow: false
+    force: true
+  when: shared_data_symlink | bool
