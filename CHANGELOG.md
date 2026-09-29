@@ -2,6 +2,9 @@
 
 ## Unversioned
 
+- Add a shared data directory (`/home/shared/databases`, symlinked as
+  `~/databases`) that trainers can write to and all users can read, for
+  datasets too large to copy into every home
 - Increase default number of nfs threads and make it configurable
 
 ## 2024-04-26

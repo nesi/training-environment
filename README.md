@@ -98,6 +98,55 @@ and `ldap_admin_password`.
 
 You will also need the kube config from the CAPI cluster to so you can create k8s clusters, this should reside within `~/.kube/config`, if running as root then under `/root/.kube/config`
 
+## Shared data (databases, reference genomes)
+
+Some workshops need a dataset that is too large to copy into every home
+directory - the kraken2 and BLAST databases, for example. A single kraken2
+database is around 9 GB, so 13 copies would need over 110 GB and will not fit
+on the services volume.
+
+The environment creates one shared directory for this:
+
+- on the *servicesnode* it is `/srv/homes/databases`
+- inside every app session and on the *webnode* it is `/home/shared/databases`,
+  and is also symlinked into every home as `~/databases`
+
+App sessions mount the whole homes export, not just the user's own home, so
+this one directory is readable by every trainer and training user with no
+per-user copy. It is owned by `root` with group `trainers` and mode `2775`
+plus a default ACL, so:
+
+- trainer users can create, upload and delete data in it
+- training users can read it, but cannot modify or delete it
+- anything a trainer stages there is readable by the training users, even if
+  the source files had restrictive permissions
+
+To stage data, log in as a trainer and copy it in, e.g. from the *webnode*
+shell (*"Cluster" -> "Web node shell access"*):
+
+```
+mkdir -p /home/shared/databases/kraken2
+rsync -a --info=progress2 k2_standard_08gb/ /home/shared/databases/kraken2/
+```
+
+Relevant variables (`roles/ldap_add_users/defaults/main.yml`):
+
+- `shared_data_name` - directory name, defaults to `databases`
+- `shared_data_symlink` - set to `false` to skip the `~/databases` symlink
+
+Check there is room before staging a large dataset, with `df -h /srv/homes` on
+the *servicesnode*. The shared directory shares the services volume with all
+the home directories, so increase `services_volume_size` in
+`terraform/terraform.tfvars` if it is tight. If a dataset needs its own volume,
+mount it at `/srv/homes/databases` and add `crossmnt` to the export options in
+`roles/nfs_homes_server/templates/exports.j2`, otherwise NFS clients will not
+be able to cross into the sub-mount.
+
+Note on memory: kraken2 loads its database into memory, so a 9 GB database
+will not run in a session with the default 8 GB. Either run kraken2 with
+`--memory-mapping`, give the sessions more memory, or use one of the capped
+databases (`k2_standard_08gb` and smaller).
+
 ## Note about terraform workspaces
 
 The terraform workspace must have already been created before running the below command.
