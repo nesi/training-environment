@@ -10,3 +10,7 @@
     when:
       - "k8s_ood_enable|default(false)|bool == true"
     register: destroy
+    # a deploy that failed before the cluster was created leaves no kubectl or cluster to delete
+    failed_when:
+      - destroy.rc != 0
+      - "'not found' not in destroy.stderr"
