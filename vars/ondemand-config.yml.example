@@ -75,9 +75,9 @@ ood_apps:
     pre_pull: false
 
   vscode_brs:
-    k8s_container: ghcr.io/mattbixley/training-environment-vscode-app:v1.0.0
+    k8s_container: ghcr.io/mattbixley/training-environment-vscode-app:v1.0.2
     repo: https://github.com/MattBixley/training-environment-vscode-app.git
-    version: 'v1.0.0'
+    version: 'v1.0.2'
     enabled: true
     pre_pull: true
 
