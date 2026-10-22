@@ -71,9 +71,9 @@ ood_apps:
     pre_pull: false
 
   better_research_software:
-    k8s_container: ghcr.io/mattbixley/training-environment-better-research-software-app:v0.1.0
+    k8s_container: ghcr.io/mattbixley/training-environment-better-research-software-app:v0.1.2
     repo: https://github.com/MattBixley/training-environment-better-research-software-app.git
-    version: 'v0.1.0'
+    version: 'v0.1.2'
     enabled: true
     pre_pull: true
 
