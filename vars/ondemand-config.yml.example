@@ -2,14 +2,14 @@
 # paramaters you are most likely to want to change are in this top section
 
 # number of training users
-num_users_create: 1
+num_users_create: 20
 # number of trainer users
-num_trainers_create: 1
+num_trainers_create: 5
 
 # control plane flavour, usually set to
 # - "balanced1.2cpu4ram" for testing
 # - "balanced1.4cpu8ram" for production
-control_plane_flavor: balanced1.2cpu4ram
+control_plane_flavor: balanced1.4cpu8ram
 
 # You must have enough worker resources to accommodate the number of users.
 # You cannot allocate the full ram on a worker node, for example we could fit
@@ -19,16 +19,21 @@ control_plane_flavor: balanced1.2cpu4ram
 # - 2x balanced1.32cpu64ram for up to 30 2cpu4ram sessions
 # - 3x balanced1.32cpu64ram for up to 45 2cpu4ram sessions
 #
-# brs-test: a test deployment for 1 trainer and 1 learner, each a 2cpu/4GB
-# session of the Better Research Software app. One worker holds both with
-# room to spare, and the 4cpu8ram services/webnode flavours (terraform.tfvars)
-# are the testing size.
-cluster_worker_count: 1
+# brs: 20 trainees + 5 trainers = 25 sessions of the Better Research Software
+# app, default 2cpu/4GB each:
+#   2cpu4ram sessions per balanced1.32cpu64ram worker  15
+#   workers to fit 25                                   ceil(25/15) = 2
+#   workers set here                                    3  (N+1 redundancy)
+# 3 workers give 45 slots for 25 sessions. If one worker is lost or drained the
+# remaining 2 still provide 30 slots, so every user keeps a session. The spare
+# capacity also absorbs users who pick the 4cpu/8GB option on the form.
+cluster_worker_count: 3
 worker_flavour: balanced1.32cpu64ram
 # worker disksize is the size of the drive on the worker node, which is used
-# for pulling the docker images. The mpi image is 4.5 GB and is pre-pulled;
-# 80 GB leaves plenty of headroom for it plus the system images.
-worker_disksize: 160
+# for pulling the docker images. Only the Better Research Software image is
+# pre-pulled (~0.6 GB compressed, ~2 GB unpacked); 100 GB leaves plenty of
+# headroom for it plus the system images.
+worker_disksize: 100
 
 # apps config
 # - `k8s_container` should be the container that will be used by the app, usually
